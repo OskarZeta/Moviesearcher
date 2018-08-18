@@ -1,0 +1,62 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
+import {
+  changePage,
+  triggerGenres, addGenres, removeGenres, clearGenres } from '../Redux/actions';
+
+class Genre extends Component {
+  checkHandler (e) {
+    this.props.changePage(1);
+    if (e.target.checked) {
+      this.props.addGenres(this.props.id);
+    } else {
+      this.props.removeGenres(this.props.id);
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.genresSelected !== prevProps.genresSelected) {
+      if (this.props.genresSelected.length !== 0) {
+        if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
+          this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
+        }
+      } else {
+        this.props.history.push(`/`);
+      }
+    }
+  }
+  render(){
+    return(
+      <label className="Genre__label">
+        {this.props.check &&
+        <input type="checkbox" name="tag" defaultChecked={true} onChange={(e) => {this.checkHandler(e)}}/>
+        }
+        {!this.props.check &&
+        <input type="checkbox" name="tag" onChange={(e) => {this.checkHandler(e)}}/>
+        }
+        <span className="Genre__name">{this.props.name}</span>
+      </label>
+    );
+  }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    genresTriggered: state.genresTriggered,
+    genresSelected: state.genresSelected,
+    page: state.page,
+    history: ownProps.history,
+    check: ownProps.check
+  }
+};
+
+const mapDispatchToProps = {
+  changePage,
+  triggerGenres,
+  addGenres,
+  removeGenres,
+  clearGenres
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Genre);
