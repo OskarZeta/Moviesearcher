@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import {
-  FETCH_INITIAL_REQUEST,
+  FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_FAIL,
   FETCH_MOVIES_SUCCESS,
   FETCH_SETTINGS_FAIL,
@@ -15,12 +15,14 @@ import {
   ADD_GENRE,
   REMOVE_GENRE,
   CLEAR_GENRES,
-  LOAD_SETTINGS
+  LOAD_SETTINGS,
+  SAVE_SEARCH_QUERY,
+  CLEAR_SEARCH_QUERY
 } from './actions';
 
 export default function rootReducer(state, action) {
   switch (action.type) {
-    case FETCH_INITIAL_REQUEST: {
+    case FETCH_MOVIES_REQUEST: {
       return Object.assign({}, state, {
         loadingMovies: action.loadingMovies
       });
@@ -113,7 +115,18 @@ export default function rootReducer(state, action) {
     }
     case CLEAR_GENRES: {
       return Object.assign({}, state, {
-        genresTriggered: action.genresTriggered
+        //genresTriggered: action.genresTriggered
+        genresSelected: []
+      })
+    }
+    case SAVE_SEARCH_QUERY: {
+      return Object.assign({}, state, {
+        searchQuery: action.searchQuery
+      })
+    }
+    case CLEAR_SEARCH_QUERY: {
+      return Object.assign({}, state, {
+        searchQuery: ''
       })
     }
     default : {

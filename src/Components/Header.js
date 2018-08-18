@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Search from '../Containers/Search';
 
 class Header extends Component {
   render() {
@@ -9,7 +10,7 @@ class Header extends Component {
           <li className="Options">Options</li>
           <li className="Favourites">Favourites</li>
           <li className="Search">
-            <input type="search"/>
+            <Search history={this.props.history} searchQuery={this.props.searchQuery} />
           </li>
         </ul>
       </header>

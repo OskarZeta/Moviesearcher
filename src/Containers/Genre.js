@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { withRouter } from 'react-router-dom'
 import {
   changePage,
-  triggerGenres, addGenres, removeGenres, clearGenres } from '../Redux/actions';
+  addGenres, removeGenres,
+} from '../Redux/actions';
 
 class Genre extends Component {
   checkHandler (e) {
@@ -17,12 +16,14 @@ class Genre extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.genresSelected !== prevProps.genresSelected) {
-      if (this.props.genresSelected.length !== 0) {
-        if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
+      if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
+        if (this.props.genresSelected.length !== 0) {
           this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
+        } else {
+          if (this.props.goHome) {
+            this.props.history.push(`/`);
+          }
         }
-      } else {
-        this.props.history.push(`/`);
       }
     }
   }
@@ -43,7 +44,6 @@ class Genre extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    genresTriggered: state.genresTriggered,
     genresSelected: state.genresSelected,
     page: state.page,
     history: ownProps.history,
@@ -53,10 +53,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
   changePage,
-  triggerGenres,
   addGenres,
-  removeGenres,
-  clearGenres
+  removeGenres
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Genre);

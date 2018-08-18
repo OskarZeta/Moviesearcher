@@ -7,7 +7,7 @@ class Movie extends Component {
     return(
       <Link className="Movie" to={`/filmId/${this.props.id}`} style={{width: +this.props.settings.poster_sizes[3].split('w').pop()}}>
         <h2>{this.props.name}</h2>
-        <img src={address}/>
+        <img src={address} alt="movie-poster"/>
       </Link>
     );
   };

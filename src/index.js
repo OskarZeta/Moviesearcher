@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider, connect} from 'react-redux';
+import {Provider} from 'react-redux';
 // import './index.css';
 import setStore from './Redux/store';
 import Root from './Containers/Root';
@@ -17,7 +17,7 @@ const initialState = {
   genresTriggered: false,
   genresSelected: [],
   page: 1,
-  urlApp: ''
+  //searchQuery: ''
 };
 
 const store = setStore(initialState);

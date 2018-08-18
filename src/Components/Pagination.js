@@ -5,8 +5,8 @@ class Pagination extends Component {
   render() {
     return (
       <div className="Pagination">
-        <PageBtn direction="prev" page={this.props.page} genresSelected={this.props.genresSelected}/>
-        <PageBtn direction="next" page={this.props.page} genresSelected={this.props.genresSelected}/>
+        <PageBtn direction="prev" searchQuery={this.props.searchQuery} page={this.props.page} genresSelected={this.props.genresSelected}/>
+        <PageBtn direction="next" searchQuery={this.props.searchQuery} page={this.props.page} genresSelected={this.props.genresSelected}/>
       </div>
     );
   }

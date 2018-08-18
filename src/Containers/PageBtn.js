@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { pageNext, pagePrev, changePage } from '../Redux/actions';
+import {
+  pageNext, pagePrev, changePage
+} from '../Redux/actions';
 
 class PageBtn extends Component {
   makePageAndText() {
@@ -24,8 +26,8 @@ class PageBtn extends Component {
   render() {
     return (
       <div>
-        {this.props.genresSelected.length === 0 &&
-          <Link className={this.props.direction}  to={`/${this.makePageAndText().page}`}>
+        {this.props.genresSelected.length === 0 && !this.props.searchQuery &&
+          <Link className={this.props.direction} to={`/${this.makePageAndText().page}`}>
             <span>{this.makePageAndText().text}</span>
           </Link>
         }
@@ -33,6 +35,11 @@ class PageBtn extends Component {
         <Link className={this.props.direction} to={`/genres=${this.props.genresSelected}/${this.makePageAndText().page}`}>
           <span>{this.makePageAndText().text}</span>
         </Link>
+        }
+        {this.props.searchQuery &&
+          <Link className={this.props.direction} to={`/search=${this.props.searchQuery}/${this.makePageAndText().page}`}>
+            <span>{this.makePageAndText().text}</span>
+          </Link>
         }
       </div>
     )
@@ -42,7 +49,8 @@ class PageBtn extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     page: ownProps.page,
-    genresSelected: ownProps.genresSelected || state.genresSelected
+    genresSelected: ownProps.genresSelected || state.genresSelected,
+    searchQuery: ownProps.searchQuery
   }
 };
 

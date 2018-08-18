@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {fetchGenres, addGenres, clearGenres} from '../Redux/actions';
+import {
+  fetchGenres
+} from '../Redux/actions';
 import Genre from './Genre';
 
 class Sidebar extends Component {
@@ -14,16 +16,16 @@ class Sidebar extends Component {
       if (selected.length > 0) {
         if (selected.includes(genre.id)) {
           return(
-            <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={true}/>
+            <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={true} goHome={this.props.goHome}/>
           );
         } else {
           return (
-            <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={false}/>
+            <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={false} goHome={this.props.goHome}/>
           );
         }
       } else {
         return (
-          <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={false}/>
+          <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={false} goHome={this.props.goHome}/>
         );
       }
     });
@@ -53,9 +55,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  fetchGenres,
-  clearGenres,
-  addGenres,
+  fetchGenres
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {
-  addGenres,
+  addGenres, clearGenres,
+  saveSearchQuery, clearSearchQuery,
   loadSettingsFromCookie,
-  fetchGenredMovies, fetchPopularMovies, fetchSettings } from '../Redux/actions';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+  fetchGenredMovies, fetchSearchedMovies, fetchPopularMovies, fetchSettings
+} from '../Redux/actions';
+//import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MovieList from '../Components/MovieList';
 import Sidebar from './Sidebar';
@@ -521,44 +523,59 @@ class App extends Component {
   componentDidMount() {
     this.getSettings();
     //load initial data
-    if (this.props.genresSelected.length > 0){
+    if (this.props.genresSelected.length > 0) {
       this.props.genresSelected.forEach((id) => {
         this.props.addGenres(id);
       });
       this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-    } else {
+    }
+    else if (this.props.searchQuery) {
+      this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
+    }
+    else {
       this.props.fetchPopularMovies(this.props.page);
     }
   }
 
   componentDidUpdate(prevProps) {
-    //change Popular movies on page change
-    if (this.props.page !== prevProps.page) {
-      if (this.props.genresSelected !== prevProps.genresSelected) {
+    if (this.props.genresSelected !== prevProps.genresSelected) {
+      if (this.props.searchQuery !== prevProps.searchQuery){
+        if (this.props.genresSelected.length === 0) {
+          if (this.props.searchQuery) {
+            this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
+          } else {
+            this.props.fetchPopularMovies(this.props.page);
+          }
+        } else {
+          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        }
+      } else {
         this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+      }
+    }
+    else if (this.props.page !== prevProps.page) {
+      if (this.props.genresSelected.length > 0) {
+        this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+      } else if (this.props.searchQuery) {
+        this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery)
       } else {
         this.props.fetchPopularMovies(this.props.page);
       }
     }
-    //change Genred movies on checkbox click
-    if (this.props.genresSelected !== prevProps.genresSelected) {
-      this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-    }
   }
 
   render() {
-
     return (
       <div className="App">
-        <Header/>
+        <Header history={this.props.history} searchQuery={this.props.searchQuery} clearInput={this.props.clearInput}/>
         <div className="App__wrapper">
-          <Sidebar history={this.props.history} genresSelected={this.props.genresSelected}/>
+          <Sidebar history={this.props.history} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} goHome={this.props.goHome}/>
           {this.props.loadingMovies && <div>Loading...</div>}
           {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
           {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length &&
             <div className="App__wrapper-movies">
               <MovieList movieList={this.props.movieList} settings={this.props.settings.images} />
-              <Pagination page={this.props.page} genresSelected={this.props.genresSelected}/>
+              <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery}/>
             </div>
           }
         </div>
@@ -576,16 +593,22 @@ const mapStateToProps = (state, ownProps) => {
     page: ownProps.page,
     url: state.url,
     history: ownProps.history,
-    genresSelected: ownProps.genresSelected || state.genresSelected
+    genresSelected: ownProps.genresSelected || state.genresSelected,
+    searchQuery: ownProps.searchQuery
   }
+
 };
 
 const mapDispatchToProps = {
   fetchGenredMovies,
+  fetchSearchedMovies,
   fetchPopularMovies,
   fetchSettings,
   loadSettingsFromCookie,
-  addGenres
+  addGenres,
+  clearGenres,
+  saveSearchQuery,
+  clearSearchQuery
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

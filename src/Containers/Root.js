@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Provider, connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './App';
 
@@ -20,7 +20,7 @@ class Root extends Component {
             return +id;
           });
           return(
-            <App page={+routerProps.match.params.page} history={routerProps.history} genresSelected={selected}/>
+            <App page={+routerProps.match.params.page} history={routerProps.history} genresSelected={selected} clearInput={true} goHome={true}/>
           );
         }}>
         </Route>
@@ -30,7 +30,19 @@ class Root extends Component {
             return +id;
           });
           return(
-            <App page={this.props.page} history={routerProps.history} genresSelected={selected}/>
+            <App page={this.props.page} history={routerProps.history} genresSelected={selected} clearInput={true} goHome={true}/>
+          );
+        }}>
+        </Route>
+        <Route path='/search=:query/:page' render={(routerProps) => {
+          return(
+            <App page={+routerProps.match.params.page} history={routerProps.history} searchQuery={routerProps.match.params.query} goHome={false}/>
+          );
+        }}>
+        </Route>
+        <Route path='/search=:query' render={(routerProps) => {
+          return(
+            <App page={this.props.page} history={routerProps.history} searchQuery={routerProps.match.params.query} goHome={false}/>
           );
         }}>
         </Route>
