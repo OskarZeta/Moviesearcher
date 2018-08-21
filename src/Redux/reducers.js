@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+//import { combineReducers } from 'redux';
 import {
   FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_FAIL,
@@ -17,14 +17,21 @@ import {
   CLEAR_GENRES,
   LOAD_SETTINGS,
   SAVE_SEARCH_QUERY,
-  CLEAR_SEARCH_QUERY
+  CLEAR_SEARCH_QUERY,
+  MOVIE_DETAILS_REQUEST,
+  MOVIE_DETAILS_FAIL,
+  MOVIE_DETAILS_SUCCESS,
+  MOVIE_SIMILAR_REQUEST,
+  MOVIE_SIMILAR_FAIL,
+  MOVIE_SIMILAR_SUCCESS
 } from './actions';
 
 export default function rootReducer(state, action) {
   switch (action.type) {
     case FETCH_MOVIES_REQUEST: {
       return Object.assign({}, state, {
-        loadingMovies: action.loadingMovies
+        loadingMovies: action.loadingMovies,
+        //initialLoadingError: action.initialLoadingError
       });
     }
     case FETCH_MOVIES_FAIL: {
@@ -37,7 +44,8 @@ export default function rootReducer(state, action) {
     case FETCH_MOVIES_SUCCESS: {
       return Object.assign({}, state, {
         movieList: action.movieList,
-        loadingMovies: !state.settings
+        loadingMovies: !state.settings,
+        initialLoadingError: action.initialLoadingError
       });
     }
     case FETCH_SETTINGS_FAIL: {
@@ -127,6 +135,44 @@ export default function rootReducer(state, action) {
     case CLEAR_SEARCH_QUERY: {
       return Object.assign({}, state, {
         searchQuery: ''
+      })
+    }
+    case MOVIE_DETAILS_REQUEST: {
+      return Object.assign({}, state, {
+        loadingMovieDetails: action.loadingMovieDetails,
+        movieDetailsError: action.movieDetailsError
+      })
+    }
+    case MOVIE_DETAILS_FAIL: {
+      return Object.assign({}, state, {
+        loadingMovieDetails: action.loadingMovieDetails,
+        movieDetailsError: action.movieDetailsError
+      })
+    }
+    case MOVIE_DETAILS_SUCCESS: {
+      return Object.assign({}, state, {
+        loadingMovieDetails: action.loadingMovieDetails,
+        movieDetailsError: action.movieDetailsError,
+        movieDetails: action.movieDetails
+      })
+    }
+    case MOVIE_SIMILAR_REQUEST: {
+      return Object.assign({}, state, {
+        loadingMovieSimilar: action.loadingMovieSimilar,
+        movieSimilarError: action.movieSimilarError
+      })
+    }
+    case MOVIE_SIMILAR_FAIL: {
+      return Object.assign({}, state, {
+        loadingMovieSimilar: action.loadingMovieSimilar,
+        movieSimilarError: action.movieSimilarError
+      })
+    }
+    case MOVIE_SIMILAR_SUCCESS: {
+      return Object.assign({}, state, {
+        loadingMovieSimilar: action.loadingMovieSimilar,
+        movieSimilarError: action.movieSimilarError,
+        movieSimilar: action.movieSimilar
       })
     }
     default : {

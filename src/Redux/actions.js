@@ -19,6 +19,12 @@ export const REMOVE_GENRE = 'REMOVE_GENRE';
 export const CLEAR_GENRES = 'CLEAR_GENRES';
 export const SAVE_SEARCH_QUERY = 'SAVE_SEARCH_QUERY';
 export const CLEAR_SEARCH_QUERY = 'CLEAR_SEARCH_QUERY';
+export const MOVIE_DETAILS_REQUEST = 'MOVIE_DETAILS_REQUEST';
+export const MOVIE_DETAILS_FAIL = 'MOVIE_DETAILS_FAIL';
+export const MOVIE_DETAILS_SUCCESS = 'MOVIE_DETAILS_SUCCESS';
+export const MOVIE_SIMILAR_REQUEST = 'MOVIE_SIMILAR_REQUEST';
+export const MOVIE_SIMILAR_FAIL = 'MOVIE_SIMILAR_FAIL';
+export const MOVIE_SIMILAR_SUCCESS = 'MOVIE_SIMILAR_SUCCESS';
 
 const apiAddress = 'https://api.themoviedb.org/3';
 //const moviesPopular = '/movie/popular?page=';
@@ -28,9 +34,20 @@ const urlGenres = `${apiAddress}/genre/movie/list?language=en-US&api_key=${apiKe
 
 const urlPolular = `https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=${apiKey}&page=`;
 const urlGenred1 = `https://api.themoviedb.org/3/discover/movie?with_genres=`;
+const urlDiscover = `https://api.themoviedb.org/3/discover/movie?sort_by=`;
+const urlPopular = `popularity`;
+const urlVotesAverage = `vote_average`;
+const urlVotesNumber = `vote_count`;
+const urlOriginalTitle = `original_title`;
 const urlGenred2 = `&api_key=${apiKey}&page=`;
 const urlSearch1 = `https://api.themoviedb.org/3/search/movie?query=`;
 const urlSearch2 = `&api_key=${apiKey}&page=`;
+const urlDetails1 = `https://api.themoviedb.org/3/movie/`;
+const urlDetails2 = `?api_key=${apiKey}&language=en-US`;
+const urlSimilar1 = `https://api.themoviedb.org/3/movie/`;
+const urlSimilar2 = `/similar?api_key=${apiKey}&language=en-US&page=`;
+//https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
+
 
 export function changeURL(url) {
   return {
@@ -42,7 +59,8 @@ export function changeURL(url) {
 function fetchMoviesRequest() {
   return {
     type: FETCH_MOVIES_REQUEST,
-    loadingMovies: true
+    loadingMovies: true,
+    initialLoadingError: false
   }
 }
 
@@ -81,7 +99,54 @@ function moviesLoadSuccess(json) {
   return {
     type: FETCH_MOVIES_SUCCESS,
     loadingMovies: false,
+    initialLoadingError: false,
     movieList: json ? json.results : []
+  }
+}
+
+function movieDetailsRequest() {
+  return {
+    type: MOVIE_DETAILS_REQUEST,
+    loadingMovieDetails: true,
+    movieDetailsError: false
+  }
+}
+function movieDetailsFail() {
+  return {
+    type: MOVIE_DETAILS_FAIL,
+    loadingMovieDetails: false,
+    movieDetailsError: true
+  }
+}
+function movieDetailsSuccess(json) {
+  return {
+    type: MOVIE_DETAILS_SUCCESS,
+    loadingMovieDetails: false,
+    movieDetailsError: false,
+    movieDetails: json
+  }
+}
+
+function movieSimilarRequest() {
+  return {
+    type: MOVIE_SIMILAR_REQUEST,
+    loadingMovieSimilar: true,
+    movieSimilarError: false
+  }
+}
+function movieSimilarFail() {
+  return {
+    type: MOVIE_SIMILAR_FAIL,
+    loadingMovieSimilar: false,
+    movieSimilarError: true
+  }
+}
+function movieSimilarSuccess(json) {
+  return {
+    type: MOVIE_SIMILAR_SUCCESS,
+    loadingMovieSimilar: false,
+    movieSimilarError: false,
+    movieSimilar: json
   }
 }
 
@@ -261,6 +326,54 @@ export function fetchGenredMovies(page, genresArray) {
   }
 }
 
+export function fetchSortedMovies(page, sortBy, direction, genresArray) {
+  return (dispatch) => {
+    dispatch(fetchMoviesRequest());
+    let url = urlDiscover;
+    switch (sortBy) {
+      case 'popularity' : {
+        url = url + urlPolular + `.${direction}`;
+        break;
+      }
+      case 'votes_average' : {
+        url = url + urlVotesAverage + `.${direction}`;
+        break;
+      }
+      case 'votes_number' : {
+        url = url + urlVotesNumber + `.${direction}`;
+        break;
+      }
+      case 'original_title' : {
+        url = url + urlOriginalTitle + `.${direction}`;
+        break;
+      }
+      default : {
+        throw new Error('Wrong sorting type input');
+      }
+    }
+    if (genresArray){
+      if (genresArray.length > 0) {
+        url = url + `&with_genres=${genresArray.toString()}`;
+      }
+    }
+    url = url + urlGenred2;
+    return fetch(url + page)
+      .then((initialResponse) => {
+        if (initialResponse.ok) {
+          return initialResponse.json();
+        } else {
+          dispatch(moviesLoadFail());
+        }
+      })
+      .then((json) => {
+        dispatch(moviesLoadSuccess(json));
+      }, (error) => {
+        dispatch(moviesLoadFail());
+        console.log(error);
+      })
+  }
+}
+
 export function fetchSearchedMovies(page, query) {
   return (dispatch) => {
     dispatch(fetchMoviesRequest());
@@ -276,6 +389,46 @@ export function fetchSearchedMovies(page, query) {
         dispatch(moviesLoadSuccess(json));
       }, (error) => {
         dispatch(moviesLoadFail());
+        console.log(error);
+      });
+  }
+}
+
+export function fetchMovieDetails(id) {
+  return (dispatch) => {
+    dispatch(movieDetailsRequest());
+    return fetch(urlDetails1 + id + urlDetails2)
+      .then((initialResponse) => {
+        if (initialResponse.ok) {
+          return initialResponse.json();
+        } else {
+          dispatch(movieDetailsFail());
+        }
+      })
+      .then((json) => {
+        dispatch(movieDetailsSuccess(json))
+      }, (error) => {
+        dispatch(movieDetailsFail());
+        console.log(error);
+      });
+  }
+}
+
+export function fetchMovieSimilar(id, page) {
+  return (dispatch) => {
+    dispatch(movieSimilarRequest());
+    return fetch(urlSimilar1 + id + urlSimilar2 + page)
+      .then((initialResponse) => {
+        if (initialResponse.ok) {
+          return initialResponse.json();
+        } else {
+          dispatch(movieSimilarFail());
+        }
+      })
+      .then((json) => {
+        dispatch(movieSimilarSuccess(json))
+      }, (error) => {
+        dispatch(movieSimilarFail());
         console.log(error);
       });
   }

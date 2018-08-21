@@ -14,6 +14,22 @@ class Root extends Component {
           );
         }}>
         </Route>
+
+        <Route exact path='/sort_by/:sortValue.:sortDir/:page' render={(routerProps) => {
+          return(
+            <App page={+routerProps.match.params.page} history={routerProps.history} sortValue={routerProps.match.params.sortValue} sortDir={routerProps.match.params.sortDir}/>
+          );
+        }}>
+        </Route>
+
+        <Route exact path='/sort_by/:sortValue.:sortDir' render={(routerProps) => {
+          return(
+            <App page={this.props.page} history={routerProps.history} sortValue={routerProps.match.params.sortValue} sortDir={routerProps.match.params.sortDir}/>
+          );
+        }}>
+        </Route>
+
+
         <Route path='/genres=:genres/:page' render={(routerProps) => {
           let selected = routerProps.match.params.genres.split(',');
           selected = selected.map((id) => {
@@ -43,6 +59,12 @@ class Root extends Component {
         <Route path='/search=:query' render={(routerProps) => {
           return(
             <App page={this.props.page} history={routerProps.history} searchQuery={routerProps.match.params.query} goHome={false}/>
+          );
+        }}>
+        </Route>
+        <Route path='/filmId/:id' render={(routerProps) => {
+          return(
+            <App filmId={+routerProps.match.params.id} history={routerProps.history}/>
           );
         }}>
         </Route>

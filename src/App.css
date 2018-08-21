@@ -1,10 +1,11 @@
 body{
   margin: 0;
   padding: 0;
+  font-family: "Times New Roman", arial, SansSerif;
 }
-
 .App {
   text-align: center;
+  min-width: 300px;
 }
 
 .App-logo {
@@ -34,12 +35,18 @@ body{
 
 .Header{
   background-color: #d667ff;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
   //padding: 10px;
 }
 .Header h1{
   margin: 0;
   padding: 0 10px;
   border-bottom: 4px solid #9d5bc3;
+}
+.Header a{
+  text-decoration: none;
 }
 .Header__additional{
   display: flex;
@@ -68,13 +75,19 @@ body{
 .App__wrapper, .App__wrapper-movies{
   display: flex;
 }
+.App__wrapper{
+  background-color: #f8f4ff;
+  padding-top: 78px;
+}
 .App__wrapper-movies{
+  flex-grow: 2;
   flex-direction: column;
 }
 .Sidebar{
-  //padding: 30px;
-  min-width: 200px;
+  /*min-width: 200px;*/
   background-color: #c167eb;
+  position: fixed;
+  height: 100%;
 }
 .Sidebar__checkboxes{
   display: flex;
@@ -84,6 +97,17 @@ body{
 .Sidebar__wrapper{
   display: flex;
   flex-direction: column;
+  min-width: 200px;
+  //background-color: #c167eb;
+}
+.Sidebar__wrapper--hidden{
+  display: none;
+}
+.Sidebar__sort-params{
+
+}
+.Sidebar__sort-params label{
+  display: flex;
 }
 .Genre__label{
   display: flex;
@@ -108,10 +132,19 @@ body{
 .Movie{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  //justify-content: space-between;
+  //align-items: stretch;
   margin: 10px auto;
   padding: 10px;
   border: 1px solid blue;
+  background-color: white;
+}
+.Movie a{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  justify-content: space-between;
+  align-items: center;
 }
 .Pagination{
   display: flex;
@@ -123,4 +156,129 @@ body{
 }
 .prev{
   margin-right: 30px;
+}
+.MovieInfo{
+  display: flex;
+  justify-content: center;
+}
+.MovieInfo__wrapper{
+  min-width: 300px;
+  width: 300px;
+  background-color: white;
+  position: relative;
+}
+.MovieInfo__title{
+  margin: 10px 0;
+  font-size: 20px;
+}
+.MovieInfo__section-header{
+  display: block;
+  text-align: left;
+  margin: 10px 20px;
+  color: grey;
+  font-style: italic;
+}
+.MovieInfo__description-wrapper{
+
+}
+.MovieInfo__info{
+  margin: 0 20px;
+  padding: 10px;
+  text-align: left;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-top-left-radius: 10px;
+  //flex-grow: 2;
+}
+
+.MovieInfo__votebox{
+  position: absolute;
+  //left: 10px;
+  width: 40px;
+  height: 40px;
+  box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.75);
+  border-bottom-right-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.MovieInfo__votebox-1{
+  font-size: 20px;
+  font-weight: bold;
+}
+.MovieInfo__votebox-2{
+  font-size: 16px;
+}
+.MovieInfo__backdrop{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.MovieInfo__vote-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.MovieInfo__vote-wrapper p{
+  border: none;
+  border-radius: 0;
+}
+.MovieInfo__vote-wrapper > div{
+  display: flex;
+  justify-content: space-between;
+  //width: 40%;
+}
+.MovieInfo__genre-href{
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+
+@media (min-width: 800px) {
+  .MovieInfo__wrapper{
+    width: 780px;
+  }
+  .MovieInfo__title{
+    font-size: 38px;
+  }
+  .MovieInfo__votebox{
+    width: 60px;
+    height: 60px;
+    left: 0;
+  }
+  .MovieInfo__votebox-1{
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .MovieInfo__votebox-2{
+    font-size: 20px;
+  }
+  .MovieInfo__backdrop{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+  .MovieInfo__vote-wrapper{
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .MovieInfo__vote-wrapper p{
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-top-left-radius: 10px;
+  }
+}
+@media (min-width: 1300px) {
+  .MovieInfo__wrapper{
+    width: 1280px;
+  }
+  .MovieInfo__votebox{
+    width: 70px;
+    height: 70px;
+    left: 0;
+  }
+  .MovieInfo__votebox-1{
+    font-size: 42px;
+    font-weight: bold;
+  }
+  .MovieInfo__votebox-2{
+    font-size: 28px;
+  }
 }

@@ -16,7 +16,7 @@ const initialState = {
   genreList: [],
   genresTriggered: false,
   genresSelected: [],
-  page: 1,
+  page: 1
   //searchQuery: ''
 };
 
