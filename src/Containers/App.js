@@ -523,60 +523,37 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (this.props.sortValue && this.props.sortDir){
-      this.props.fetchSearchedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
-    }
-    if (typeof this.props.filmId !== undefined && isNaN(this.props.filmId)) {
+    if (this.props.filmId === 'error') {
+      //console.log('wrong id');
       this.props.history.push('/');
     }
+    if (Number.isNaN(this.props.page)) {
+      //console.log('wrong page', this.props.page);
+      this.props.history.push('/');
+    }
+
     //load settings (MUST)
     this.getSettings();
     //load initial data
     if (this.props.filmId) {
       this.props.fetchMovieDetails(this.props.filmId);
     } else {
-      if (this.props.genresSelected.length > 0) {
-        this.props.genresSelected.forEach((id) => {
-          this.props.addGenres(id);
-        });
-        this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        if (this.props.genresSelected.length > 0) {
+          this.props.genresSelected.forEach((id) => {
+            this.props.addGenres(id);
+          });
+          if (this.props.sortValue && this.props.sortDir){
+            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
+          } else {
+            this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+          }
       }
       else if (this.props.searchQuery) {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
       }
       else {
-        this.props.fetchPopularMovies(this.props.page);
-      }
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.genresSelected !== prevProps.genresSelected) {
-      //console.log(this.props.genresSelected);
-    }
-    if (this.props.filmId !== prevProps.filmId && this.props.filmId) {
-      this.props.fetchMovieDetails(this.props.filmId);
-    } else {
-      if (this.props.genresSelected !== prevProps.genresSelected) {
-        if (this.props.searchQuery !== prevProps.searchQuery){
-          if (this.props.genresSelected.length === 0) {
-            if (this.props.searchQuery) {
-              this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
-            } else {
-              this.props.fetchPopularMovies(this.props.page);
-            }
-          } else {
-            this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-          }
-        } else {
-          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-        }
-      }
-      else if (this.props.page !== prevProps.page) {
-        if (this.props.genresSelected.length > 0) {
-          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-        } else if (this.props.searchQuery) {
-          this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery)
+        if (this.props.sortValue && this.props.sortDir){
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
         } else {
           this.props.fetchPopularMovies(this.props.page);
         }
@@ -584,21 +561,106 @@ class App extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.filmId !== prevProps.filmId && this.props.filmId) {
+      //console.log('its a film page');
+      this.props.fetchMovieDetails(this.props.filmId);
+    }
+    else if (this.props.searchQuery !== prevProps.searchQuery) {
+      //console.log('search triggered');
+      if (this.props.searchQuery) {
+        this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
+      } else if (this.props.sortValue !== prevProps.sortValue || this.props.sortDir !== prevProps.sortDir) {
+        if (this.props.sortValue && this.props.sortDir) {
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
+        }
+      } else {
+        this.props.fetchPopularMovies(this.props.page);
+      }
+    }
+    else if (this.props.sortValue !== prevProps.sortValue || this.props.sortDir !== prevProps.sortDir) {
+      //console.log('sorting triggered');
+      if (this.props.sortValue && this.props.sortDir){
+        if (this.props.genresSelected.length > 0) {
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
+        } else {
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
+        }
+      }
+    }
+    else if (this.props.genresSelected !== prevProps.genresSelected) {
+      //console.log('genres changed');
+      if (this.props.searchQuery !== prevProps.searchQuery){
+        if (this.props.genresSelected.length === 0) {
+          //console.log('no genres');
+          if (this.props.searchQuery) {
+            this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
+          } else {
+            this.props.fetchPopularMovies(this.props.page);
+          }
+        } else {
+          //console.log('genres > 0');
+          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        }
+      } else {
+        if (this.props.sortValue && this.props.sortDir) {
+          if (this.props.genresSelected.length > 0) {
+            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
+          } else {
+            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
+          }
+        } else {
+          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        }
+      }
+    }
+    // else if (this.props.searchQuery !== prevProps.searchQuery) {
+    //   console.log('search triggered');
+    //   if (this.props.searchQuery) {
+    //     this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
+    //   } else {
+    //     this.props.fetchPopularMovies(this.props.page);
+    //   }
+    // }
+    else if (this.props.page !== prevProps.page) {
+      //console.log('pagination triggered');
+      if (this.props.genresSelected.length > 0 ) {
+        if (this.props.sortValue && this.props.sortDir) {
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
+        } else {
+          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        }
+      } else if (this.props.sortValue && this.props.sortDir) {
+        this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
+      } else if (this.props.searchQuery) {
+        this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery)
+      } else {
+        this.props.fetchPopularMovies(this.props.page);
+      }
+    }
+  }
+
   render() {
-    //console.log(this.props.filmId);
     return (
       <div className="App">
         {!this.props.filmId &&
         <div className="App__moviesearch">
           <Header history={this.props.history} searchQuery={this.props.searchQuery}/>
           <div className="App__wrapper">
-            <Sidebar history={this.props.history} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} goHome={this.props.goHome}/>
+              <Sidebar
+                history={this.props.history}
+                genresSelected={this.props.genresSelected}
+                searchQuery={this.props.searchQuery}
+                goHome={this.props.goHome}
+                sortValue={this.props.sortValue}
+                sortDir={this.props.sortDir}
+              />
             {this.props.loadingMovies && <div>Loading...</div>}
             {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
             {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length &&
               <div className="App__wrapper-movies" style={{paddingLeft: 200}}>
                 <MovieList movieList={this.props.movieList} settings={this.props.settings.images} />
-                <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery}/>
+                <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>
               </div>
             }
           </div>

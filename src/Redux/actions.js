@@ -35,7 +35,7 @@ const urlGenres = `${apiAddress}/genre/movie/list?language=en-US&api_key=${apiKe
 const urlPolular = `https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=${apiKey}&page=`;
 const urlGenred1 = `https://api.themoviedb.org/3/discover/movie?with_genres=`;
 const urlDiscover = `https://api.themoviedb.org/3/discover/movie?sort_by=`;
-const urlPopular = `popularity`;
+const urlPopularity = `popularity`;
 const urlVotesAverage = `vote_average`;
 const urlVotesNumber = `vote_count`;
 const urlOriginalTitle = `original_title`;
@@ -327,12 +327,13 @@ export function fetchGenredMovies(page, genresArray) {
 }
 
 export function fetchSortedMovies(page, sortBy, direction, genresArray) {
+  //console.log(sortBy, direction);
   return (dispatch) => {
     dispatch(fetchMoviesRequest());
     let url = urlDiscover;
     switch (sortBy) {
       case 'popularity' : {
-        url = url + urlPolular + `.${direction}`;
+        url = url + urlPopularity + `.${direction}`;
         break;
       }
       case 'votes_average' : {
@@ -351,14 +352,17 @@ export function fetchSortedMovies(page, sortBy, direction, genresArray) {
         throw new Error('Wrong sorting type input');
       }
     }
+    //console.log(url);
     if (genresArray){
       if (genresArray.length > 0) {
         url = url + `&with_genres=${genresArray.toString()}`;
       }
     }
     url = url + urlGenred2;
+    //console.log(url);
     return fetch(url + page)
       .then((initialResponse) => {
+        //console.log(initialResponse);
         if (initialResponse.ok) {
           return initialResponse.json();
         } else {

@@ -24,17 +24,28 @@ class PageBtn extends Component {
     }
   }
   render() {
+    //console.log(this.props.sortValue, this.props.sortDir, this.props.genresSelected.length, this.props.searchQuery);
     return (
       <div>
-        {this.props.genresSelected.length === 0 && !this.props.searchQuery &&
+        {this.props.genresSelected.length === 0 && !this.props.searchQuery && !(this.props.sortValue && this.props.sortDir) &&
           <Link className={this.props.direction} to={`/${this.makePageAndText().page}`}>
             <span>{this.makePageAndText().text}</span>
           </Link>
         }
-        {this.props.genresSelected.length !== 0 &&
-        <Link className={this.props.direction} to={`/genres=${this.props.genresSelected}/${this.makePageAndText().page}`}>
-          <span>{this.makePageAndText().text}</span>
-        </Link>
+        {this.props.genresSelected.length !== 0 && !this.props.searchQuery && !(this.props.sortValue && this.props.sortDir) &&
+          <Link className={this.props.direction} to={`/genres=${this.props.genresSelected}/${this.makePageAndText().page}`}>
+            <span>{this.makePageAndText().text}</span>
+          </Link>
+        }
+        {(this.props.sortValue && this.props.sortDir) && this.props.genresSelected.length !== 0 && !this.props.searchQuery &&
+          <Link className={this.props.direction} to={`/sort_by/${this.props.sortValue}.${this.props.sortDir}/genres=${this.props.genresSelected}/${this.makePageAndText().page}`}>
+            <span>{this.makePageAndText().text}</span>
+          </Link>
+        }
+        {(this.props.sortValue && this.props.sortDir) && this.props.genresSelected.length === 0 && !this.props.searchQuery &&
+          <Link className={this.props.direction} to={`/sort_by/${this.props.sortValue}.${this.props.sortDir}/${this.makePageAndText().page}`}>
+            <span>{this.makePageAndText().text}</span>
+          </Link>
         }
         {this.props.searchQuery &&
           <Link className={this.props.direction} to={`/search=${this.props.searchQuery}/${this.makePageAndText().page}`}>

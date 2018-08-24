@@ -18,10 +18,18 @@ class Genre extends Component {
     if (this.props.genresSelected !== prevProps.genresSelected) {
       if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
         if (this.props.genresSelected.length !== 0) {
-          this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
+          //console.log(this.props.sortValue, this.props.sortDir);
+          if (this.props.sortValue && this.props.sortDir) {
+            this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}/genres=${this.props.genresSelected}/${this.props.page}`);
+          } else {
+            this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
+          }
         } else {
           if (this.props.goHome) {
+            //console.log('genres');
             this.props.history.push(`/`);
+          } else if (this.props.sortValue && this.props.sortDir) {
+            this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}`);
           }
         }
       }
