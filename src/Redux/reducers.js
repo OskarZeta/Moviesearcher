@@ -23,7 +23,15 @@ import {
   MOVIE_DETAILS_SUCCESS,
   MOVIE_SIMILAR_REQUEST,
   MOVIE_SIMILAR_FAIL,
-  MOVIE_SIMILAR_SUCCESS
+  MOVIE_SIMILAR_SUCCESS,
+  MOVIE_IMAGES_REQUEST,
+  MOVIE_IMAGES_FAIL,
+  MOVIE_IMAGES_SUCCESS,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
+  CLEAR_IMAGES,
+  // IMAGE_PREV,
+  // IMAGE_NEXT
 } from './actions';
 
 export default function rootReducer(state, action) {
@@ -129,12 +137,12 @@ export default function rootReducer(state, action) {
     }
     case SAVE_SEARCH_QUERY: {
       return Object.assign({}, state, {
-        searchQuery: action.searchQuery
+        //searchQuery: action.searchQuery
       })
     }
     case CLEAR_SEARCH_QUERY: {
       return Object.assign({}, state, {
-        searchQuery: ''
+        //searchQuery: ''
       })
     }
     case MOVIE_DETAILS_REQUEST: {
@@ -175,6 +183,52 @@ export default function rootReducer(state, action) {
         movieSimilar: action.movieSimilar
       })
     }
+    case MOVIE_IMAGES_REQUEST: {
+      return Object.assign({}, state, {
+        loadingMovieImages: action.loadingMovieImages,
+        movieImagesError: action.movieImagesError
+      })
+    }
+    case MOVIE_IMAGES_FAIL: {
+      return Object.assign({}, state, {
+        loadingMovieImages: action.loadingMovieImages,
+        movieImagesError: action.movieImagesError
+      })
+    }
+    case MOVIE_IMAGES_SUCCESS: {
+      return Object.assign({}, state, {
+        loadingMovieImages: action.loadingMovieImages,
+        movieImagesError: action.movieImagesError,
+        movieImages: action.movieImages
+      })
+    }
+    case ADD_FAVORITE: {
+      return Object.assign({}, state, {
+        favorites: state.favorites.concat(action.id)
+      })
+    }
+    case REMOVE_FAVORITE: {
+      return Object.assign({}, state, {
+        favorites: state.favorites.filter((fave) => {
+          return fave !== action.id;
+        })
+      })
+    }
+    case CLEAR_IMAGES: {
+      return Object.assign({}, state, {
+        movieImages: action.movieImages
+      })
+    }
+    // case IMAGE_NEXT: {
+    //   return Object.assign({}, state, {
+    //     imageIndex: state.imageIndex + 1,
+    //   })
+    // }
+    // case IMAGE_PREV: {
+    //   return Object.assign({}, state, {
+    //     imageIndex: state.imageIndex - 1,
+    //   })
+    // }
     default : {
       return state;
     }

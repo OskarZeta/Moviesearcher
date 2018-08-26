@@ -25,6 +25,14 @@ export const MOVIE_DETAILS_SUCCESS = 'MOVIE_DETAILS_SUCCESS';
 export const MOVIE_SIMILAR_REQUEST = 'MOVIE_SIMILAR_REQUEST';
 export const MOVIE_SIMILAR_FAIL = 'MOVIE_SIMILAR_FAIL';
 export const MOVIE_SIMILAR_SUCCESS = 'MOVIE_SIMILAR_SUCCESS';
+export const ADD_FAVORITE = 'ADD_FAVORITE';
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
+export const MOVIE_IMAGES_REQUEST = 'MOVIE_IMAGES_REQUEST';
+export const MOVIE_IMAGES_FAIL = 'MOVIE_IMAGES_FAIL';
+export const MOVIE_IMAGES_SUCCESS = 'MOVIE_IMAGES_SUCCESS';
+export const CLEAR_IMAGES = 'CLEAR_IMAGES';
+// export const IMAGE_PREV = 'IMAGE_PREV';
+// export const IMAGE_NEXT = 'IMAGE_NEXT';
 
 const apiAddress = 'https://api.themoviedb.org/3';
 //const moviesPopular = '/movie/popular?page=';
@@ -46,6 +54,8 @@ const urlDetails1 = `https://api.themoviedb.org/3/movie/`;
 const urlDetails2 = `?api_key=${apiKey}&language=en-US`;
 const urlSimilar1 = `https://api.themoviedb.org/3/movie/`;
 const urlSimilar2 = `/similar?api_key=${apiKey}&language=en-US&page=`;
+const urlImages1 = `https://api.themoviedb.org/3/movie/`;
+const urlImages2 = `/images?api_key=${apiKey}`;
 //https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
 
 
@@ -150,6 +160,36 @@ function movieSimilarSuccess(json) {
   }
 }
 
+function movieImagesRequest() {
+  return {
+    type: MOVIE_IMAGES_REQUEST,
+    loadingMovieImages: true,
+    movieImagesError: false
+  }
+}
+function movieImagesFail() {
+  return {
+    type: MOVIE_IMAGES_FAIL,
+    loadingMovieImages: false,
+    movieImagesError: true
+  }
+}
+function movieImagesSuccess(json) {
+  return {
+    type: MOVIE_IMAGES_SUCCESS,
+    loadingMovieImages: false,
+    movieImagesError: false,
+    movieImages: json
+  }
+}
+
+export function clearImages() {
+  return {
+    type: CLEAR_IMAGES,
+    movieImages: undefined
+  }
+}
+
 function fetchGenresRequest() {
   return {
     type: FETCH_GENRES_REQUEST,
@@ -213,7 +253,7 @@ export function addGenres(id) {
 }
 
 export function removeGenres(id) {
-  return{
+  return {
     type: REMOVE_GENRE,
     id: id
   }
@@ -233,6 +273,31 @@ export function clearSearchQuery() {
   }
 }
 
+export function addFavorite(id) {
+  return{
+    type: ADD_FAVORITE,
+    id: id
+  }
+}
+
+export function removeFavorite(id) {
+  return{
+    type: REMOVE_FAVORITE,
+    id: id
+  }
+}
+
+// export function imagePrev() {
+//   return {
+//     type: IMAGE_PREV
+//   }
+// }
+// export function imageNext() {
+//   return {
+//     type: IMAGE_NEXT
+//   }
+// }
+
 export function fetchGenres() {
   //let url = `https://api.themoviedb.org/genre/movie/list?language=en-US&api_key=${apiKey}`;
   return ((dispatch) => {
@@ -246,6 +311,7 @@ export function fetchGenres() {
         }
       })
       .then((json) => {
+        //console.log(json);
         json = json.genres.map((genre) => {
           return Object.assign(genre, {
             selected: false
@@ -359,7 +425,7 @@ export function fetchSortedMovies(page, sortBy, direction, genresArray) {
       }
     }
     url = url + urlGenred2;
-    //console.log(url);
+    //console.log('\n' + url);
     return fetch(url + page)
       .then((initialResponse) => {
         //console.log(initialResponse);
@@ -433,6 +499,26 @@ export function fetchMovieSimilar(id, page) {
         dispatch(movieSimilarSuccess(json))
       }, (error) => {
         dispatch(movieSimilarFail());
+        console.log(error);
+      });
+  }
+}
+
+export function fetchMovieImages(id) {
+  return (dispatch) => {
+    dispatch(movieImagesRequest());
+    return fetch(urlImages1 + id + urlImages2)
+      .then((initialResponse) => {
+        if (initialResponse.ok) {
+          return initialResponse.json();
+        } else {
+          dispatch(movieImagesFail());
+        }
+      })
+      .then((json) => {
+        dispatch(movieImagesSuccess(json))
+      }, (error) => {
+        dispatch(movieImagesFail());
         console.log(error);
       });
   }

@@ -4,18 +4,14 @@ import {
   fetchGenres
 } from '../Redux/actions';
 import Genre from './Genre';
-import Sort from './Sort';
+import Sort from '../Components/Sort';
 
 class Sidebar extends Component {
   componentDidMount() {
-    //console.log(this.props.sortValue, this.props.sortDir);
     this.props.fetchGenres();
   }
   componentDidUpdate(prevProps) {
-    //console.log(this.props.sortValue, this.props.sortDir);
-    if (this.props.sortValue !== prevProps.sortValue || this.props.sortDir !== prevProps.sortDir) {
-      //console.log(prevProps.sortValue, this.props.sortValue, prevProps.sortDir, this.props.sortDir);
-    }
+
   }
   makeGenreList() {
     let list = this.props.genreList;
@@ -39,7 +35,6 @@ class Sidebar extends Component {
     });
   }
   render(){
-
     return(
       <div className="Sidebar">
         {this.props.disable &&
@@ -62,54 +57,54 @@ class Sidebar extends Component {
                 <div className="Sidebar__sort-params">
                   <h2>Sort movies by:</h2>
                   <div>
-                  {(this.props.sortValue === 'popularity' || !this.props.sortValue) &&
-                    <div>
-                      <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                      <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
-                    </div>
-                  }
-                  {this.props.sortValue && this.props.sortValue === 'votes_average' &&
-                    <div>
-                      <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                      <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
-                    </div>
-                  }
-                  {this.props.sortValue && this.props.sortValue === 'votes_number' &&
-                    <div>
-                      <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                      <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
-                    </div>
-                  }
-                  {this.props.sortValue && this.props.sortValue === 'original_title' &&
-                    <div>
-                      <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                    </div>
-                  }
+                    {(this.props.sortValue === 'popularity' || !this.props.sortValue) &&
+                      <div>
+                        <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                        <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
+                      </div>
+                    }
+                    {this.props.sortValue && this.props.sortValue === 'votes_average' &&
+                      <div>
+                        <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                        <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
+                      </div>
+                    }
+                    {this.props.sortValue && this.props.sortValue === 'votes_number' &&
+                      <div>
+                        <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                        <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} />
+                      </div>
+                    }
+                    {this.props.sortValue && this.props.sortValue === 'original_title' &&
+                      <div>
+                        <Sort name="sort" title="Popularity" value="popularity" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Average votes" value="votes_average" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Number of votes" value="votes_number" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        <Sort name="sort" title="Original title" value="original_title" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                      </div>
+                    }
                   </div>
                   <div>
                     <h3>Choose sorting direction:</h3>
                     <div>
-                    {(this.props.sortDir && this.props.sortDir === 'desc' || !this.props.sortDir) &&
-                      <div>
-                        <Sort name="direction" title="Descending" value="desc" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                        <Sort name="direction" title="Ascending" value="asc" history={this.props.history} genresSelected={this.props.genresSelected} />
-                      </div>
-                    }
-                    {this.props.sortDir && this.props.sortDir === 'asc' &&
-                      <div>
-                        <Sort name="direction" title="Descending" value="desc" history={this.props.history} genresSelected={this.props.genresSelected} />
-                        <Sort name="direction" title="Ascending" value="asc" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
-                      </div>
-                    }
+                      {(this.props.sortDir && this.props.sortDir === 'desc' || !this.props.sortDir) &&
+                        <div>
+                          <Sort name="direction" title="Descending" value="desc" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                          <Sort name="direction" title="Ascending" value="asc" history={this.props.history} genresSelected={this.props.genresSelected} />
+                        </div>
+                      }
+                      {this.props.sortDir && this.props.sortDir === 'asc' &&
+                        <div>
+                          <Sort name="direction" title="Descending" value="desc" history={this.props.history} genresSelected={this.props.genresSelected} />
+                          <Sort name="direction" title="Ascending" value="asc" history={this.props.history} genresSelected={this.props.genresSelected} defaultChecked/>
+                        </div>
+                      }
                     </div>
                   </div>
                 </div>

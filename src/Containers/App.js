@@ -5,12 +5,15 @@ import {
   saveSearchQuery, clearSearchQuery,
   loadSettingsFromCookie,
   fetchGenredMovies, fetchSearchedMovies, fetchPopularMovies, fetchSortedMovies, fetchSettings,
-  fetchMovieDetails
+  fetchMovieDetails,
+  fetchMovieImages,
+  clearImages
 } from '../Redux/actions';
 //import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MovieList from '../Components/MovieList';
 import MovieInfo from '../Containers/MovieInfo';
+import Gallery from '../Components/Gallery';
 import Sidebar from './Sidebar';
 import Header from '../Components/Header';
 import Pagination from '../Components/Pagination';
@@ -527,26 +530,37 @@ class App extends Component {
       //console.log('wrong id');
       this.props.history.push('/');
     }
+
     if (Number.isNaN(this.props.page)) {
       //console.log('wrong page', this.props.page);
       this.props.history.push('/');
     }
-
     //load settings (MUST)
     this.getSettings();
     //load initial data
     if (this.props.filmId) {
-      this.props.fetchMovieDetails(this.props.filmId);
+      //this.props.clearGenres();
+      if (!this.props.gallery) {
+        this.props.fetchMovieDetails(this.props.filmId);
+        if (this.props.imageIndex) {
+          //console.log('imageFromMoviePage');
+        }
+      } else {
+        this.props.fetchMovieImages(this.props.filmId);
+        if (this.props.imageIndex) {
+          //console.log('imageFromGallery');
+        }
+      }
     } else {
-        if (this.props.genresSelected.length > 0) {
-          this.props.genresSelected.forEach((id) => {
-            this.props.addGenres(id);
-          });
-          if (this.props.sortValue && this.props.sortDir){
-            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
-          } else {
-            this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
-          }
+      if (this.props.genresSelected.length > 0) {
+        this.props.genresSelected.forEach((id) => {
+          this.props.addGenres(id);
+        });
+        if (this.props.sortValue && this.props.sortDir){
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
+        } else {
+          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+        }
       }
       else if (this.props.searchQuery) {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
@@ -562,12 +576,29 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.filmId !== prevProps.filmId && this.props.filmId) {
-      //console.log('its a film page');
-      this.props.fetchMovieDetails(this.props.filmId);
+    //console.log('imageToShow');
+    if (this.props.filmId) {
+      //this.props.clearGenres();
+
+      if (this.props.filmId !== prevProps.filmId || ((this.props.filmId === prevProps.filmId) && this.props.gallery !== prevProps.gallery)){
+        this.props.fetchMovieDetails(this.props.filmId);
+        //this.props.clearImages();
+      } else if (this.props.filmId === prevProps.filmId) {
+        if (this.props.imageIndex) {
+          //console.log('imageToShow');
+          if ((this.props.imageIndex !== prevProps.imageIndex) && !this.props.gallery) {
+            ////console.log(this.props.imageIndex);
+            //console.log(this.props.imageToShow);
+          } else if ((this.props.imageIndex !== prevProps.imageIndex) && this.props.gallery) {
+            ////console.log('imageFromGallery');
+          }
+        }
+      }
+    }
+    else if (this.props.favorites !== prevProps.favorites) {
+      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
     }
     else if (this.props.searchQuery !== prevProps.searchQuery) {
-      //console.log('search triggered');
       if (this.props.searchQuery) {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
       } else if (this.props.sortValue !== prevProps.sortValue || this.props.sortDir !== prevProps.sortDir) {
@@ -579,27 +610,26 @@ class App extends Component {
       }
     }
     else if (this.props.sortValue !== prevProps.sortValue || this.props.sortDir !== prevProps.sortDir) {
-      //console.log('sorting triggered');
       if (this.props.sortValue && this.props.sortDir){
         if (this.props.genresSelected.length > 0) {
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
         } else {
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
         }
+      } else {
+        this.props.fetchPopularMovies(this.props.page);
       }
     }
     else if (this.props.genresSelected !== prevProps.genresSelected) {
-      //console.log('genres changed');
+      //console.log('genres update');
       if (this.props.searchQuery !== prevProps.searchQuery){
         if (this.props.genresSelected.length === 0) {
-          //console.log('no genres');
           if (this.props.searchQuery) {
             this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
           } else {
             this.props.fetchPopularMovies(this.props.page);
           }
         } else {
-          //console.log('genres > 0');
           this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
         }
       } else {
@@ -614,16 +644,7 @@ class App extends Component {
         }
       }
     }
-    // else if (this.props.searchQuery !== prevProps.searchQuery) {
-    //   console.log('search triggered');
-    //   if (this.props.searchQuery) {
-    //     this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
-    //   } else {
-    //     this.props.fetchPopularMovies(this.props.page);
-    //   }
-    // }
     else if (this.props.page !== prevProps.page) {
-      //console.log('pagination triggered');
       if (this.props.genresSelected.length > 0 ) {
         if (this.props.sortValue && this.props.sortDir) {
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
@@ -644,42 +665,59 @@ class App extends Component {
     return (
       <div className="App">
         {!this.props.filmId &&
-        <div className="App__moviesearch">
-          <Header history={this.props.history} searchQuery={this.props.searchQuery}/>
-          <div className="App__wrapper">
-              <Sidebar
-                history={this.props.history}
-                genresSelected={this.props.genresSelected}
-                searchQuery={this.props.searchQuery}
-                goHome={this.props.goHome}
-                sortValue={this.props.sortValue}
-                sortDir={this.props.sortDir}
-              />
-            {this.props.loadingMovies && <div>Loading...</div>}
-            {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
-            {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length &&
-              <div className="App__wrapper-movies" style={{paddingLeft: 200}}>
-                <MovieList movieList={this.props.movieList} settings={this.props.settings.images} />
-                <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>
-              </div>
-            }
+          <div className="App__moviesearch">
+            <Header history={this.props.history} searchQuery={this.props.searchQuery}/>
+            <div className="App__wrapper">
+                <Sidebar
+                  history={this.props.history}
+                  genresSelected={this.props.genresSelected}
+                  searchQuery={this.props.searchQuery}
+                  goHome={this.props.goHome}
+                  sortValue={this.props.sortValue}
+                  sortDir={this.props.sortDir}
+                />
+              {this.props.loadingMovies && <div>Loading...</div>}
+              {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
+              {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length && this.props.favorites &&
+                <div className="App__wrapper-movies" style={{paddingLeft: 200}}>
+                  <MovieList movieList={this.props.movieList} settings={this.props.settings.images} favorites={this.props.favorites}/>
+                  <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>
+                </div>
+              }
+            </div>
           </div>
-        </div>
         }
-        {this.props.filmId &&
-        <div className="App__movieread">
-          <Header filmId={this.props.filmId}/>
-          <div className="App__wrapper">
-            <Sidebar disable={true}/>
-            {this.props.loadingMovieDetails && <div>Loading...</div>}
-            {this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}
-            {!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length &&
-              <div className="App__wrapper-movies">
-                <MovieInfo movieDetails={this.props.movieDetails} settings={this.props.settings.images}/>
-              </div>
-            }
+        {this.props.filmId && !this.props.gallery &&
+          <div className="App__movieread">
+            <Header filmId={this.props.filmId}/>
+            <div className="App__wrapper">
+              <Sidebar disable={true}/>
+              {this.props.loadingMovieDetails && <div>Loading...</div>}
+              {this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}
+              {!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length && this.props.favorites &&
+                <div className="App__wrapper-movies">
+                  <MovieInfo movieDetails={this.props.movieDetails} settings={this.props.settings.images} favorites={this.props.favorites}
+                  imageIndex={this.props.imageIndex} history={this.props.history}/>
+                </div>
+              }
+            </div>
           </div>
-        </div>
+        }
+        {this.props.filmId && this.props.gallery &&
+          <div className="App__movieread">
+            <Header filmId={this.props.filmId} toMovie={true}/>
+            <div className="App__wrapper">
+              <Sidebar disable={true}/>
+              {this.props.loadingMovieImages && <div>Loading gallery...</div>}
+              {this.props.movieImagesError && !this.props.loadingMovieImages && <div>GALLERY ERROR!</div>}
+              {!this.props.loadingMovieImages && !this.props.movieImagesError && this.props.movieImages && Object.keys(this.props.settings).length &&
+                <div className="App__wrapper-movies">
+                  <Gallery filmId={this.props.filmId} movieImages={this.props.movieImages} settings={this.props.settings.images}
+                  imageIndex={this.props.imageIndex} history={this.props.history}/>
+                </div>
+              }
+            </div>
+          </div>
         }
       </div>
     );
@@ -699,7 +737,12 @@ const mapStateToProps = (state, ownProps) => {
     searchQuery: ownProps.searchQuery,
     loadingMovieDetails: state.loadingMovieDetails,
     movieDetailsError: state.movieDetailsError,
-    movieDetails: state.movieDetails
+    movieDetails: state.movieDetails,
+    loadingMovieImages: state.loadingMovieImages,
+    movieImagesError: state.movieImagesError,
+    movieImages: state.movieImages,
+    favorites: state.favorites,
+    imageIndex: ownProps.imageIndex
   }
 };
 
@@ -711,11 +754,12 @@ const mapDispatchToProps = {
   fetchSettings,
   loadSettingsFromCookie,
   fetchMovieDetails,
+  fetchMovieImages,
   addGenres,
   clearGenres,
   saveSearchQuery,
-  clearSearchQuery
+  clearSearchQuery,
+  clearImages
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {
-  changePage,
-  addGenres, removeGenres,
-} from '../Redux/actions';
+// import { connect } from 'react-redux';
+// import {
+//   changePage,
+//   addGenres, removeGenres,
+// } from '../Redux/actions';
 
 class Sort extends Component {
   clickHandler (e) {

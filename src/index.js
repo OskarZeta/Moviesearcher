@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-// import './index.css';
 import setStore from './Redux/store';
 import Root from './Containers/Root';
 import registerServiceWorker from './registerServiceWorker';
+// import './index.css';
 
 const initialState = {
   loadingMovies: false,
@@ -16,8 +16,9 @@ const initialState = {
   genreList: [],
   genresTriggered: false,
   genresSelected: [],
-  page: 1
-  //searchQuery: ''
+  page: 1,
+  favorites: JSON.parse(localStorage.getItem('favorites')) || [],
+  imageIndex: 1
 };
 
 const store = setStore(initialState);
