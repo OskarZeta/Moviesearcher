@@ -27,6 +27,9 @@ import {
   MOVIE_IMAGES_REQUEST,
   MOVIE_IMAGES_FAIL,
   MOVIE_IMAGES_SUCCESS,
+  MOVIE_CREDITS_REQUEST,
+  MOVIE_CREDITS_FAIL,
+  MOVIE_CREDITS_SUCCESS,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   CLEAR_IMAGES,
@@ -202,15 +205,39 @@ export default function rootReducer(state, action) {
         movieImages: action.movieImages
       })
     }
+    case MOVIE_CREDITS_REQUEST: {
+      return Object.assign({}, state, {
+        loadingMovieCredits: action.loadingMovieCredits,
+        movieCreditsError: action.movieCreditsError
+      })
+    }
+    case MOVIE_CREDITS_FAIL: {
+      return Object.assign({}, state, {
+        loadingMovieCredits: action.loadingMovieCredits,
+        movieCreditsError: action.movieCreditsError
+      })
+    }
+    case MOVIE_CREDITS_SUCCESS: {
+      return Object.assign({}, state, {
+        loadingMovieCredits: action.loadingMovieCredits,
+        movieCreditsError: action.movieCreditsError,
+        movieCredits: action.movieCredits
+      })
+    }
     case ADD_FAVORITE: {
       return Object.assign({}, state, {
-        favorites: state.favorites.concat(action.id)
+        favorites: state.favorites.concat(action.movie)
       })
     }
     case REMOVE_FAVORITE: {
+      // state.favorites.filter((fave) => {
+      //   console.log(fave.id !== action.id);
+      //   return fave.id !== action.id;
+      // });
+      // return Object.assign({}, state, {});
       return Object.assign({}, state, {
         favorites: state.favorites.filter((fave) => {
-          return fave !== action.id;
+          return fave.id !== action.id;
         })
       })
     }

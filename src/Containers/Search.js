@@ -17,10 +17,10 @@ class Search extends Component {
     return(
       <div>
         {this.props.searchQuery &&
-          <input className="search-input" type="search" value={this.props.searchQuery} autoFocus onChange={(e) => {this.searchRequest(e)}}/>
+          <input type="search" value={this.props.searchQuery} autoFocus onChange={(e) => {this.searchRequest(e)}}/>
         }
         {!this.props.searchQuery &&
-          <input className="search-input" type="search" onChange={(e) => {this.searchRequest(e)}}/>
+          <input type="search" onChange={(e) => {this.searchRequest(e)}} placeholder="Search..."/>
         }
       </div>
     );

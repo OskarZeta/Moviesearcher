@@ -45,16 +45,30 @@ class ImageShow extends Component {
   }
 
   render(){
-    let path = this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    //let path = this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressMobile = this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressTablet = this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressDesktop = this.props.settings.base_url + this.props.settings.backdrop_sizes[3] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
     return(
       <div className="ImageShow">
-        <div className="ImageShow__wrapper">
-          <button className="ImageShow__close" onClick={() => {this.closeClick()}}>
-            Close
-          </button>
-          <button onClick={() => {this.sliderClick("prev")}}>prev</button>
-          <button onClick={() => {this.sliderClick("next")}}>next</button>
-          <img src={path}/>
+        <div className="container container--imageshow">
+          <picture>
+            <source srcSet={addressDesktop} media="(min-width: 1300px)"/>
+            <source srcSet={addressTablet} media="(min-width: 800px)"/>
+            <img src={addressMobile} alt="movie-poster"/>
+          </picture>
+          <div className="ImageShow__interface">
+            <button className="ImageShow__prev" onClick={() => {this.sliderClick("prev")}}>
+              <span className="ImageShow__prev-triangle"></span>
+            </button>
+            <button className="ImageShow__close" onClick={() => {this.closeClick()}}>
+              <span className="ImageShow__close-circle"></span>
+              <span className="ImageShow__close-stick"></span>
+            </button>
+            <button className="ImageShow__next" onClick={() => {this.sliderClick("next")}}>
+              <span className="ImageShow__next-triangle"></span>
+            </button>
+          </div>
         </div>
       </div>
     );

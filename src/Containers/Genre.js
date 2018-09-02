@@ -37,14 +37,17 @@ class Genre extends Component {
   }
   render(){
     return(
-      <label className="Genre__label">
-        {this.props.check &&
-        <input type="checkbox" name="tag" defaultChecked={true} onChange={(e) => {this.checkHandler(e)}}/>
-        }
-        {!this.props.check &&
-        <input type="checkbox" name="tag" onChange={(e) => {this.checkHandler(e)}}/>
-        }
-        <span className="Genre__name">{this.props.name}</span>
+      <label className="Sidebar__genre-label">
+        <div className="Sidebar__genre-checkbox">
+          {this.props.check &&
+            <input className="Sidebar__genre-input" type="checkbox" name="tag" defaultChecked={true} onChange={(e) => {this.checkHandler(e)}}/>
+          }
+          {!this.props.check &&
+            <input className="Sidebar__genre-input" type="checkbox" name="tag" onChange={(e) => {this.checkHandler(e)}}/>
+          }
+          <span className="Sidebar__genre-custom"></span>
+        </div>
+        <span className="Sidebar__genre-name">{this.props.name}</span>
       </label>
     );
   }

@@ -3,17 +3,17 @@ import Movie from './Movie';
 
 class MovieList extends Component {
   makeList() {
-    //console.log(this.props.favorites);
-    let list = this.props.movieList;
-
-    // isFav = {this.props.favorites.length > 0 ? !!this.props.favorites.filter((id) => {
-    // return id === movie.id;
-    // }) : false}
+    let list;
+    if (this.props.movieList && !this.props.favsPage) {
+      list = this.props.movieList;
+    } else if (this.props.favsPage) {
+      list = this.props.favorites;
+    }
     return list.map((movie) => {
       return(
         <Movie key={movie.id} id={movie.id} name={movie.title} poster={movie.poster_path} settings={this.props.settings} usePreview={this.props.usePreview} favorites={this.props.favorites}
-          isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((id) => {
-            return id === movie.id;}).length > 0)
+          isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
+            return favMovie.id === movie.id;}).length > 0)
           : false}
         />
       );
@@ -21,7 +21,7 @@ class MovieList extends Component {
   }
   render() {
     return(
-      <div className="Movies__wrapper">{this.makeList()}</div>
+      <div className="App__content">{this.makeList()}</div>
     );
   }
 }

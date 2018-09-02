@@ -31,6 +31,9 @@ export const MOVIE_IMAGES_REQUEST = 'MOVIE_IMAGES_REQUEST';
 export const MOVIE_IMAGES_FAIL = 'MOVIE_IMAGES_FAIL';
 export const MOVIE_IMAGES_SUCCESS = 'MOVIE_IMAGES_SUCCESS';
 export const CLEAR_IMAGES = 'CLEAR_IMAGES';
+export const MOVIE_CREDITS_REQUEST = 'MOVIE_CREDITS_REQUEST';
+export const MOVIE_CREDITS_FAIL = 'MOVIE_CREDITS_FAIL';
+export const MOVIE_CREDITS_SUCCESS = 'MOVIE_CREDITS_SUCCESS';
 // export const IMAGE_PREV = 'IMAGE_PREV';
 // export const IMAGE_NEXT = 'IMAGE_NEXT';
 
@@ -47,6 +50,7 @@ const urlPopularity = `popularity`;
 const urlVotesAverage = `vote_average`;
 const urlVotesNumber = `vote_count`;
 const urlOriginalTitle = `original_title`;
+const urlReleaseDate = `release_date`;
 const urlGenred2 = `&api_key=${apiKey}&page=`;
 const urlSearch1 = `https://api.themoviedb.org/3/search/movie?query=`;
 const urlSearch2 = `&api_key=${apiKey}&page=`;
@@ -56,6 +60,8 @@ const urlSimilar1 = `https://api.themoviedb.org/3/movie/`;
 const urlSimilar2 = `/similar?api_key=${apiKey}&language=en-US&page=`;
 const urlImages1 = `https://api.themoviedb.org/3/movie/`;
 const urlImages2 = `/images?api_key=${apiKey}`;
+const urlCredits1 = `https://api.themoviedb.org/3/movie/`;
+const urlCredits2 = `/credits?api_key=${apiKey}`;
 //https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key=<<api_key>>&language=en-US&page=1
 
 
@@ -183,6 +189,29 @@ function movieImagesSuccess(json) {
   }
 }
 
+function movieCreditsRequest() {
+  return {
+    type: MOVIE_CREDITS_REQUEST,
+    loadingMovieCredits: true,
+    movieCreditsError: false
+  }
+}
+function movieCreditsFail() {
+  return {
+    type: MOVIE_CREDITS_FAIL,
+    loadingMovieCredits: false,
+    movieCreditsError: true
+  }
+}
+function movieCreditsSuccess(json) {
+  return {
+    type: MOVIE_CREDITS_SUCCESS,
+    loadingMovieCredits: false,
+    movieCreditsError: false,
+    movieCredits: json
+  }
+}
+
 export function clearImages() {
   return {
     type: CLEAR_IMAGES,
@@ -273,10 +302,10 @@ export function clearSearchQuery() {
   }
 }
 
-export function addFavorite(id) {
+export function addFavorite(movie) {
   return{
     type: ADD_FAVORITE,
-    id: id
+    movie: movie
   }
 }
 
@@ -414,6 +443,10 @@ export function fetchSortedMovies(page, sortBy, direction, genresArray) {
         url = url + urlOriginalTitle + `.${direction}`;
         break;
       }
+      case 'release_date' : {
+        url = url + urlReleaseDate + `.${direction}`;
+        break;
+      }
       default : {
         throw new Error('Wrong sorting type input');
       }
@@ -519,6 +552,26 @@ export function fetchMovieImages(id) {
         dispatch(movieImagesSuccess(json))
       }, (error) => {
         dispatch(movieImagesFail());
+        console.log(error);
+      });
+  }
+}
+
+export function fetchMovieCredits(id) {
+  return (dispatch) => {
+    dispatch(movieCreditsRequest());
+    return fetch(urlCredits1 + id + urlCredits2)
+      .then((initialResponse) => {
+        if (initialResponse.ok) {
+          return initialResponse.json();
+        } else {
+          dispatch(movieCreditsFail());
+        }
+      })
+      .then((json) => {
+        dispatch(movieCreditsSuccess(json))
+      }, (error) => {
+        dispatch(movieCreditsFail());
         console.log(error);
       });
   }

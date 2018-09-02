@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+//import '../App.css';
 import {
   addGenres, clearGenres,
   saveSearchQuery, clearSearchQuery,
@@ -7,9 +7,9 @@ import {
   fetchGenredMovies, fetchSearchedMovies, fetchPopularMovies, fetchSortedMovies, fetchSettings,
   fetchMovieDetails,
   fetchMovieImages,
+  fetchMovieCredits,
   clearImages
 } from '../Redux/actions';
-//import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MovieList from '../Components/MovieList';
 import MovieInfo from '../Containers/MovieInfo';
@@ -17,7 +17,11 @@ import Gallery from '../Components/Gallery';
 import Sidebar from './Sidebar';
 import Header from '../Components/Header';
 import Pagination from '../Components/Pagination';
+import Favorites from '../Components/Favorites';
+import Crew from '../Components/Crew';
+import Cast from '../Components/Cast';
 
+//import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 // const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 // const apiAddress = 'https://api.themoviedb.org/3';
 // const moviesToShowDefault = '/movie/popular?page=';
@@ -525,14 +529,34 @@ class App extends Component {
     }
   }
 
+  getContentPosition(){
+    //console.log(window.getComputedStyle(document.querySelector('#root')).getPropertyValue('width'));
+    // if (document.querySelector('.App__wrapper-movies')) {
+    //   const widthTablet = 800;
+    //   const widthDesktop = 1300;
+    //   let content = document.querySelector('.App__wrapper-movies');
+    //   let appWidth = document.querySelector('.App').offsetWidth;
+    //   let headerHeight = document.querySelector('.Header').offsetHeight;
+    //   console.log(headerHeight);
+    //   content.style.paddingTop = '"' + headerHeight + 'px"';
+    // }
+  }
+
+  // setContentOffset(e){
+  //   console.log(e.target);
+  // }
+
   componentDidMount() {
+    //this.getContentPosition();
+    //window.addEventListener('resize', this.getContentPosition);
+    //window.addEventListener('resize', this.setContentOffset);
     if (this.props.filmId === 'error') {
-      //console.log('wrong id');
+      console.log('wrong id');
       this.props.history.push('/');
     }
 
     if (Number.isNaN(this.props.page)) {
-      //console.log('wrong page', this.props.page);
+      console.log('wrong page', this.props.page);
       this.props.history.push('/');
     }
     //load settings (MUST)
@@ -540,16 +564,15 @@ class App extends Component {
     //load initial data
     if (this.props.filmId) {
       //this.props.clearGenres();
-      if (!this.props.gallery) {
-        this.props.fetchMovieDetails(this.props.filmId);
-        if (this.props.imageIndex) {
-          //console.log('imageFromMoviePage');
-        }
-      } else {
+      if (this.props.gallery) {
         this.props.fetchMovieImages(this.props.filmId);
-        if (this.props.imageIndex) {
-          //console.log('imageFromGallery');
-        }
+      }
+      else if (this.props.crewPage || this.props.castPage) {
+        this.props.fetchMovieCredits(this.props.filmId);
+      }
+      else {
+        this.props.fetchMovieDetails(this.props.filmId);
+        //this.props.fetchMovieImages(this.props.filmId);
       }
     } else {
       if (this.props.genresSelected.length > 0) {
@@ -566,9 +589,10 @@ class App extends Component {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
       }
       else {
+        //console.log('favs');
         if (this.props.sortValue && this.props.sortDir){
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
-        } else {
+        }  else {
           this.props.fetchPopularMovies(this.props.page);
         }
       }
@@ -577,27 +601,24 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     //console.log('imageToShow');
-    if (this.props.filmId) {
-      //this.props.clearGenres();
-
-      if (this.props.filmId !== prevProps.filmId || ((this.props.filmId === prevProps.filmId) && this.props.gallery !== prevProps.gallery)){
-        this.props.fetchMovieDetails(this.props.filmId);
-        //this.props.clearImages();
-      } else if (this.props.filmId === prevProps.filmId) {
-        if (this.props.imageIndex) {
-          //console.log('imageToShow');
-          if ((this.props.imageIndex !== prevProps.imageIndex) && !this.props.gallery) {
-            ////console.log(this.props.imageIndex);
-            //console.log(this.props.imageToShow);
-          } else if ((this.props.imageIndex !== prevProps.imageIndex) && this.props.gallery) {
-            ////console.log('imageFromGallery');
-          }
-        }
-      }
-    }
-    else if (this.props.favorites !== prevProps.favorites) {
+    if (this.props.favorites !== prevProps.favorites) {
+      //console.log('favs updated');
       localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
     }
+    if (this.props.filmId) {
+      //this.props.clearGenres();
+      if (this.props.filmId !== prevProps.filmId ||
+        ((this.props.filmId === prevProps.filmId) && this.props.gallery !== prevProps.gallery) ||
+        ((this.props.filmId === prevProps.filmId) && this.props.crewPage !== prevProps.crewPage) ||
+        ((this.props.filmId === prevProps.filmId) && this.props.castPage !== prevProps.castPage)){
+
+        this.props.fetchMovieDetails(this.props.filmId);
+        //this.props.clearImages();
+      }
+    }
+    // else if (this.props.favorites !== prevProps.favorites) {
+    //   localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+    // }
     else if (this.props.searchQuery !== prevProps.searchQuery) {
       if (this.props.searchQuery) {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
@@ -620,9 +641,10 @@ class App extends Component {
         this.props.fetchPopularMovies(this.props.page);
       }
     }
-    else if (this.props.genresSelected !== prevProps.genresSelected) {
-      //console.log('genres update');
+    else if (this.props.genresSelected !== prevProps.genresSelected && this.props.favorites === prevProps.favorites) {
+      //console.log('genres changed');
       if (this.props.searchQuery !== prevProps.searchQuery){
+        //console.log('search changed');
         if (this.props.genresSelected.length === 0) {
           if (this.props.searchQuery) {
             this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
@@ -632,17 +654,21 @@ class App extends Component {
         } else {
           this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
         }
-      } else {
-        if (this.props.sortValue && this.props.sortDir) {
-          if (this.props.genresSelected.length > 0) {
-            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
-          } else {
-            this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
-          }
+      }
+      else if (this.props.sortValue && this.props.sortDir) {
+        //console.log('sort changed');
+        if (this.props.genresSelected.length > 0) {
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir, this.props.genresSelected);
         } else {
-          this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+          this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
         }
       }
+
+      else {
+        //console.log('smthng changed');
+        this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
+      }
+
     }
     else if (this.props.page !== prevProps.page) {
       if (this.props.genresSelected.length > 0 ) {
@@ -664,22 +690,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {!this.props.filmId &&
+        {!this.props.filmId && !this.props.favsPage &&
           <div className="App__moviesearch">
-            <Header history={this.props.history} searchQuery={this.props.searchQuery}/>
-            <div className="App__wrapper">
-                <Sidebar
-                  history={this.props.history}
-                  genresSelected={this.props.genresSelected}
-                  searchQuery={this.props.searchQuery}
-                  goHome={this.props.goHome}
-                  sortValue={this.props.sortValue}
-                  sortDir={this.props.sortDir}
-                />
+            <Header history={this.props.history}
+                    searchQuery={this.props.searchQuery}
+                    genresSelected={this.props.genresSelected}
+                    goHome={this.props.goHome}
+                    sortValue={this.props.sortValue}
+                    sortDir={this.props.sortDir}
+            />
+            <div className="container container--movielist">
               {this.props.loadingMovies && <div>Loading...</div>}
               {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
               {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length && this.props.favorites &&
-                <div className="App__wrapper-movies" style={{paddingLeft: 200}}>
+                <div className="App__wrapper-movies" >
                   <MovieList movieList={this.props.movieList} settings={this.props.settings.images} favorites={this.props.favorites}/>
                   <Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>
                 </div>
@@ -687,11 +711,10 @@ class App extends Component {
             </div>
           </div>
         }
-        {this.props.filmId && !this.props.gallery &&
+        {this.props.filmId && !this.props.gallery && !this.props.crewPage && !this.props.castPage &&
           <div className="App__movieread">
             <Header filmId={this.props.filmId}/>
-            <div className="App__wrapper">
-              <Sidebar disable={true}/>
+            <div className="container container--movieinfo">
               {this.props.loadingMovieDetails && <div>Loading...</div>}
               {this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}
               {!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length && this.props.favorites &&
@@ -703,17 +726,56 @@ class App extends Component {
             </div>
           </div>
         }
-        {this.props.filmId && this.props.gallery &&
+        {this.props.filmId && this.props.gallery && !this.props.crewPage && !this.props.castPage &&
           <div className="App__movieread">
             <Header filmId={this.props.filmId} toMovie={true}/>
-            <div className="App__wrapper">
-              <Sidebar disable={true}/>
+            <div className="container container--movieinfo">
               {this.props.loadingMovieImages && <div>Loading gallery...</div>}
               {this.props.movieImagesError && !this.props.loadingMovieImages && <div>GALLERY ERROR!</div>}
               {!this.props.loadingMovieImages && !this.props.movieImagesError && this.props.movieImages && Object.keys(this.props.settings).length &&
                 <div className="App__wrapper-movies">
                   <Gallery filmId={this.props.filmId} movieImages={this.props.movieImages} settings={this.props.settings.images}
                   imageIndex={this.props.imageIndex} history={this.props.history}/>
+                </div>
+              }
+            </div>
+          </div>
+        }
+        {this.props.filmId && !this.props.gallery && this.props.crewPage && !this.props.castPage &&
+          <div className="App__movieread">
+            <Header filmId={this.props.filmId} toMovie={true}/>
+            <div className="container container--movieinfo">
+              {this.props.loadingMovieCredits && <div>Loading crew list...</div>}
+              {this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CREW ERROR!</div>}
+              {!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&
+                <div className="App__wrapper-movies">
+                  <Crew crew={this.props.movieCredits.crew}/>
+                </div>
+              }
+            </div>
+          </div>
+        }
+        {this.props.filmId && !this.props.gallery && !this.props.crewPage && this.props.castPage &&
+          <div className="App__movieread">
+            <Header filmId={this.props.filmId} toMovie={true}/>
+            <div className="container container--movieinfo">
+              {this.props.loadingMovieCredits && <div>Loading gallery...</div>}
+              {this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CAST ERROR!</div>}
+              {!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&
+                <div className="App__wrapper-movies">
+                  <Cast cast={this.props.movieCredits.cast}/>
+                </div>
+              }
+            </div>
+          </div>
+        }
+        {this.props.favsPage &&
+          <div className="App__movieread">
+            <Header filmId={this.props.filmId} toFavs={true}/>
+            <div className="container container--movieinfo">
+              {this.props.favorites && Object.keys(this.props.settings).length &&
+                <div className="App__wrapper-movies">
+                  <Favorites settings={this.props.settings} favorites={this.props.favorites} favsPage={this.props.favsPage}/>
                 </div>
               }
             </div>
@@ -741,6 +803,9 @@ const mapStateToProps = (state, ownProps) => {
     loadingMovieImages: state.loadingMovieImages,
     movieImagesError: state.movieImagesError,
     movieImages: state.movieImages,
+    loadingMovieCredits: state.loadingMovieCredits,
+    movieCreditsError: state.movieCreditsError,
+    movieCredits: state.movieCredits,
     favorites: state.favorites,
     imageIndex: ownProps.imageIndex
   }
@@ -755,6 +820,7 @@ const mapDispatchToProps = {
   loadSettingsFromCookie,
   fetchMovieDetails,
   fetchMovieImages,
+  fetchMovieCredits,
   addGenres,
   clearGenres,
   saveSearchQuery,

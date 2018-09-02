@@ -4,26 +4,36 @@ import { addFavorite, removeFavorite } from '../Redux/actions';
 
 
 class FaveBtn extends Component {
-  componentDidMount(){
-    //console.log(this.props.isFav);
-  }
   clickHandler(e){
-    //e.preventDefault();
-    if (!this.props.isFav){
-      this.props.addFavorite(this.props.id);
+    if (!this.props.isFav) {
+      //console.log('add fav');
+      this.props.addFavorite ({
+        id: this.props.id,
+        title: this.props.name,
+        poster_path: this.props.poster
+      });
     } else {
+      //console.log('remove fav');
       this.props.removeFavorite(this.props.id);
     }
-    //console.log(this.props.id);
   }
   render(){
+    //<img src="../star.svg"/>
+    //<img src="../star_active.svg"/>
+
+    //<div className={this.props.isFav ? 'FaveBtn FaveBtn--active' : 'FaveBtn'}>
+    //this.props.onMovie ?
     return(
-      <div className="FaveBtn">
-        <button onClick={(e) => {this.clickHandler(e)}}>ADD TO FAVORITES</button>
-        <span>
-          {!this.props.isFav && 'not favorite'}
-          {this.props.isFav && 'favorite'}
-        </span>
+      <div className={this.props.isFav ? this.props.moviePage ? 'FaveBtn__moviePage FaveBtn__moviePage--active' : 'FaveBtn FaveBtn--active'
+                      : this.props.moviePage ? 'FaveBtn__moviePage' : 'FaveBtn'}>
+        <button className='FaveBtn__button' onClick={(e) => {this.clickHandler(e)}}>
+          {!this.props.isFav &&
+            <img src="http://localhost:3000/star.svg"/>
+          }
+          {this.props.isFav &&
+            <img src="http://localhost:3000/star_active.svg"/>
+          }
+        </button>
       </div>
     );
   }

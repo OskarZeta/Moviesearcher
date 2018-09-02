@@ -3,24 +3,22 @@ import { Link } from 'react-router-dom';
 import ImageShow from '../Components/ImageShow';
 
 class Gallery extends Component {
-  componentDidMount() {
-    if (this.props.imageIndex) {
-      //console.log('image to show from gallery on mount');
-    }
-  }
-  componentDidUpdate() {
-    if (this.props.imageIndex) {
-      //console.log('image to show from gallery on change');
-    }
-  }
-  loadImages() {
+    loadImages() {
     if (this.props.movieImages) {
       let images = this.props.movieImages.backdrops;
       return images.map((image, index) => {
-        let path = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
+        let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
+        let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
+        let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + image.file_path;
+        //let path = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
+        //<img src={path} alt="movie-poster"/>
         return(
           <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.filmId}/images/${index+1}`}>
-            <img src={path} alt="movie-poster"/>
+            <picture>
+              <source srcSet={addressDesktop} media="(min-width: 1300px)" />
+              <source srcSet={addressTablet} media="(min-width: 800px)" />
+              <img src={addressMobile} alt="movie-poster"/>
+            </picture>
           </Link>
         );
       });

@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import '../css/style.css';
 import App from './App';
 
 class Root extends Component {
+  checkId(id){
+    if (isNaN(id)) {
+      return 'error';
+    } else {
+      return id;
+    }
+  }
   render() {
     return(
     <BrowserRouter>
@@ -14,7 +22,13 @@ class Root extends Component {
           );
         }}>
         </Route>
-
+        <Route path='/favorites' render={(routerProps) => {
+          //console.log('favorites');
+          return(
+            <App page={this.props.page} history={routerProps.history} favorites={this.props.favorites} favsPage={true}/>
+          );
+        }}>
+        </Route>
         <Route path='/sort_by/:sortValue.:sortDir/genres=:genres/:page' render={(routerProps) => {
           let selected = routerProps.match.params.genres.split(',');
           selected = selected.map((id) => {
@@ -35,7 +49,6 @@ class Root extends Component {
           );
         }}>
         </Route>
-
         <Route path='/sort_by/:sortValue.:sortDir/:page' render={(routerProps) => {
           return(
             <App page={+routerProps.match.params.page} history={routerProps.history} sortValue={routerProps.match.params.sortValue} sortDir={routerProps.match.params.sortDir} favorites={this.props.favorites}/>
@@ -48,8 +61,6 @@ class Root extends Component {
           );
         }}>
         </Route>
-
-
         <Route path='/genres=:genres/:page' render={(routerProps) => {
           let selected = routerProps.match.params.genres.split(',');
           selected = selected.map((id) => {
@@ -71,66 +82,50 @@ class Root extends Component {
         }}>
         </Route>
         <Route path='/search=:query/:page' render={(routerProps) => {
-          //console.log('search/page');
           return(
             <App page={+routerProps.match.params.page} history={routerProps.history} searchQuery={routerProps.match.params.query} goHome={false} favorites={this.props.favorites}/>
           );
         }}>
         </Route>
         <Route path='/search=:query' render={(routerProps) => {
-          //console.log('search');
           return(
             <App page={this.props.page} history={routerProps.history} searchQuery={routerProps.match.params.query} goHome={false} favorites={this.props.favorites}/>
           );
         }}>
         </Route>
         <Route exact path='/filmId/:id' render={(routerProps) => {
-          //console.log('movie page');
-          let id;
-          if (isNaN(+routerProps.match.params.id)) {
-            id = 'error';
-          } else {
-            id = +routerProps.match.params.id;
-          }
           return(
-            <App filmId={id} history={routerProps.history} favorites={this.props.favorites} />
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} favorites={this.props.favorites} />
+          );
+        }}>
+        </Route>
+        <Route exact path='/filmId/:id/crew' render={(routerProps) => {
+          return(
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} crewPage={true}/>
+          );
+        }}>
+        </Route>
+        <Route exact path='/filmId/:id/cast' render={(routerProps) => {
+          return(
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} castPage={true}/>
           );
         }}>
         </Route>
         <Route exact path='/filmId/:id/image=:image' render={(routerProps) => {
-          //console.log('image from movie page');
-          let id;
-          if (isNaN(+routerProps.match.params.id)) {
-            id = 'error';
-          } else {
-            id = +routerProps.match.params.id;
-          }
           return(
-            <App filmId={id} history={routerProps.history} favorites={this.props.favorites} imageIndex={+routerProps.match.params.image}/>
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} favorites={this.props.favorites} imageIndex={+routerProps.match.params.image}/>
           );
         }}>
         </Route>
         <Route exact path='/filmId/:id/images' render={(routerProps) => {
-          let id;
-          if (isNaN(+routerProps.match.params.id)) {
-            id = 'error';
-          } else {
-            id = +routerProps.match.params.id;
-          }
           return(
-            <App filmId={id} history={routerProps.history} gallery={true}/>
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} gallery={true}/>
           );
         }}>
         </Route>
         <Route exact path='/filmId/:id/images/:image' render={(routerProps) => {
-          let id;
-          if (isNaN(+routerProps.match.params.id)) {
-            id = 'error';
-          } else {
-            id = +routerProps.match.params.id;
-          }
           return(
-            <App filmId={id} history={routerProps.history} gallery={true} imageIndex={+routerProps.match.params.image}/>
+            <App filmId={this.checkId(+routerProps.match.params.id)} history={routerProps.history} gallery={true} imageIndex={+routerProps.match.params.image}/>
           );
         }}>
         </Route>

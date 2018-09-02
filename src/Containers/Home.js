@@ -14,7 +14,7 @@ class Home extends Component {
   render(){
     return (
       <Link to="/" onClick={() => {this.clickHandler()}}>
-        <h1>Moviesearcher</h1>
+        <h1>Moviesearcher App</h1>
       </Link>
     );
   }

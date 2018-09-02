@@ -8,29 +8,17 @@ body{
   min-width: 300px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.container {
+  min-width: 320px;
+  width: 320px;
+  padding: 10px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .Header{
@@ -38,11 +26,9 @@ body{
   position: fixed;
   width: 100%;
   z-index: 10;
-  //padding: 10px;
 }
 .Header h1{
   margin: 0;
-  padding: 0 10px;
   border-bottom: 4px solid #9d5bc3;
 }
 .Header a{
@@ -50,19 +36,31 @@ body{
 }
 .Header__additional{
   display: flex;
+  flex-direction: column;
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-.Options{
+.Header__back{
+  width: 180px;
+  padding: 10px;
+}
+.Header__favorites{
+  width: 180px;
+  padding: 10px;
+}
+.Header__options{
   width: 180px;
   min-width: 180px;
   padding: 10px;
 }
+
 .Favorites{
-  width: 180px;
-  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
+
 .Search{
   flex-grow: 2;
   margin: 10px 10px 0 10px;
@@ -84,7 +82,6 @@ body{
   flex-direction: column;
 }
 .Sidebar{
-  /*min-width: 200px;*/
   background-color: #c167eb;
   position: fixed;
   //min-height: 700px;
@@ -119,16 +116,7 @@ body{
 .Genre__name{
   margin-left: 10px;
 }
-.Container{
-  display: flex;
-  flex-direction: column;
-  //flex-wrap: wrap;
-}
-.Container__movies{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+
 .Movies__wrapper{
   display: flex;
   flex-wrap: wrap;
@@ -139,9 +127,8 @@ body{
   flex-direction: column;
   margin: 10px auto;
   padding: 4px;
-  //border: 1px solid blue;
   background-color: white;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.75);
   border-radius: 5px;
 }
 .Movie{
@@ -228,7 +215,7 @@ body{
   position: relative;
   //flex-grow: 2;
 }
-.MovieInfo__gallery-link{
+.MovieInfo__show-link{
   position: absolute;
   right: 0;
   bottom: 100%;
@@ -244,7 +231,6 @@ body{
 }
 .MovieInfo__votebox{
   position: absolute;
-  //left: 10px;
   width: 40px;
   height: 40px;
   box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.75);
@@ -281,6 +267,27 @@ body{
   text-decoration: none;
   margin-right: 5px;
 }
+.MovieInfo__info--credits{
+  background-color: #fafafa;
+}
+.MovieInfo__person{
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+.MovieInfo__person:nth-child(odd){
+  background-color: #f5f5f5;
+}
+.MovieInfo__person:nth-child(even){
+  background-color: white;
+}
+.MovieInfo__person-name{
+  text-align: left;
+}
+.MovieInfo__person-character{
+  text-align: right;
+}
+
 .Gallery{
 
 }
@@ -297,6 +304,13 @@ body{
 .Gallery__wrapper a{
   margin: 0 auto 10px auto;
 }
+.Crew__wrapper, .Cast__wrapper{
+  list-style-type: none;
+  min-width: 300px;
+  width: 300px;
+  padding: 10px 20px;
+  margin: 0 auto;
+}
 .ImageShow {
   position: fixed;
   z-index: 6;
@@ -307,6 +321,7 @@ body{
 .hidden {
   display: none;
 }
+
 
 @media (min-width: 800px) {
   .Movie {
@@ -346,6 +361,12 @@ body{
   .Gallery__wrapper{
     width: 780px;
   }
+  .Crew__wrapper, .Cast__wrapper{
+    width: 780px;
+  }
+  .container {
+    width: 780px;
+  }
 }
 @media (min-width: 1300px) {
   .Movie {
@@ -367,6 +388,12 @@ body{
     font-size: 28px;
   }
   .Gallery__wrapper{
+    width: 1280px;
+  }
+  .Crew__wrapper, .Cast__wrapper{
+    width: 1280px;
+  }
+  .container {
     width: 1280px;
   }
 }
