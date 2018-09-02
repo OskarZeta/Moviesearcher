@@ -1,0 +1,168 @@
+.MovieInfo{
+  display: flex;
+  justify-content: center;
+}
+.MovieInfo__wrapper{
+  background-color: white;
+  position: relative;
+}
+.MovieInfo__title{
+  margin: 10px 0;
+  font-size: 20px;
+}
+.MovieInfo__section-header{
+  display: block;
+  text-align: left;
+  margin: 10px 20px;
+  color: grey;
+  font-style: italic;
+}
+.MovieInfo__description-wrapper{
+
+}
+.MovieInfo__info{
+  //margin: 0 20px;
+  margin: 0 10px;
+  padding: 10px;
+  text-align: left;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-top-left-radius: 10px;
+  position: relative;
+  //flex-grow: 2;
+}
+.MovieInfo__info--gallery{
+  margin: 0;
+  border-left: none;
+  border-bottom: 1px solid grey;
+  border-top-left-radius: 0;
+  padding: 5px 0;
+}
+.MovieInfo__show-link{
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: 10px;
+}
+.MovieInfo__images-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.MovieInfo__image-preview{
+  display: flex;
+  align-items: center;
+  width: 49%;
+  margin-top: 5px;
+}
+.MovieInfo__image-preview:nth-child(1), .MovieInfo__image-preview:nth-child(2){
+  margin-top: 0;
+}
+.MovieInfo__image-preview img{
+  width: 100%;
+}
+.MovieInfo__poster-wrapper{
+  position: relative;
+}
+.MovieInfo__votebox{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.75);
+  border-bottom-right-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.MovieInfo__votebox-1{
+  font-size: 20px;
+  font-weight: bold;
+}
+.MovieInfo__votebox-2{
+  font-size: 16px;
+}
+.MovieInfo__backdrop{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.MovieInfo__vote-wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.MovieInfo__vote-wrapper p{
+  border: none;
+  border-radius: 0;
+}
+.MovieInfo__vote-wrapper > div{
+  display: flex;
+  justify-content: space-between;
+}
+.MovieInfo__genre-href{
+  text-decoration: none;
+  margin-right: 5px;
+}
+.MovieInfo__info--credits{
+  background-color: #fafafa;
+}
+.MovieInfo__person{
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+.MovieInfo__person:nth-child(odd){
+  background-color: #f5f5f5;
+}
+.MovieInfo__person:nth-child(even){
+  background-color: white;
+}
+.MovieInfo__person-name{
+  text-align: left;
+  margin-right: 20px;
+}
+.MovieInfo__person-character{
+  text-align: right;
+}
+@media (min-width: 800px) {
+  .MovieInfo__wrapper{
+
+  }
+  .MovieInfo__title{
+    font-size: 38px;
+    position: relative;
+    z-index: 2;
+  }
+  .MovieInfo__images-wrapper{
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .MovieInfo__image-preview{
+    justify-content: center;
+    width: 25%;
+  }
+  .MovieInfo__votebox{
+    width: 60px;
+    height: 60px;
+    left: 0;
+  }
+  .MovieInfo__votebox-1{
+    font-size: 32px;
+    font-weight: bold;
+  }
+  .MovieInfo__votebox-2{
+    font-size: 20px;
+  }
+  .MovieInfo__backdrop{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+  .MovieInfo__vote-wrapper{
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .MovieInfo__vote-wrapper p{
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-top-left-radius: 10px;
+  }
+}

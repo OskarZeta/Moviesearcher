@@ -1,0 +1,21 @@
+@import "blocks/App.css";
+@import "blocks/container.css";
+@import "blocks/Header.css";
+@import "blocks/Sidebar.css";
+@import "blocks/Movie.css";
+@import "blocks/FaveBtn.css";
+@import "blocks/Pagination.css";
+@import "blocks/MovieInfo.css";
+@import "blocks/Gallery.css";
+@import "blocks/ImageShow.css";
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Times New Roman', Times, serif;
+  //overflow: hidden;
+}
+
+a:visited{
+  color: inherit;
+}

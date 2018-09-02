@@ -1,0 +1,210 @@
+.Sidebar{
+  background-color: #c167eb;
+  //position: absolute;
+  //left: 0;
+  //top: calc(100% + 10px);
+  width: 100%;
+  //height: 100%;
+}
+.Sidebar__wrapper{
+  display: flex;
+  flex-direction: column;
+  //min-width: 200px;
+  //height: 760px;
+  //overflow-y: scroll;
+  //background-color: #c167eb;
+}
+
+.Sidebar__header{
+  font-size: 16px;
+  margin: 0;
+  text-align: left;
+  //border-bottom: 1px solid #693b82;
+}
+.Sidebar__header-text{
+  padding-left: 5px;
+  font-style: italic;
+}
+.Sidebar__genreList-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  //justify-content: space-between;
+}
+.Sidebar__genre-label{
+  display: flex;
+  width: 33%;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.Sidebar__genre-label:hover{
+  background-color: #b768e1;
+}
+.Sidebar__genre-checkbox{
+
+}
+.Sidebar__genre-input{
+  display: none;
+}
+.Sidebar__genre-custom{
+  box-sizing: border-box;
+  display: block;
+  width: 10px;
+  height: 10px;
+  //background-color: #E2DDFF;
+  border: 1px solid #E2DDFF;
+  background-color: #cfcaeb;
+  margin: 3px 5px;
+}
+.Sidebar__genre-input:checked + .Sidebar__genre-custom{
+  border: 1px solid #E2DDFF;
+  background-color: #6f3b9b;
+}
+.Sidebar__genre-name{
+  font-size: 12px;
+}
+.Sidebar__sort-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+}
+.Sidebar__sort-label{
+  width: 16%;
+  display: flex;
+  flex-direction: column;
+  background-color: #b461dc;
+  border-radius: 8px;
+  margin: 0 auto;
+  padding: 3px;
+  cursor: pointer;
+  transition: 0.3s;
+  //position: relative;
+}
+.Sidebar__sort-label:hover{
+  background-color: #a062c8;
+}
+.Sidebar__sort-label--active{
+  background-color: #a062c8;
+}
+.Sidebar__sort-radiobtn{
+  order: 2;
+}
+.Sidebar__sort-wrapper--direction .Sidebar__sort-label{
+  width: 30%;
+}
+.Sidebar__sort-input{
+  //order: 2;
+  //opacity: 0;
+  display: none;
+  //width: 100%;
+  //align-self: center;
+  //position: absolute;
+  //top: 100%;
+  //left: calc(50% - 12px);
+}
+.Sidebar__sort-custom{
+  box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
+  //width: 80%;
+  width: 40px;
+  height: 12px;
+  background-color: #e2ddff;
+  border: 3px solid #6f3b9b;
+  border-top: none;
+  border-left: none;
+  border-top-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  //border-radius: 1px;
+}
+.Sidebar__sort-input:checked + .Sidebar__sort-custom{
+  //background-color: #7bfffd;
+  background: linear-gradient(to bottom, #D3FFFD, #00ffff);
+  border: 1px solid #6f3b9b;
+  border-radius: 0;
+  //border-bottom: none;
+  //border-right: none;
+}
+.Sidebar__sort-name{
+  font-size: 12px;
+  flex-grow: 2;
+  order: 1;
+  margin-bottom: 2px;
+}
+.Sidebar__checkboxes{
+  //display: flex;
+  //flex-direction: column;
+  //margin-top: 30px;
+}
+
+
+.Sidebar__wrapper--hidden{
+  display: none;
+}
+.Sidebar__sort-params{
+
+}
+.Sidebar__sort-params label{
+  display: flex;
+}
+@media (min-width: 800px) {
+  .Sidebar{
+
+  }
+  .Sidebar__wrapper{
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+  }
+  .Sidebar__header{
+    margin: 5px 0;
+  }
+  .Sidebar__header-text{
+    font-size: 18px;
+  }
+  .Sidebar__genreList-wrapper{
+    margin: 0 10px;
+  }
+  .Sidebar__genre-label{
+    width: 120px;
+    margin-right: 30px;
+  }
+  .Sidebar__genre-name{
+    font-size: 16px;
+  }
+  .Sidebar__sort-wrapper{
+    margin-left: 10px;
+  }
+  .Sidebar__sort-name{
+    font-size: 14px;
+  }
+  .Sidebar__sort{
+    display: flex;
+    flex-direction: column;
+  }
+  .Sidebar__sort:last-child{
+    flex-grow: 2;
+    margin-left: 40px;
+  }
+  .Sidebar__sort-params{
+    display: flex;
+    width: 100%;
+  }
+  .Sidebar__sort-label{
+    width: 90px;
+    margin: 0 5px 0 0;
+    border-radius: 4px;
+    padding-bottom: 7px;
+  }
+  .Sidebar__sort-label:first-child{
+    //margin-left: 5px;
+  }
+  .Sidebar__sort-wrapper--direction{
+    justify-content: space-between;
+    margin-right: 10px;
+    //align-self: stretch;
+    flex-grow: 2;
+  }
+  .Sidebar__sort-wrapper--direction .Sidebar__sort-label{
+    width: 90px;
+  }
+}
