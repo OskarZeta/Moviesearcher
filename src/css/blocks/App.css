@@ -1,6 +1,9 @@
+#root {
+  //width: 100%;
+}
+
 .App {
-  text-align: center;
-  min-width: 320px;
+  //text-align: center;
 }
 
 @keyframes App-logo-spin {
@@ -9,36 +12,37 @@
 }
 
 .Favorites{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  //width: 100%;
+  //display: flex;
+  //flex-wrap: wrap;
 }
 
-.App__wrapper, .App__wrapper-movies{
-  display: flex;
+/*.App__wrapper, .App__wrapper-movies{*/
+.App__wrapper-movies{
+  //display: flex;
+  //box-sizing: border-box;
 }
 .App__wrapper{
-  background-color: #f8f4ff;
-  padding-top: 78px;
+  //background-color: #f8f4ff;
+  //padding-top: 78px;
+  width: 100%;
 }
 .App__wrapper-movies{
-  flex-grow: 2;
-  flex-direction: column;
-
+  //flex-grow: 2;
+  //flex-direction: column;
 }
 .App__content{
   display: flex;
-  flex-grow: 2;
+  //flex-grow: 2;
   flex-direction: row;
   flex-wrap: wrap;
-  //height: 60vh;
-  //overflow-y: scroll;
 }
 
 .App__credits{
   margin: 10px 0;
   padding: 0;
 }
+
 /*.Movies__wrapper{*/
   /*display: flex;*/
   /*flex-wrap: wrap;*/
@@ -75,10 +79,10 @@
 }
 @media (min-width: 1300px) {
   .Movie {
-    width: 350px;
+    //width: 350px;
   }
   .MovieInfo__wrapper{
-    width: 1280px;
+    //width: 1280px;
   }
   .MovieInfo__votebox{
     width: 70px;
@@ -93,12 +97,12 @@
     font-size: 28px;
   }
   .Gallery__wrapper{
-    width: 1280px;
+    //width: 1280px;
   }
   .Crew__wrapper, .Cast__wrapper{
-    width: 1280px;
+    //width: 1280px;
   }
   .container {
-    width: 1280px;
+    //width: 1280px;
   }
 }

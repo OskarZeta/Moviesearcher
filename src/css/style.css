@@ -8,6 +8,7 @@
 @import "blocks/MovieInfo.css";
 @import "blocks/Gallery.css";
 @import "blocks/ImageShow.css";
+@import "blocks/Spinner.css";
 
 body{
   margin: 0;
@@ -18,4 +19,8 @@ body{
 
 a:visited{
   color: inherit;
+}
+
+.empty{
+  //height: calc(100% - 123px);
 }

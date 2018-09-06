@@ -24,16 +24,17 @@ class Header extends Component {
   }
   render() {
     //console.log(this.props.toFavs);
+    //"Header__sidebar hidden"
     return (
       <header className="Header">
         <div className="container container--header">
           <Home/>
           {!this.props.filmId && !this.props.toFavs &&
             <ul className="Header__additional">
-              <li className="Header__options" onClick={(e) => {this.clickOptions(e)}}>
+              <li className={`Header__options ${(this.props.genresSelected.length === 0 && !this.props.sortValue) ? `` : `Header__btn-active`}`} onClick={(e) => {this.clickOptions(e)}}>
                 <span>Options</span>
               </li>
-              <li className="Header__sidebar hidden">
+              <li className={`Header__sidebar ${(this.props.genresSelected.length === 0 && !this.props.sortValue) ? `hidden` : ``}`}>
                 <Sidebar
                   history={this.props.history}
                   genresSelected={this.props.genresSelected}

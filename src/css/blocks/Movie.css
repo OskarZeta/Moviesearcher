@@ -29,16 +29,14 @@
   margin-bottom: 0;
 }
 .Movie__preview .Movie__link img{
-  //height: 200px;
+
 }
 .Movie__preview-header{
   font-size: 12px;
   text-align: center;
   margin: 5px;
 }
-/*.Movie a h2{*/
-  /*text-decoration: none;*/
-/*}*/
+
 .Movie a, .Movie__preview a{
   box-sizing: border-box;
   display: flex;
@@ -60,6 +58,27 @@
 .Movie__preview a:hover{
   border-radius: 5px;
 }
+.Movie__placeholder-mobile, .Movie__placeholder-tablet, .Movie__placeholder-desktop, .Movie__placeholder-tablet--desktop{
+  background: url("http://localhost:3000/placeholder-image.png") center;
+  background-size: cover;
+  margin-bottom: 4px;
+}
+
+.Movie__placeholder-mobile{
+  width: 92px;
+  height: 138px;
+  display: block;
+}
+.Movie__placeholder-tablet, .Movie__placeholder-tablet--desktop{
+  width: 154px;
+  height: 231px;
+  display: none;
+}
+.Movie__placeholder-desktop{
+  width: 342px;
+  height: 514px;
+  display: none;
+}
 @media (min-width: 800px) {
   .Movie {
     width: 163px;
@@ -67,12 +86,48 @@
   .Movie__preview{
     width: 163px;
   }
+  .Movie__preview-header{
+    font-size: 16px;
+    text-align: center;
+    margin: 5px;
+  }
+  .Movie__placeholder-mobile{
+    display: none;
+  }
+  .Movie__placeholder-tablet{
+    display: block;
+  }
+  .Movie__placeholder-desktop{
+    display: none;
+  }
 }
 @media (min-width: 1300px) {
   .Movie {
     width: 351px;
+    margin: 20px auto;
   }
   .Movie__preview{
 
+  }
+  .Movie__preview-header{
+    font-size: 20px;
+  }
+  .Movie__header{
+    font-size: 24px;
+  }
+  .Movie__link{
+    margin-bottom: 49px;
+  }
+  .Movie__placeholder-mobile{
+    display: none;
+  }
+  .Movie__placeholder-tablet{
+    display: none;
+  }
+  .Movie__placeholder-tablet--desktop{
+    display: block;
+  }
+  .Movie__placeholder-desktop{
+    display: block;
   }
 }

@@ -1,11 +1,10 @@
 .Pagination{
   display: flex;
   justify-content: center;
+  text-align: center;
   margin-top: 10px;
-  //background: linear-gradient(135deg, rgb(255, 255, 255) 10%, #c26bff 50%, rgb(255, 255, 255) 90%);
 }
 .Pagination__prev, .Pagination__next{
-  //padding: 10px;
   display: block;
   cursor: pointer;
   text-decoration: none;
@@ -27,7 +26,6 @@
   background-color: #d981ff;
   border: 1px solid #6d4991;
 }
-
 .Pagination__prev span, .Pagination__next span{
   text-transform: uppercase;
   font-weight: bold;
@@ -53,4 +51,15 @@
   background-color: #d981ff;
   border: 1px solid #6d4991;
   border-bottom-left-radius: 0;
+}
+@media (min-width: 1300px) {
+  .Pagination__prev, .Pagination__next{
+    width: 130px;
+  }
+  .Pagination__prev{
+    margin-right: 100px;
+  }
+  .Pagination__prev span, .Pagination__next span{
+    font-size: 26px;
+  }
 }

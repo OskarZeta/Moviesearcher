@@ -13,7 +13,7 @@ class Home extends Component {
   }
   render(){
     return (
-      <Link to="/" onClick={() => {this.clickHandler()}}>
+      <Link className="Header__home" to="/" onClick={() => {this.clickHandler()}}>
         <h1>Moviesearcher App</h1>
       </Link>
     );

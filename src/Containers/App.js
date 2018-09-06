@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import '../App.css';
 import {
   addGenres, clearGenres,
   saveSearchQuery, clearSearchQuery,
@@ -14,7 +13,7 @@ import { connect } from 'react-redux';
 import MovieList from '../Components/MovieList';
 import MovieInfo from '../Containers/MovieInfo';
 import Gallery from '../Components/Gallery';
-import Sidebar from './Sidebar';
+import Spinner from '../Components/Spinner';
 import Header from '../Components/Header';
 import Pagination from '../Components/Pagination';
 import Favorites from '../Components/Favorites';
@@ -528,42 +527,19 @@ class App extends Component {
       this.props.fetchSettings(JSON.parse(document.cookie.split(';')[0].split(' ')[0].split('settings=')[1]));
     }
   }
-
-  getContentPosition(){
-    //console.log(window.getComputedStyle(document.querySelector('#root')).getPropertyValue('width'));
-    // if (document.querySelector('.App__wrapper-movies')) {
-    //   const widthTablet = 800;
-    //   const widthDesktop = 1300;
-    //   let content = document.querySelector('.App__wrapper-movies');
-    //   let appWidth = document.querySelector('.App').offsetWidth;
-    //   let headerHeight = document.querySelector('.Header').offsetHeight;
-    //   console.log(headerHeight);
-    //   content.style.paddingTop = '"' + headerHeight + 'px"';
-    // }
-  }
-
-  // setContentOffset(e){
-  //   console.log(e.target);
-  // }
-
   componentDidMount() {
-    //this.getContentPosition();
-    //window.addEventListener('resize', this.getContentPosition);
-    //window.addEventListener('resize', this.setContentOffset);
     if (this.props.filmId === 'error') {
       console.log('wrong id');
       this.props.history.push('/');
     }
-
     if (Number.isNaN(this.props.page)) {
       console.log('wrong page', this.props.page);
       this.props.history.push('/');
     }
-    //load settings (MUST)
+    //load settings
     this.getSettings();
     //load initial data
     if (this.props.filmId) {
-      //this.props.clearGenres();
       if (this.props.gallery) {
         this.props.fetchMovieImages(this.props.filmId);
       }
@@ -572,7 +548,6 @@ class App extends Component {
       }
       else {
         this.props.fetchMovieDetails(this.props.filmId);
-        //this.props.fetchMovieImages(this.props.filmId);
       }
     } else {
       if (this.props.genresSelected.length > 0) {
@@ -589,7 +564,6 @@ class App extends Component {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
       }
       else {
-        //console.log('favs');
         if (this.props.sortValue && this.props.sortDir){
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
         }  else {
@@ -600,25 +574,18 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    //console.log('imageToShow');
     if (this.props.favorites !== prevProps.favorites) {
       //console.log('favs updated');
       localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
     }
     if (this.props.filmId) {
-      //this.props.clearGenres();
       if (this.props.filmId !== prevProps.filmId ||
         ((this.props.filmId === prevProps.filmId) && this.props.gallery !== prevProps.gallery) ||
         ((this.props.filmId === prevProps.filmId) && this.props.crewPage !== prevProps.crewPage) ||
         ((this.props.filmId === prevProps.filmId) && this.props.castPage !== prevProps.castPage)){
-
         this.props.fetchMovieDetails(this.props.filmId);
-        //this.props.clearImages();
       }
     }
-    // else if (this.props.favorites !== prevProps.favorites) {
-    //   localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
-    // }
     else if (this.props.searchQuery !== prevProps.searchQuery) {
       if (this.props.searchQuery) {
         this.props.fetchSearchedMovies(this.props.page, this.props.searchQuery);
@@ -663,9 +630,7 @@ class App extends Component {
           this.props.fetchSortedMovies(this.props.page, this.props.sortValue, this.props.sortDir);
         }
       }
-
       else {
-        //console.log('smthng changed');
         this.props.fetchGenredMovies(this.props.page, this.props.genresSelected);
       }
 
@@ -700,7 +665,7 @@ class App extends Component {
                     sortDir={this.props.sortDir}
             />
             <div className="container container--movielist">
-              {this.props.loadingMovies && <div>Loading...</div>}
+              {this.props.loadingMovies && <Spinner/>}
               {this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}
               {!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length && this.props.favorites &&
                 <div className="App__wrapper-movies" >
@@ -715,7 +680,7 @@ class App extends Component {
           <div className="App__movieread">
             <Header filmId={this.props.filmId}/>
             <div className="container container--movieinfo">
-              {this.props.loadingMovieDetails && <div>Loading...</div>}
+              {this.props.loadingMovieDetails && <Spinner/>}
               {this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}
               {!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length && this.props.favorites &&
                 <div className="App__wrapper-movies">
@@ -730,7 +695,7 @@ class App extends Component {
           <div className="App__movieread">
             <Header filmId={this.props.filmId} toMovie={true}/>
             <div className="container container--movieinfo">
-              {this.props.loadingMovieImages && <div>Loading gallery...</div>}
+              {this.props.loadingMovieImages && <Spinner/>}
               {this.props.movieImagesError && !this.props.loadingMovieImages && <div>GALLERY ERROR!</div>}
               {!this.props.loadingMovieImages && !this.props.movieImagesError && this.props.movieImages && Object.keys(this.props.settings).length &&
                 <div className="App__wrapper-movies">
@@ -745,7 +710,7 @@ class App extends Component {
           <div className="App__movieread">
             <Header filmId={this.props.filmId} toMovie={true}/>
             <div className="container container--movieinfo">
-              {this.props.loadingMovieCredits && <div>Loading crew list...</div>}
+              {this.props.loadingMovieCredits && <Spinner/>}
               {this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CREW ERROR!</div>}
               {!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&
                 <div className="App__wrapper-movies">
@@ -759,7 +724,7 @@ class App extends Component {
           <div className="App__movieread">
             <Header filmId={this.props.filmId} toMovie={true}/>
             <div className="container container--movieinfo">
-              {this.props.loadingMovieCredits && <div>Loading gallery...</div>}
+              {this.props.loadingMovieCredits && <Spinner/>}
               {this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CAST ERROR!</div>}
               {!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&
                 <div className="App__wrapper-movies">

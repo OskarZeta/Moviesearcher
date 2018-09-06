@@ -13,8 +13,29 @@ class FaveBtn extends Component {
         poster_path: this.props.poster
       });
     } else {
-      //console.log('remove fav');
       this.props.removeFavorite(this.props.id);
+    }
+  }
+  componentDidMount() {
+    if (document.querySelector('.MovieInfo__title')) {
+      let coloredHeader = document.querySelector('.FaveBtn__header');
+      if (this.props.isFav && this.props.moviePage) {
+        coloredHeader.style.opacity = '1';
+      } else if (!this.props.isFav && this.props.moviePage) {
+        coloredHeader.style.opacity = '0';
+      }
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (document.querySelector('.MovieInfo__title')) {
+      if (this.props.isFav !== prevProps.isFav && this.props.moviePage) {
+        let coloredHeader = document.querySelector('.FaveBtn__header');
+        if (this.props.isFav) {
+          coloredHeader.style.opacity = '1';
+        } else if (!this.props.isFav) {
+          coloredHeader.style.opacity = '0';
+        }
+      }
     }
   }
   render(){

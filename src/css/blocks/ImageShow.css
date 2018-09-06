@@ -211,3 +211,96 @@
     transition: 0.1s;
   }
 }
+@media (min-width: 1300px) {
+  .ImageShow__prev::after, .ImageShow__next::after{
+    top: -8px;
+    border-right: 40px solid #8453a5;
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+  }
+  .ImageShow__next::after{
+    border-left: 40px solid #8453a5;
+    border-right: none;
+  }
+  .ImageShow__prev-triangle, .ImageShow__next-triangle{
+    top: -2px;
+    right: 4px;
+    border-right: 26px solid #d15ad7;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+  }
+  .ImageShow__next-triangle{
+    left: 4px;
+    border-left: 26px solid #d15ad7;
+    border-right: none;
+  }
+  .ImageShow__prev:hover::after{
+    border-right: 40px solid #704991;
+  }
+  .ImageShow__next:hover::after{
+    border-left: 40px solid #704991;
+  }
+  .ImageShow__prev:active .ImageShow__prev-triangle{
+    top: -1px;
+    right: 6px;
+    border-right: 24px solid #d15ad7;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+  .ImageShow__next:active .ImageShow__next-triangle{
+    top: -1px;
+    left: 6px;
+    border-left: 24px solid #d15ad7;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+  .ImageShow__close{
+    width: 40px;
+    height: 40px;
+    background: #9f69c3;
+    position: relative;
+    top: 26px;
+    border-radius: 20px;
+    outline: none;
+    margin: 0 40px;
+    cursor: pointer;
+  }
+  .ImageShow__close:hover{
+    background: #8e5caf;
+  }
+  .ImageShow__close:hover .ImageShow__close-stick{
+    border: 1px solid #8e5caf;
+  }
+  .ImageShow__close:active .ImageShow__close-circle{
+    top: 6px;
+    left: 6px;
+    width: 22px;
+    height: 22px;
+  }
+  .ImageShow__close:active .ImageShow__close-stick{
+    top: 3px;
+  }
+  .ImageShow__close-circle{
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: #d15ad7;
+    width: 26px;
+    height: 26px;
+    border: 3px solid #5c3d87;
+    border-radius: 20px;
+    transition: 0.1s;
+  }
+  .ImageShow__close-stick{
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 17px;
+    border: 1px solid #9f69c3;
+    background-color: #5c3d87;
+    width: 7px;
+    height: 18px;
+    border-radius: 5px;
+    transition: 0.1s;
+  }
+}

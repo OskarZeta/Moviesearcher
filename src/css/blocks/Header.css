@@ -1,16 +1,27 @@
 .Header{
-  //background-color: #d667ff;
   background-color: #c26bff;
-  //position: fixed;
   width: 100%;
   z-index: 10;
 }
 .Header h1{
   margin: 0;
   border-bottom: 4px solid #9d5bc3;
+  text-align: center;
+  //background: linear-gradient(90deg, #d667ff, #d667ff);
+  color: #6e2887;
+  transition: 0.1s;
 }
 .Header a{
   text-decoration: none;
+}
+.Header h1:hover{
+  background: linear-gradient(90deg, #d667ff 10%, #e095ff 50%, #d667ff 90%);
+  color: #331941;
+
+}
+.Header h1:active{
+  //background: linear-gradient(90deg, #d667ff 10%, #e095ff 50%, #d667ff 90%);
+  color: #f3edff;
 }
 .Header__additional{
   display: flex;
@@ -33,6 +44,7 @@
   border-top: 1px solid #bd62e6;
   border-left: 1px solid #bd62e6;
   transition: 0.2s;
+  text-align: center;
 }
 .Header__options:hover, .Header__favorites:hover, .Header__back:hover{
   background-color: #e1a4ff;
@@ -89,12 +101,13 @@
 }
 
 @media (min-width: 800px) {
+  .Header h1{
 
+  }
   .Header__additional{
     flex-direction: row;
     position: relative;
   }
-
   .Header__options, .Header__favorites, .Header__back{
     position: relative;
     padding: 5px;
@@ -149,7 +162,7 @@
   .Header__btn-active{
     background-color: #d981ff;
     border: 1px solid #6d4991;
-    margin-bottom: 210px;
+    margin-bottom: 225px;
   }
   .Header__favorites-nonbtn{
     margin-bottom: 5px;
@@ -176,5 +189,46 @@
     /*width: 250px;*/
     /*height: calc(100% - 5px);*/
     /*background-color: #b964e1;*/
+  }
+}
+
+@media (min-width: 1300px) {
+  .Header h1{
+    font-size: 48px;
+  }
+  .Header__additional{
+    font-size: 24px;
+  }
+  .Header__sidebar{
+    top: 51px;
+  }
+  .Header__options, .Header__favorites, .Header__back, .Header__search{
+    height: 27px;
+    padding: 5px;
+  }
+  .Header__options, .Header__favorites, .Header__back{
+    width: 220px;
+  }
+  .Header__options:active{
+    border: 1px solid #6d4991;
+  }
+  .Header__search{
+    margin-top: 5px;
+  }
+  .Header__search input{
+    padding: 5px 10px;
+    display: flex;
+    align-self: stretch;
+    font-size: 16px;
+  }
+  .Header__options a, .Header__favorites a, .Header__back a {
+    padding: 0;
+  }
+  .Header__btn-active{
+    margin-bottom: 280px;
+  }
+  .Header__favorites-nonbtn{
+    margin-bottom: 10px;
+    padding: 0 0 10px 0;
   }
 }

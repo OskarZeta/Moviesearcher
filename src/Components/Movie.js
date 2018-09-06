@@ -25,11 +25,20 @@ class Movie extends Component {
           <div className="Movie__link">
             <Link to={`/filmId/${this.props.id}`} >
               <h2 className="Movie__header">{this.props.name}</h2>
-              <picture>
-                <source srcSet={addressDesktop} media="(min-width: 1300px)"/>
-                <source srcSet={addressTablet} media="(min-width: 800px)"/>
-                <img src={addressMobile} alt="movie-poster"/>
-              </picture>
+              {this.props.poster !== null &&
+                <picture>
+                  <source srcSet={addressDesktop} media="(min-width: 1300px)"/>
+                  <source srcSet={addressTablet} media="(min-width: 800px)"/>
+                  <img src={addressMobile} alt="movie-poster"/>
+                </picture>
+              }
+              {this.props.poster === null &&
+                <div className="Movie__placeholder">
+                  <div className="Movie__placeholder-mobile"></div>
+                  <div className="Movie__placeholder-tablet"></div>
+                  <div className="Movie__placeholder-desktop"></div>
+                </div>
+              }
             </Link>
             <FaveBtn favorites={this.props.favorites} id={this.props.id} name={this.props.name} poster={this.props.poster} isFav={this.props.isFav}/>
           </div>
@@ -38,11 +47,18 @@ class Movie extends Component {
           <div className="Movie__link">
             <Link to={`/filmId/${this.props.id}`}>
               <h2 className="Movie__preview-header">{this.props.name}</h2>
-              <picture>
-                <source srcSet={addressDesktop} media="(min-width: 1300px)"/>
-                <source srcSet={addressTablet} media="(min-width: 800px)"/>
-                <img src={addressMobile} alt="movie-poster"/>
-              </picture>
+              {this.props.poster !== null &&
+                <picture>
+                  <source srcSet={addressTablet} media="(min-width: 800px)"/>
+                  <img src={addressMobile} alt="movie-poster"/>
+                </picture>
+              }
+              {this.props.poster === null &&
+                <div className="Movie__placeholder">
+                  <div className="Movie__placeholder-mobile"></div>
+                  <div className="Movie__placeholder-tablet Movie__placeholder-tablet--desktop"></div>
+                </div>
+              }
             </Link>
             <FaveBtn favorites={this.props.favorites} id={this.props.id} name={this.props.name} poster={this.props.poster} isFav={this.props.isFav}/>
           </div>

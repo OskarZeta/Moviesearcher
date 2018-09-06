@@ -1,14 +1,22 @@
 .MovieInfo{
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 .MovieInfo__wrapper{
   background-color: white;
   position: relative;
+  width: 100%;
 }
 .MovieInfo__title{
   margin: 10px 0;
   font-size: 20px;
+  text-align: center;
+  position: relative;
+}
+.MovieInfo__title span{
+  position: relative;
+  z-index: 1;
 }
 .MovieInfo__section-header{
   display: block;
@@ -44,6 +52,12 @@
   bottom: 100%;
   margin-bottom: 10px;
 }
+.MovieInfo__show-link a{
+  color: #73009b;
+}
+.MovieInfo__show-link a:visited{
+  color: #73009b;
+}
 .MovieInfo__images-wrapper{
   display: flex;
   flex-wrap: wrap;
@@ -52,8 +66,8 @@
 .MovieInfo__image-preview{
   display: flex;
   align-items: center;
-  width: 49%;
-  margin-top: 5px;
+  width: 48%;
+  margin: 5px auto 0 auto;
 }
 .MovieInfo__image-preview:nth-child(1), .MovieInfo__image-preview:nth-child(2){
   margin-top: 0;
@@ -63,6 +77,28 @@
 }
 .MovieInfo__poster-wrapper{
   position: relative;
+}
+.MovieInfo__placeholder{
+  padding-bottom: 5px;
+}
+.MovieInfo__placeholder-mobile, .MovieInfo__placeholder-tablet, .MovieInfo__placeholder-desktop{
+  background: url("http://localhost:3000/placeholder-image.png") center;
+  background-size: cover;
+}
+.MovieInfo__placeholder-mobile{
+  width: 300px;
+  height: 169px;
+  display: block;
+}
+.MovieInfo__placeholder-tablet{
+  width: 780px;
+  height: 439px;
+  display: none;
+}
+.MovieInfo__placeholder-desktop{
+  width: 1280px;
+  height: 420px;
+  display: none;
 }
 .MovieInfo__votebox{
   position: absolute;
@@ -139,6 +175,7 @@
   .MovieInfo__image-preview{
     justify-content: center;
     width: 25%;
+    margin-top: 0;
   }
   .MovieInfo__votebox{
     width: 60px;
@@ -164,5 +201,41 @@
     border-top: 1px solid grey;
     border-left: 1px solid grey;
     border-top-left-radius: 10px;
+  }
+  .MovieInfo__placeholder-mobile{
+    display: none;
+  }
+  .MovieInfo__placeholder-tablet{
+    display: block;
+  }
+  .MovieInfo__placeholder-desktop{
+    display: none;
+  }
+}
+
+@media (min-width: 1300px) {
+  .MovieInfo__image-preview{
+    width: 24%;
+  }
+  .MovieInfo__placeholder-mobile{
+    display: none;
+  }
+  .MovieInfo__placeholder-tablet{
+    display: none;
+  }
+  .MovieInfo__placeholder-desktop{
+    display: block;
+  }
+  .MovieInfo__poster-wrapper{
+    margin-bottom: 25px;
+  }
+  .MovieInfo__section-header{
+    font-size: 20px;
+  }
+  .MovieInfo__info{
+    font-size: 20px;
+  }
+  .MovieInfo__show-link{
+    font-size: 20px;
   }
 }

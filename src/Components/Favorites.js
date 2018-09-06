@@ -7,7 +7,9 @@ class Favorites extends Component {
     return(
       <div className="Favorites">
         {(this.props.favorites.length === 0 || !this.props.favorites) &&
-          <span>You don't have favorites yet</span>
+          <div className="empty">
+            <span>You don't have favorites yet</span>
+          </div>
         }
         {this.props.favorites && this.props.favorites.length > 0 && Object.keys(this.props.settings).length &&
           <MovieList settings={this.props.settings.images} favorites={this.props.favorites} favsPage={this.props.favsPage}/>

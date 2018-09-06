@@ -126,6 +126,7 @@
 }
 .Sidebar__sort-name{
   font-size: 12px;
+  text-align: center;
   flex-grow: 2;
   order: 1;
   margin-bottom: 2px;
@@ -196,15 +197,59 @@
     padding-bottom: 7px;
   }
   .Sidebar__sort-label:first-child{
-    //margin-left: 5px;
+
   }
   .Sidebar__sort-wrapper--direction{
     justify-content: space-between;
     margin-right: 10px;
-    //align-self: stretch;
     flex-grow: 2;
   }
   .Sidebar__sort-wrapper--direction .Sidebar__sort-label{
     width: 90px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .Sidebar__header-text{
+    font-size: 26px;
+  }
+  .Sidebar__genre-label{
+    width: 220px;
+  }
+  .Sidebar__genre-custom{
+    width: 15px;
+    height: 15px;
+    border: 2px solid #E2DDFF;
+    margin-right: 10px;
+  }
+  .Sidebar__genre-name{
+    font-size: 20px;
+  }
+  .Sidebar__sort-label{
+    width: 160px;
+    margin-right: 10px;
+  }
+  .Sidebar__sort-name{
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .Sidebar__sort-custom{
+    width: 80px;
+    height: 20px;
+    border: 3px solid #6f3b9b;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+  }
+  .Sidebar__sort-input:checked + .Sidebar__sort-custom{
+
+  }
+  .Sidebar__sort-wrapper--direction{
+    justify-content: space-between;
+    margin-right: 0;
+    flex-grow: 2;
+  }
+  .Sidebar__sort-wrapper--direction .Sidebar__sort-label{
+    width: 140px;
   }
 }

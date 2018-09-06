@@ -84,7 +84,10 @@ class MovieInfo extends Component {
             <ImageShow imageIndex={this.props.imageIndex - 1} movieImages={this.props.movieImages} settings={this.props.settings} history={this.props.history} from="movie"/>
           }
           <div className="MovieInfo__wrapper">
-            <h1 className="MovieInfo__title">{this.props.movieDetails.title}</h1>
+            <h1 className="MovieInfo__title">
+              <span>{this.props.movieDetails.title}</span>
+              <div className="FaveBtn__header"></div>
+            </h1>
             <div className="MovieInfo__votebox" style={{background:
               this.props.movieDetails.vote_average >= 7 ? 'linear-gradient(-45deg, #b4e391 0%, #61c419 50%,#b4e391 100%)' :
                 this.props.movieDetails.vote_average < 7 && this.props.movieDetails.vote_average > 3 ? 'linear-gradient(-45deg, #fefcea 0%,#f1da36 50%,#fefcea 100%)' :
@@ -102,11 +105,20 @@ class MovieInfo extends Component {
               }
             </div>
             <div className="MovieInfo__poster-wrapper">
-              <picture>
-                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
-                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
-                <img className="MovieInfo__backdrop" src={this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
-              </picture>
+              {this.props.movieDetails.backdrop_path !== null &&
+                <picture>
+                  <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
+                  <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
+                  <img className="MovieInfo__backdrop" src={this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
+                </picture>
+              }
+              {this.props.movieDetails.backdrop_path === null &&
+                <div className="MovieInfo__placeholder">
+                  <div className="MovieInfo__placeholder-mobile"></div>
+                  <div className="MovieInfo__placeholder-tablet"></div>
+                  <div className="MovieInfo__placeholder-desktop"></div>
+                </div>
+              }
               <FaveBtn favorites={this.props.favorites} id={this.props.movieDetails.id} name={this.props.movieDetails.title} poster={this.props.movieDetails.poster_path}
                        isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
                            return favMovie.id === this.props.movieDetails.id;}).length > 0)

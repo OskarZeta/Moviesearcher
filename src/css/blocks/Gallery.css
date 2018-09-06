@@ -4,7 +4,7 @@
 .Gallery__wrapper{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  //justify-content: space-between;
   position: relative;
 }
 .Gallery__wrapper a{
