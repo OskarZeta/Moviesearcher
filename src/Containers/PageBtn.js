@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  pageNext, pagePrev, changePage
-} from '../Redux/actions';
+import { pageNext, pagePrev, changePage } from '../Redux/actions/change_page';
 
 class PageBtn extends Component {
   makePageAndText() {
@@ -24,7 +22,6 @@ class PageBtn extends Component {
     }
   }
   render() {
-    //console.log(this.props.sortValue, this.props.sortDir, this.props.genresSelected.length, this.props.searchQuery);
     return (
       <div>
         {this.props.genresSelected.length === 0 && !this.props.searchQuery && !(this.props.sortValue && this.props.sortDir) &&

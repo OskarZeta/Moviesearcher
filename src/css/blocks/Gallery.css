@@ -1,19 +1,5 @@
-.Gallery{
-
-}
 .Gallery__wrapper{
   display: flex;
   flex-wrap: wrap;
-  //justify-content: space-between;
   position: relative;
-}
-.Gallery__wrapper a{
-  //margin: 0 auto 5px auto;
-  //width: 49%;
-}
-.Gallery__wrapper a img{
-  //width: 100%;
-}
-@media (min-width: 800px) {
-
 }

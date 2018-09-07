@@ -1,48 +1,58 @@
-//import { combineReducers } from 'redux';
 import {
   FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_FAIL,
-  FETCH_MOVIES_SUCCESS,
+  FETCH_MOVIES_SUCCESS
+} from './actions/fetch_movies';
+import {
   FETCH_SETTINGS_FAIL,
   FETCH_SETTINGS_SUCCESS,
+  LOAD_SETTINGS
+} from './actions/fetch_settings';
+import {
   FETCH_GENRES_REQUEST,
   FETCH_GENRES_FAIL,
-  FETCH_GENRES_SUCCESS,
-  PAGE_NEXT, PAGE_PREV,
-  CHANGE_PAGE,
-  CHANGE_URL,
-  TRIGGER_GENRES,
-  ADD_GENRE,
-  REMOVE_GENRE,
-  CLEAR_GENRES,
-  LOAD_SETTINGS,
-  SAVE_SEARCH_QUERY,
-  CLEAR_SEARCH_QUERY,
+  FETCH_GENRES_SUCCESS
+} from './actions/fetch_genres';
+import {
   MOVIE_DETAILS_REQUEST,
   MOVIE_DETAILS_FAIL,
-  MOVIE_DETAILS_SUCCESS,
-  MOVIE_SIMILAR_REQUEST,
-  MOVIE_SIMILAR_FAIL,
-  MOVIE_SIMILAR_SUCCESS,
+  MOVIE_DETAILS_SUCCESS
+} from './actions/fetch_movie_details';
+import {
   MOVIE_IMAGES_REQUEST,
   MOVIE_IMAGES_FAIL,
-  MOVIE_IMAGES_SUCCESS,
+  MOVIE_IMAGES_SUCCESS
+} from './actions/fetch_movie_images';
+import {
+  MOVIE_SIMILAR_REQUEST,
+  MOVIE_SIMILAR_FAIL,
+  MOVIE_SIMILAR_SUCCESS
+} from './actions/fetch_movie_similars';
+import {
   MOVIE_CREDITS_REQUEST,
   MOVIE_CREDITS_FAIL,
-  MOVIE_CREDITS_SUCCESS,
+  MOVIE_CREDITS_SUCCESS
+} from './actions/fetch_movie_credits';
+import {
+  ADD_GENRE,
+  REMOVE_GENRE,
+  CLEAR_GENRES
+} from './actions/change_genres';
+import {
+  PAGE_NEXT,
+  PAGE_PREV,
+  CHANGE_PAGE
+} from './actions/change_page';
+import {
   ADD_FAVORITE,
-  REMOVE_FAVORITE,
-  CLEAR_IMAGES,
-  // IMAGE_PREV,
-  // IMAGE_NEXT
-} from './actions';
+  REMOVE_FAVORITE
+} from './actions/change_favorites';
 
 export default function rootReducer(state, action) {
   switch (action.type) {
     case FETCH_MOVIES_REQUEST: {
       return Object.assign({}, state, {
         loadingMovies: action.loadingMovies,
-        //initialLoadingError: action.initialLoadingError
       });
     }
     case FETCH_MOVIES_FAIL: {
@@ -95,11 +105,6 @@ export default function rootReducer(state, action) {
         loadingGenres: action.loadingGenres
       });
     }
-    case CHANGE_URL: {
-      return Object.assign({}, state, {
-        url: action.url
-      });
-    }
     case PAGE_NEXT: {
       return Object.assign({}, state, {
         page: state.page + 1,
@@ -113,11 +118,6 @@ export default function rootReducer(state, action) {
     case CHANGE_PAGE: {
       return Object.assign({}, state, {
         page: action.page
-      })
-    }
-    case TRIGGER_GENRES: {
-      return Object.assign({}, state, {
-        genresTriggered: action.genresTriggered
       })
     }
     case ADD_GENRE: {
@@ -134,18 +134,7 @@ export default function rootReducer(state, action) {
     }
     case CLEAR_GENRES: {
       return Object.assign({}, state, {
-        //genresTriggered: action.genresTriggered
         genresSelected: []
-      })
-    }
-    case SAVE_SEARCH_QUERY: {
-      return Object.assign({}, state, {
-        //searchQuery: action.searchQuery
-      })
-    }
-    case CLEAR_SEARCH_QUERY: {
-      return Object.assign({}, state, {
-        //searchQuery: ''
       })
     }
     case MOVIE_DETAILS_REQUEST: {
@@ -230,40 +219,14 @@ export default function rootReducer(state, action) {
       })
     }
     case REMOVE_FAVORITE: {
-      // state.favorites.filter((fave) => {
-      //   console.log(fave.id !== action.id);
-      //   return fave.id !== action.id;
-      // });
-      // return Object.assign({}, state, {});
       return Object.assign({}, state, {
         favorites: state.favorites.filter((fave) => {
           return fave.id !== action.id;
         })
       })
     }
-    case CLEAR_IMAGES: {
-      return Object.assign({}, state, {
-        movieImages: action.movieImages
-      })
-    }
-    // case IMAGE_NEXT: {
-    //   return Object.assign({}, state, {
-    //     imageIndex: state.imageIndex + 1,
-    //   })
-    // }
-    // case IMAGE_PREV: {
-    //   return Object.assign({}, state, {
-    //     imageIndex: state.imageIndex - 1,
-    //   })
-    // }
     default : {
       return state;
     }
   }
 }
-
-// const rootReducer =  combineReducers({
-
-// });
-
-//export default rootReducer;

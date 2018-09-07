@@ -1,108 +1,12 @@
-#root {
-  //width: 100%;
-}
-
-.App {
-  //text-align: center;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.Favorites{
-  //width: 100%;
-  //display: flex;
-  //flex-wrap: wrap;
-}
-
-/*.App__wrapper, .App__wrapper-movies{*/
-.App__wrapper-movies{
-  //display: flex;
-  //box-sizing: border-box;
-}
 .App__wrapper{
-  //background-color: #f8f4ff;
-  //padding-top: 78px;
   width: 100%;
-}
-.App__wrapper-movies{
-  //flex-grow: 2;
-  //flex-direction: column;
 }
 .App__content{
   display: flex;
-  //flex-grow: 2;
   flex-direction: row;
   flex-wrap: wrap;
 }
-
 .App__credits{
   margin: 10px 0;
   padding: 0;
-}
-
-/*.Movies__wrapper{*/
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-/*}*/
-
-/*.Crew__wrapper, .Cast__wrapper{*/
-  /*list-style-type: none;*/
-  /*min-width: 300px;*/
-  /*width: 300px;*/
-  /*padding: 10px 20px;*/
-  /*margin: 0 auto;*/
-/*}*/
-
-
-.hidden {
-  display: none;
-}
-
-
-@media (min-width: 800px) {
-  /*.Movie {*/
-    /*width: 190px;*/
-  /*}*/
-
-  /*.Gallery__wrapper{*/
-    /*width: 780px;*/
-  /*}*/
-  /*.Crew__wrapper, .Cast__wrapper{*/
-    /*width: 780px;*/
-  /*}*/
-  /*.container {*/
-    /*width: 780px;*/
-  /*}*/
-}
-@media (min-width: 1300px) {
-  .Movie {
-    //width: 350px;
-  }
-  .MovieInfo__wrapper{
-    //width: 1280px;
-  }
-  .MovieInfo__votebox{
-    width: 70px;
-    height: 70px;
-    left: 0;
-  }
-  .MovieInfo__votebox-1{
-    font-size: 42px;
-    font-weight: bold;
-  }
-  .MovieInfo__votebox-2{
-    font-size: 28px;
-  }
-  .Gallery__wrapper{
-    //width: 1280px;
-  }
-  .Crew__wrapper, .Cast__wrapper{
-    //width: 1280px;
-  }
-  .container {
-    //width: 1280px;
-  }
 }

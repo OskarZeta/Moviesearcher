@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changePage, clearGenres } from '../Redux/actions';
+import { changePage } from '../Redux/actions/change_page';
+import { clearGenres } from '../Redux/actions/change_genres';
 
 class Search extends Component {
   searchRequest(e){

@@ -12,6 +12,12 @@ class Root extends Component {
       return id;
     }
   }
+  makeSelectedGenresList(rawList){
+    let selected = rawList.split(',');
+    return selected.map((id) => {
+      return +id;
+    });
+  }
   render() {
     return(
     <BrowserRouter>
@@ -22,28 +28,21 @@ class Root extends Component {
           );
         }}>
         </Route>
-        <Route path='/favorites' render={(routerProps) => {
-          //console.log('favorites');
+        <Route exact path='/favorites' render={(routerProps) => {
           return(
             <App page={this.props.page} history={routerProps.history} favorites={this.props.favorites} favsPage={true}/>
           );
         }}>
         </Route>
         <Route path='/sort_by/:sortValue.:sortDir/genres=:genres/:page' render={(routerProps) => {
-          let selected = routerProps.match.params.genres.split(',');
-          selected = selected.map((id) => {
-            return +id;
-          });
+          let selected = this.makeSelectedGenresList(routerProps.match.params.genres);
           return(
             <App page={+routerProps.match.params.page} history={routerProps.history} sortValue={routerProps.match.params.sortValue} sortDir={routerProps.match.params.sortDir} genresSelected={selected} favorites={this.props.favorites}/>
           );
         }}>
         </Route>
         <Route path='/sort_by/:sortValue.:sortDir/genres=:genres' render={(routerProps) => {
-          let selected = routerProps.match.params.genres.split(',');
-          selected = selected.map((id) => {
-            return +id;
-          });
+          let selected = this.makeSelectedGenresList(routerProps.match.params.genres);
           return(
             <App page={this.props.page} history={routerProps.history} sortValue={routerProps.match.params.sortValue} sortDir={routerProps.match.params.sortDir} genresSelected={selected} favorites={this.props.favorites}/>
           );
@@ -62,20 +61,14 @@ class Root extends Component {
         }}>
         </Route>
         <Route path='/genres=:genres/:page' render={(routerProps) => {
-          let selected = routerProps.match.params.genres.split(',');
-          selected = selected.map((id) => {
-            return +id;
-          });
+          let selected = this.makeSelectedGenresList(routerProps.match.params.genres);
           return(
             <App page={+routerProps.match.params.page} history={routerProps.history} genresSelected={selected} clearInput={true} goHome={true} favorites={this.props.favorites}/>
           );
         }}>
         </Route>
         <Route path='/genres=:genres' render={(routerProps) => {
-          let selected = routerProps.match.params.genres.split(',');
-          selected = selected.map((id) => {
-            return +id;
-          });
+          let selected = this.makeSelectedGenresList(routerProps.match.params.genres);
           return(
             <App page={this.props.page} history={routerProps.history} genresSelected={selected} clearInput={true} goHome={true} favorites={this.props.favorites}/>
           );

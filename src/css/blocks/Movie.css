@@ -28,15 +28,11 @@
 .Movie__preview .Movie__link{
   margin-bottom: 0;
 }
-.Movie__preview .Movie__link img{
-
-}
 .Movie__preview-header{
   font-size: 12px;
   text-align: center;
   margin: 5px;
 }
-
 .Movie a, .Movie__preview a{
   box-sizing: border-box;
   display: flex;
@@ -63,7 +59,6 @@
   background-size: cover;
   margin-bottom: 4px;
 }
-
 .Movie__placeholder-mobile{
   width: 92px;
   height: 138px;
@@ -105,9 +100,6 @@
   .Movie {
     width: 351px;
     margin: 20px auto;
-  }
-  .Movie__preview{
-
   }
   .Movie__preview-header{
     font-size: 20px;

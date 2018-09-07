@@ -25,11 +25,7 @@
   color: grey;
   font-style: italic;
 }
-.MovieInfo__description-wrapper{
-
-}
 .MovieInfo__info{
-  //margin: 0 20px;
   margin: 0 10px;
   padding: 10px;
   text-align: left;
@@ -37,7 +33,6 @@
   border-left: 1px solid grey;
   border-top-left-radius: 10px;
   position: relative;
-  //flex-grow: 2;
 }
 .MovieInfo__info--gallery{
   margin: 0;
@@ -68,6 +63,7 @@
   align-items: center;
   width: 48%;
   margin: 5px auto 0 auto;
+  position: relative;
 }
 .MovieInfo__image-preview:nth-child(1), .MovieInfo__image-preview:nth-child(2){
   margin-top: 0;
@@ -77,6 +73,8 @@
 }
 .MovieInfo__poster-wrapper{
   position: relative;
+  min-width: 290px;
+  min-height: 163px;
 }
 .MovieInfo__placeholder{
   padding-bottom: 5px;
@@ -109,7 +107,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 3;
 }
 .MovieInfo__votebox-1{
   font-size: 20px;
@@ -159,10 +157,8 @@
 .MovieInfo__person-character{
   text-align: right;
 }
-@media (min-width: 800px) {
-  .MovieInfo__wrapper{
 
-  }
+@media (min-width: 800px) {
   .MovieInfo__title{
     font-size: 38px;
     position: relative;
@@ -171,6 +167,7 @@
   .MovieInfo__images-wrapper{
     flex-direction: row;
     flex-wrap: nowrap;
+    min-height: 104px;
   }
   .MovieInfo__image-preview{
     justify-content: center;
@@ -211,9 +208,16 @@
   .MovieInfo__placeholder-desktop{
     display: none;
   }
+  .MovieInfo__poster-wrapper{
+    min-width: 550px;
+    min-height: 310px;
+  }
 }
 
 @media (min-width: 1300px) {
+  .MovieInfo__images-wrapper{
+    min-height: 173px;
+  }
   .MovieInfo__image-preview{
     width: 24%;
   }
@@ -228,6 +232,8 @@
   }
   .MovieInfo__poster-wrapper{
     margin-bottom: 25px;
+    min-width: 890px;
+    min-height: 500px;
   }
   .MovieInfo__section-header{
     font-size: 20px;
@@ -237,5 +243,17 @@
   }
   .MovieInfo__show-link{
     font-size: 20px;
+  }
+  .MovieInfo__votebox{
+    width: 70px;
+    height: 70px;
+    left: 0;
+  }
+  .MovieInfo__votebox-1{
+    font-size: 42px;
+    font-weight: bold;
+  }
+  .MovieInfo__votebox-2{
+    font-size: 28px;
   }
 }

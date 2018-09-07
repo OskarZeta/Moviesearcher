@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  changePage,
-  addGenres, removeGenres,
-} from '../Redux/actions';
+import { addGenres, removeGenres } from '../Redux/actions/change_genres';
+import { changePage } from '../Redux/actions/change_page';
 
 class Genre extends Component {
   checkHandler (e) {
@@ -16,23 +14,24 @@ class Genre extends Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.genresSelected !== prevProps.genresSelected) {
-      if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
-        if (this.props.genresSelected.length !== 0) {
-          //console.log(this.props.sortValue, this.props.sortDir);
-          if (this.props.sortValue && this.props.sortDir) {
-            this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}/genres=${this.props.genresSelected}/${this.props.page}`);
+      if (this.props.genresSelected.length !== 0 || prevProps.genresSelected.length !== 0) {
+        if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
+          if (this.props.genresSelected.length !== 0) {
+            if (this.props.sortValue && this.props.sortDir) {
+              this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}/genres=${this.props.genresSelected}/${this.props.page}`);
+            } else {
+              this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
+            }
           } else {
-            this.props.history.push(`/genres=${this.props.genresSelected}/${this.props.page}`);
-          }
-        } else {
-          if (this.props.goHome) {
-            //console.log('genres');
-            this.props.history.push(`/`);
-          } else if (this.props.sortValue && this.props.sortDir) {
-            this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}`);
+            if (this.props.goHome) {
+              this.props.history.push(`/`);
+            } else if (this.props.sortValue && this.props.sortDir) {
+              this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}`);
+            }
           }
         }
       }
+
     }
   }
   render(){

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  fetchGenres
-} from '../Redux/actions';
+import { fetchGenres } from '../Redux/actions/fetch_genres';
 import Genre from './Genre';
 import Sort from '../Components/Sort';
 
 class Sidebar extends Component {
   componentDidMount() {
     this.props.fetchGenres();
-  }
-  componentDidUpdate(prevProps) {
-
   }
   makeGenreList() {
     let list = this.props.genreList;
@@ -37,9 +32,6 @@ class Sidebar extends Component {
   render(){
     return(
       <div className="Sidebar">
-        {/*{this.props.disable &&*/}
-          {/*<div className="Sidebar__wrapper--hidden"></div>*/}
-        {/*}*/}
         {!this.props.disable &&
           <div>
             {this.props.loadingGenres &&

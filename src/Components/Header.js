@@ -2,29 +2,16 @@ import React, { Component } from 'react';
 import Search from '../Containers/Search';
 import Home from '../Containers/Home';
 import Sidebar from '../Containers/Sidebar';
-import Favorites from './Favorites';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
   clickOptions(e){
-    //if (e.target.classList.contains('Header__options')) {
-      let sidebar = document.querySelector('.Header__sidebar');
-      //console.log('aaa');
-      sidebar.classList.toggle('hidden');
-      let btn = document.querySelector('.Header__options');
-      btn.classList.toggle('Header__btn-active');
-    //}
-    // let sidebar = document.querySelector('.Header__sidebar');
-    // //console.log('aaa');
-    // sidebar.classList.toggle('hidden');
-    // if (e.target.classList.contains('Header__options')) {
-    //   e.target.classList.toggle('Header__btn-active');
-    // }
-    //console.log(e.target);
+    let sidebar = document.querySelector('.Header__sidebar');
+    sidebar.classList.toggle('hidden');
+    let btn = document.querySelector('.Header__options');
+    btn.classList.toggle('Header__btn-active');
   }
   render() {
-    //console.log(this.props.toFavs);
-    //"Header__sidebar hidden"
     return (
       <header className="Header">
         <div className="container container--header">
@@ -80,9 +67,7 @@ class Header extends Component {
           {this.props.toFavs && !this.props.toMovie &&
             <ul className="Header__additional">
               <li className="Header__favorites Header__favorites-nonbtn Header__btn-active">
-
                 <span style={{display: "block", padding: "5px"}}>Favorites</span>
-
               </li>
             </ul>
           }

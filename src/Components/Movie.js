@@ -4,21 +4,15 @@ import FaveBtn from '../Containers/FaveBtn';
 
 class Movie extends Component {
   render(){
-    //console.log(this.props.isFav);
     // 0(pin): "w92"
     // 1(pin): "w154"
     // 2(pin): "w185"
     // 3(pin): "w342"
     // 4(pin): "w500"
     // 5(pin): "w780"
-
     let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[0] + this.props.poster;
     let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[1] + this.props.poster;
     let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + this.props.poster;
-
-    //style={{width: +this.props.settings.poster_sizes[3].split('w').pop()}}
-
-    //<img src={addressMobile} style={{width: 155}} alt="movie-poster"/>
     return(
       <div className={!this.props.usePreview ? 'Movie' : 'Movie__preview'}>
         {!this.props.usePreview &&

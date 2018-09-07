@@ -10,8 +10,6 @@ class Gallery extends Component {
         let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
         let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
         let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + image.file_path;
-        //let path = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
-        //<img src={path} alt="movie-poster"/>
         return(
           <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.filmId}/images/${index+1}`}>
             <picture>
@@ -25,7 +23,6 @@ class Gallery extends Component {
     }
   }
   render(){
-    //console.log(this.props.imageToShow);
     return(
       <div className="Gallery">
         {this.props.imageIndex && this.props.filmId && this.props.movieImages && this.props.settings &&

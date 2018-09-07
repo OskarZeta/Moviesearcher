@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addGenres, clearGenres, fetchMovieSimilar, fetchMovieImages, fetchMovieCredits, clearImages } from '../Redux/actions';
+import { addGenres, clearGenres } from '../Redux/actions/change_genres';
+import { fetchMovieSimilar } from '../Redux/actions/fetch_movie_similars';
+import { fetchMovieImages } from '../Redux/actions/fetch_movie_images';
+import { fetchMovieCredits } from '../Redux/actions/fetch_movie_credits';
 import MovieList from '../Components/MovieList';
 import ImageShow from '../Components/ImageShow';
+import Spinner from '../Components/Spinner';
 import FaveBtn from '../Containers/FaveBtn';
 
-//import Movie from '../Components/Movie';
 const imagesToShowPreview = 4;
 const castToShowPreview = 8;
 
 class MovieInfo extends Component {
+  loadImage(e) {
+    e.target.parentNode.parentNode.querySelector('.image-preload').classList.add('hidden');
+  }
   loadImages() {
     if (this.props.movieImages) {
       let images = this.props.movieImages.backdrops;
       return images.map((image, index) => {
-        //let path = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
         let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
         let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
         let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + image.file_path;
         if (index < imagesToShowPreview) {
           return(
             <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.movieDetails.id}/image=${index+1}`}>
-              {/*<img src={path} alt="movie-poster"/>*/}
               <picture>
                 <source srcSet={addressDesktop} media="(min-width: 1300px)" />
                 <source srcSet={addressTablet} media="(min-width: 800px)" />
-                <img src={addressMobile} alt="movie-poster"/>
+                <img className="MovieInfo__img" onLoad={(e) => {this.loadImage(e)}} src={addressMobile} alt="movie-poster"/>
               </picture>
+              <div className="image-preload image-preload--gallery-preview">
+                <Spinner/>
+              </div>
             </Link>
           );
         }
@@ -66,11 +73,6 @@ class MovieInfo extends Component {
     }
   }
   componentDidMount() {
-    //console.log('mount');
-    if (this.props.imageIndex) {
-      //console.log('image to show from movie page on mount');
-    }
-    //this.props.clearImages();
     this.props.clearGenres();
     this.props.fetchMovieSimilar(this.props.movieDetails.id, 1);
     this.props.fetchMovieImages(this.props.movieDetails.id);
@@ -104,21 +106,16 @@ class MovieInfo extends Component {
                 </div>
               }
             </div>
+            {this.props.movieDetails.backdrop_path !== null &&
             <div className="MovieInfo__poster-wrapper">
-              {this.props.movieDetails.backdrop_path !== null &&
-                <picture>
-                  <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
-                  <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
-                  <img className="MovieInfo__backdrop" src={this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
-                </picture>
-              }
-              {this.props.movieDetails.backdrop_path === null &&
-                <div className="MovieInfo__placeholder">
-                  <div className="MovieInfo__placeholder-mobile"></div>
-                  <div className="MovieInfo__placeholder-tablet"></div>
-                  <div className="MovieInfo__placeholder-desktop"></div>
-                </div>
-              }
+              <picture>
+                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
+                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
+                <img className="MovieInfo__backdrop" onLoad={(e) => {this.loadImage(e)}} src={this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
+              </picture>
+              <div className="image-preload image-preload--movie-backdrop">
+                <Spinner/>
+              </div>
               <FaveBtn favorites={this.props.favorites} id={this.props.movieDetails.id} name={this.props.movieDetails.title} poster={this.props.movieDetails.poster_path}
                        isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
                            return favMovie.id === this.props.movieDetails.id;}).length > 0)
@@ -126,7 +123,22 @@ class MovieInfo extends Component {
                        moviePage={true}
               />
             </div>
-
+            }
+            {this.props.movieDetails.backdrop_path === null &&
+            <div className="MovieInfo__poster-wrapper">
+              <div className="MovieInfo__placeholder">
+                <div className="MovieInfo__placeholder-mobile"></div>
+                <div className="MovieInfo__placeholder-tablet"></div>
+                <div className="MovieInfo__placeholder-desktop"></div>
+              </div>
+              <FaveBtn favorites={this.props.favorites} id={this.props.movieDetails.id} name={this.props.movieDetails.title} poster={this.props.movieDetails.poster_path}
+                       isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
+                           return favMovie.id === this.props.movieDetails.id;}).length > 0)
+                         : false}
+                       moviePage={true}
+              />
+            </div>
+            }
             <span className="MovieInfo__section-header">image gallery</span>
             <div className="MovieInfo__info MovieInfo__info--gallery">
               <div className="MovieInfo__show-link">
@@ -137,9 +149,9 @@ class MovieInfo extends Component {
               {this.props.loadingMovieImages && <div>Loading images gallery...</div>}
               {this.props.movieImagesError && !this.props.loadingMovieImages && <div>ERROR IN GALLERY!</div>}
               {!this.props.movieImagesError && !this.props.loadingMovieImages && this.props.movieImages && this.props.settings &&
-              <div className="MovieInfo__images-wrapper">
-                {this.loadImages()}
-              </div>
+                <div className="MovieInfo__images-wrapper">
+                  {this.loadImages()}
+                </div>
               }
             </div>
             <span className="MovieInfo__section-header">original title</span>
@@ -246,14 +258,12 @@ const mapStateToProps = (state) => {
     movieCredits: state.movieCredits
   }
 };
-
 const mapDispatchToProps = {
   addGenres,
   clearGenres,
   fetchMovieSimilar,
   fetchMovieImages,
   fetchMovieCredits,
-  clearImages
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieInfo);

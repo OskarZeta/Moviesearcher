@@ -14,13 +14,50 @@ body{
   margin: 0;
   padding: 0;
   font-family: 'Times New Roman', Times, serif;
-  //overflow: hidden;
 }
-
 a:visited{
   color: inherit;
 }
+.image-preload{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ecf0ff;
+}
+.image-preload--gallery-preview{
+  min-width: 144px;
+  min-height: 81px;
+}
+.image-preload--movie-backdrop{
+  min-width: 290px;
+  min-height: 163px;
+}
+.hidden {
+  display: none;
+}
 
-.empty{
-  //height: calc(100% - 123px);
+@media (min-width: 800px) {
+  .image-preload--gallery-preview{
+    min-width: 185px;
+    min-height: 104px;
+  }
+  .image-preload--movie-backdrop{
+    min-width: 550px;
+    min-height: 310px;
+  }
+}
+@media (min-width: 1300px) {
+  .image-preload--gallery-preview{
+    min-width: 308px;
+    min-height: 173px;
+  }
+  .image-preload--movie-backdrop{
+    min-width: 890px;
+    min-height: 500px;
+  }
 }
