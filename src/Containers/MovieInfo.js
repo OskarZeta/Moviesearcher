@@ -21,9 +21,9 @@ class MovieInfo extends Component {
     if (this.props.movieImages) {
       let images = this.props.movieImages.backdrops;
       return images.map((image, index) => {
-        let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
-        let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
-        let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + image.file_path;
+        let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + image.file_path;
+        let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[2] + image.file_path;
+        let addressDesktop = this.props.settings.secure_base_url + this.props.settings.poster_sizes[3] + image.file_path;
         if (index < imagesToShowPreview) {
           return(
             <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.movieDetails.id}/image=${index+1}`}>
@@ -109,9 +109,9 @@ class MovieInfo extends Component {
             {this.props.movieDetails.backdrop_path !== null &&
             <div className="MovieInfo__poster-wrapper">
               <picture>
-                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
-                <source srcSet={this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
-                <img className="MovieInfo__backdrop" onLoad={(e) => {this.loadImage(e)}} src={this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
+                <source srcSet={this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[2] + this.props.movieDetails.backdrop_path} media="(min-width: 1300px)"/>
+                <source srcSet={this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[1] + this.props.movieDetails.backdrop_path} media="(min-width: 800px)"/>
+                <img className="MovieInfo__backdrop" onLoad={(e) => {this.loadImage(e)}} src={this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[0] + this.props.movieDetails.backdrop_path} alt="movie-backdrop"/>
               </picture>
               <div className="image-preload image-preload--movie-backdrop">
                 <Spinner/>

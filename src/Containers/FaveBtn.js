@@ -42,10 +42,10 @@ class FaveBtn extends Component {
                       : this.props.moviePage ? 'FaveBtn__moviePage' : 'FaveBtn'}>
         <button className='FaveBtn__button' onClick={(e) => {this.clickHandler(e)}}>
           {!this.props.isFav &&
-            <img src="https://oskarzeta.github.io/star.svg"/>
+            <img src="star.svg"/>
           }
           {this.props.isFav &&
-            <img src="https://oskarzeta.github.io/star_active.svg"/>
+            <img src="star_active.svg"/>
           }
         </button>
       </div>

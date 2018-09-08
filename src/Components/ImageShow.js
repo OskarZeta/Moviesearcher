@@ -45,9 +45,9 @@ class ImageShow extends Component {
     document.querySelector('.image-preload').classList.remove('hidden');
   }
   render(){
-    let addressMobile = this.props.settings.base_url + this.props.settings.backdrop_sizes[0] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-    let addressTablet = this.props.settings.base_url + this.props.settings.backdrop_sizes[1] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-    let addressDesktop = this.props.settings.base_url + this.props.settings.backdrop_sizes[2] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressMobile = this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[0] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressTablet = this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[1] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressDesktop = this.props.settings.secure_base_url + this.props.settings.backdrop_sizes[2] + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
     return(
       <div className="ImageShow">
         <div className="container container--imageshow">

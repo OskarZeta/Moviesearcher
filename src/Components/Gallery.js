@@ -7,9 +7,9 @@ class Gallery extends Component {
     if (this.props.movieImages) {
       let images = this.props.movieImages.backdrops;
       return images.map((image, index) => {
-        let addressMobile = this.props.settings.base_url + this.props.settings.poster_sizes[1] + image.file_path;
-        let addressTablet = this.props.settings.base_url + this.props.settings.poster_sizes[2] + image.file_path;
-        let addressDesktop = this.props.settings.base_url + this.props.settings.poster_sizes[3] + image.file_path;
+        let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + image.file_path;
+        let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[2] + image.file_path;
+        let addressDesktop = this.props.settings.secure_base_url + this.props.settings.poster_sizes[3] + image.file_path;
         return(
           <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.filmId}/images/${index+1}`}>
             <picture>
