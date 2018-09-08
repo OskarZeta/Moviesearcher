@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addFavorite, removeFavorite } from '../Redux/actions/change_favorites';
 
-
 class FaveBtn extends Component {
   clickHandler(e){
     if (!this.props.isFav) {
@@ -43,10 +42,10 @@ class FaveBtn extends Component {
                       : this.props.moviePage ? 'FaveBtn__moviePage' : 'FaveBtn'}>
         <button className='FaveBtn__button' onClick={(e) => {this.clickHandler(e)}}>
           {!this.props.isFav &&
-            <img src="http://localhost:3000/star.svg"/>
+            <img src="https://oskarzeta.github.io/star.svg"/>
           }
           {this.props.isFav &&
-            <img src="http://localhost:3000/star_active.svg"/>
+            <img src="https://oskarzeta.github.io/star_active.svg"/>
           }
         </button>
       </div>

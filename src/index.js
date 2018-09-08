@@ -13,7 +13,6 @@ const initialState = {
   movieList: [],
   settings: {},
   genreList: [],
-  //genresTriggered: false,
   genresSelected: [],
   page: 1,
   favorites: JSON.parse(localStorage.getItem('favorites')) || [],
