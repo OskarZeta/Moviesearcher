@@ -1,5 +1,4 @@
 .Sidebar{
-  background-color: #c167eb;
   width: 100%;
 }
 .Sidebar__wrapper{
@@ -10,6 +9,8 @@
   font-size: 16px;
   margin: 0;
   text-align: left;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #989b98;
 }
 .Sidebar__header-text{
   padding-left: 5px;
@@ -18,98 +19,93 @@
 .Sidebar__genreList-wrapper{
   display: flex;
   flex-wrap: wrap;
+  padding-top: 3px;
+  justify-content: space-around;
 }
 .Sidebar__genre-label{
   display: flex;
-  width: 33%;
+  width: 32%;
   align-items: center;
   cursor: pointer;
   transition: 0.2s;
+  margin-bottom: 0;
 }
 .Sidebar__genre-label:hover{
-  background-color: #b768e1;
+  background-color: #c9e1d8;
 }
 .Sidebar__genre-input{
   display: none;
 }
 .Sidebar__genre-custom{
   box-sizing: border-box;
-  display: block;
-  width: 10px;
-  height: 10px;
-  border: 1px solid #E2DDFF;
-  background-color: #cfcaeb;
-  margin: 3px 5px;
+  display: flex;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #8e918e;
+  margin-right: 8px;
 }
-.Sidebar__genre-input:checked + .Sidebar__genre-custom{
-  border: 1px solid #E2DDFF;
-  background-color: #6f3b9b;
+.Sidebar__genre-input:checked + .Sidebar__genre-custom::after{
+  display: block;
+  content: "";
+  background-color: #989b98;
+  width: 8px;
+  height: 8px;
+  margin: auto;
 }
 .Sidebar__genre-name{
   font-size: 12px;
 }
+.Sidebar__sort-params{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
 .Sidebar__sort-wrapper{
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  padding-top: 3px;
 }
 .Sidebar__sort-label{
-  width: 16%;
   display: flex;
-  flex-direction: column;
-  background-color: #b461dc;
   border-radius: 8px;
-  margin: 0 auto;
-  padding: 3px;
+  margin: 0;
   cursor: pointer;
   transition: 0.3s;
 }
 .Sidebar__sort-label:hover{
-  background-color: #a062c8;
-}
-.Sidebar__sort-label--active{
-  background-color: #a062c8;
+  background-color: #c9e1d8;
 }
 .Sidebar__sort-radiobtn{
-  order: 2;
-}
-.Sidebar__sort-wrapper--direction .Sidebar__sort-label{
-  width: 30%;
+  display: flex;
+  align-items: center;
 }
 .Sidebar__sort-input{
   display: none;
 }
 .Sidebar__sort-custom{
   box-sizing: border-box;
-  display: block;
-  margin: 0 auto;
-  width: 40px;
-  height: 12px;
-  background-color: #e2ddff;
-  border: 3px solid #6f3b9b;
-  border-top: none;
-  border-left: none;
-  border-top-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  display: flex;
+  width: 13px;
+  height: 13px;
+  border: 1px solid #8e918e;
+  border-radius: 10px;
+  margin-right: 8px;
 }
-.Sidebar__sort-input:checked + .Sidebar__sort-custom{
-  background: linear-gradient(to bottom, #D3FFFD, #00ffff);
-  border: 1px solid #6f3b9b;
-  border-radius: 0;
+.Sidebar__sort-input:checked + .Sidebar__sort-custom::after{
+  display: block;
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #8e918e;
+  border-radius: 10px;
+  margin: auto;
 }
 .Sidebar__sort-name{
   font-size: 12px;
-  text-align: center;
-  flex-grow: 2;
-  order: 1;
-  margin-bottom: 2px;
 }
 .Sidebar__wrapper--hidden{
   display: none;
 }
-.Sidebar__sort-params label{
-  display: flex;
-}
-
 @media (min-width: 800px) {
   .Sidebar__wrapper{
     flex-direction: row;
@@ -121,19 +117,22 @@
   }
   .Sidebar__header-text{
     font-size: 18px;
+    font-weight: bold;
   }
   .Sidebar__genreList-wrapper{
-    margin: 0 10px;
+    margin: 0 5px;
+    justify-content: flex-start;
   }
   .Sidebar__genre-label{
-    width: 120px;
-    margin-right: 30px;
+    width: 18%;
+    margin-right: 13px;
   }
   .Sidebar__genre-name{
     font-size: 16px;
   }
   .Sidebar__sort-wrapper{
-    margin-left: 10px;
+    margin-left: 5px;
+    flex-direction: row;
   }
   .Sidebar__sort-name{
     font-size: 14px;
@@ -144,66 +143,69 @@
   }
   .Sidebar__sort:last-child{
     flex-grow: 2;
-    margin-left: 40px;
+    margin-left: 45px;
   }
   .Sidebar__sort-params{
     display: flex;
     width: 100%;
   }
   .Sidebar__sort-label{
-    width: 90px;
-    margin: 0 5px 0 0;
+    margin: 0 5px 2px 0;
     border-radius: 4px;
-    padding-bottom: 7px;
   }
   .Sidebar__sort-wrapper--direction{
+    flex-direction: column;
     justify-content: space-between;
-    margin-right: 10px;
+    margin: 0;
     flex-grow: 2;
-  }
-  .Sidebar__sort-wrapper--direction .Sidebar__sort-label{
-    width: 90px;
   }
 }
 
 @media (min-width: 1300px) {
+  .Sidebar__header{
+    margin-top: 15px;
+  }
   .Sidebar__header-text{
     font-size: 26px;
   }
+  .Sidebar__genreList-wrapper{
+    margin-left: 15px;
+  }
   .Sidebar__genre-label{
-    width: 220px;
+    margin-right: 20px;
   }
   .Sidebar__genre-custom{
-    width: 15px;
-    height: 15px;
-    border: 2px solid #E2DDFF;
+    width: 18px;
+    height: 18px;
     margin-right: 10px;
+  }
+  .Sidebar__genre-input:checked + .Sidebar__genre-custom::after{
+    width: 12px;
+    height: 12px;
   }
   .Sidebar__genre-name{
     font-size: 20px;
   }
-  .Sidebar__sort-label{
-    width: 160px;
-    margin-right: 10px;
-  }
-  .Sidebar__sort-name{
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-  .Sidebar__sort-custom{
-    width: 80px;
-    height: 20px;
-    border: 3px solid #6f3b9b;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-
-  }
-  .Sidebar__sort-wrapper--direction{
-    justify-content: space-between;
-    margin-right: 0;
+  .Sidebar__sort{
     flex-grow: 2;
   }
-  .Sidebar__sort-wrapper--direction .Sidebar__sort-label{
-    width: 140px;
+  .Sidebar__sort:last-child{
+    flex-grow: 1;
+    margin-left: 50px;
+  }
+  .Sidebar__sort-name{
+    font-size: 20px;
+  }
+  .Sidebar__sort-custom{
+    width: 20px;
+    height: 20px;
+  }
+  .Sidebar__sort-input:checked + .Sidebar__sort-custom::after{
+    width: 12px;
+    height: 12px;
+  }
+  .Sidebar__sort-wrapper{
+    margin-left: 15px;
+    justify-content: space-between;
   }
 }

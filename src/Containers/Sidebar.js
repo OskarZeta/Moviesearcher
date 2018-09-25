@@ -13,7 +13,7 @@ class Sidebar extends Component {
     let selected = this.props.genresSelected;
     return list.map((genre) => {
       if (selected.length > 0) {
-        if (selected.includes(genre.id)) {
+        if (selected.indexOf(genre.id) !== -1) {
           return(
             <Genre key={genre.id} id={genre.id} name={genre.name} history={this.props.history} check={true} goHome={this.props.goHome} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>
           );

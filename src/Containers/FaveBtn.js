@@ -14,40 +14,48 @@ class FaveBtn extends Component {
       this.props.removeFavorite(this.props.id);
     }
   }
-  componentDidMount() {
-    if (document.querySelector('.MovieInfo__title')) {
-      let coloredHeader = document.querySelector('.FaveBtn__header');
-      if (this.props.isFav && this.props.moviePage) {
-        coloredHeader.style.opacity = '1';
-      } else if (!this.props.isFav && this.props.moviePage) {
-        coloredHeader.style.opacity = '0';
-      }
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (document.querySelector('.MovieInfo__title')) {
-      if (this.props.isFav !== prevProps.isFav && this.props.moviePage) {
-        let coloredHeader = document.querySelector('.FaveBtn__header');
-        if (this.props.isFav) {
-          coloredHeader.style.opacity = '1';
-        } else if (!this.props.isFav) {
-          coloredHeader.style.opacity = '0';
-        }
-      }
-    }
-  }
   render(){
     return(
-      <div className={this.props.isFav ? this.props.moviePage ? 'FaveBtn__moviePage FaveBtn__moviePage--active' : 'FaveBtn FaveBtn--active'
-                      : this.props.moviePage ? 'FaveBtn__moviePage' : 'FaveBtn'}>
-        <button className='FaveBtn__button' onClick={(e) => {this.clickHandler(e)}}>
-          {!this.props.isFav &&
-            <img src="star.svg"/>
-          }
-          {this.props.isFav &&
-            <img src="star_active.svg"/>
-          }
-        </button>
+      <div className={this.props.isFav ? this.props.moviePage ? 'FaveBtn FaveBtn--moviePage FaveBtn--active btn' : 'FaveBtn FaveBtn--active btn'
+                      : this.props.moviePage ? 'FaveBtn FaveBtn--moviePage btn btn-success' : 'FaveBtn btn btn-success'}
+           onClick={(e) => {this.clickHandler(e)}}
+      >
+        {!this.props.isFav && !this.props.moviePage &&
+          <div className='FaveBtn__content'>
+            <svg className="FaveBtn__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path className="FaveBtn__star" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z"
+              />
+            </svg>
+            <span className="FaveBtn__text">Add to faves</span>
+          </div>
+        }
+        {this.props.isFav && !this.props.moviePage &&
+          <div className='FaveBtn__content'>
+            <svg className="FaveBtn__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path className="FaveBtn__star FaveBtn__star--active" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z"
+              />
+            </svg>
+            <span className="FaveBtn__text">Remove from faves</span>
+          </div>
+        }
+        {!this.props.isFav && this.props.moviePage &&
+          <div className='FaveBtn__content'>
+            <svg className="FaveBtn__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path className="FaveBtn__star" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z"
+              />
+            </svg>
+            <span className="FaveBtn__text">Add to favorites</span>
+          </div>
+        }
+        {this.props.isFav && this.props.moviePage &&
+          <div className='FaveBtn__content'>
+            <svg className="FaveBtn__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path className="FaveBtn__star FaveBtn__star--active" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z"
+              />
+            </svg>
+            <span className="FaveBtn__text">Remove from favorites</span>
+          </div>
+        }
       </div>
     );
   }

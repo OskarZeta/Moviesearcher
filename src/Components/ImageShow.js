@@ -62,16 +62,9 @@ class ImageShow extends Component {
             </div>
           </div>
           <div className="ImageShow__interface">
-            <button className="ImageShow__prev" onClick={() => {this.sliderClick("prev")}}>
-              <span className="ImageShow__prev-triangle"></span>
-            </button>
-            <button className="ImageShow__close" onClick={() => {this.closeClick()}}>
-              <span className="ImageShow__close-circle"></span>
-              <span className="ImageShow__close-stick"></span>
-            </button>
-            <button className="ImageShow__next" onClick={() => {this.sliderClick("next")}}>
-              <span className="ImageShow__next-triangle"></span>
-            </button>
+            <button className="ImageShow__prev" onClick={() => {this.sliderClick("prev")}}></button>
+            <button className="ImageShow__close" onClick={() => {this.closeClick()}}></button>
+            <button className="ImageShow__next" onClick={() => {this.sliderClick("next")}}></button>
           </div>
         </div>
       </div>

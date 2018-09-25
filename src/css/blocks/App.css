@@ -1,3 +1,6 @@
+.App{
+  background-color: #f0f0f0;
+}
 .App__wrapper{
   width: 100%;
 }
@@ -9,4 +12,12 @@
 .App__credits{
   margin: 10px 0;
   padding: 0;
+}
+.App__faves-empty{
+  font-size: 20px;
+}
+@media (min-width: 1300px) {
+  .App__faves-empty{
+    font-size: 28px;
+  }
 }

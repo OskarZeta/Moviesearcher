@@ -9,7 +9,7 @@ class Header extends Component {
     let sidebar = document.querySelector('.Header__sidebar');
     sidebar.classList.toggle('hidden');
     let btn = document.querySelector('.Header__options');
-    btn.classList.toggle('Header__btn-active');
+    btn.classList.toggle('Header__btn--active');
   }
   render() {
     return (
@@ -18,7 +18,7 @@ class Header extends Component {
           <Home/>
           {!this.props.filmId && !this.props.toFavs &&
             <ul className="Header__additional">
-              <li className={`Header__options ${(this.props.genresSelected.length === 0 && !this.props.sortValue) ? `` : `Header__btn-active`}`} onClick={(e) => {this.clickOptions(e)}}>
+              <li className={`Header__options Header__btn ${(this.props.genresSelected.length === 0 && !this.props.sortValue) ? `` : `Header__btn--active`}`} onClick={(e) => {this.clickOptions(e)}}>
                 <span>Options</span>
               </li>
               <li className={`Header__sidebar ${(this.props.genresSelected.length === 0 && !this.props.sortValue) ? `hidden` : ``}`}>
@@ -31,7 +31,7 @@ class Header extends Component {
                   sortDir={this.props.sortDir}
                 />
               </li>
-              <li className="Header__favorites">
+              <li className="Header__favorites Header__btn">
                 <Link to="/favorites">
                   <span>Favorites</span>
                 </Link>
@@ -43,7 +43,7 @@ class Header extends Component {
           }
           {this.props.filmId && !this.props.toMovie && !this.props.toFavs &&
             <ul className="Header__additional">
-              <li className="Header__favorites">
+              <li className="Header__favorites Header__btn">
                 <Link to="/favorites">
                   <span>Favorites</span>
                 </Link>
@@ -52,21 +52,21 @@ class Header extends Component {
           }
           {this.props.filmId && this.props.toMovie && !this.props.toFavs &&
             <ul className="Header__additional Header__additional--movie">
-              <li className="Header__favorites">
+              <li className="Header__favorites Header__btn">
                 <Link to="/favorites">
                   <span>Favorites</span>
                 </Link>
               </li>
-              <li className="Header__back">
+              <li className="Header__back Header__btn">
                 <Link to={`/filmId/${this.props.filmId}`}>
-                  Back to movie
+                  To movie
                 </Link>
               </li>
             </ul>
           }
           {this.props.toFavs && !this.props.toMovie &&
             <ul className="Header__additional">
-              <li className="Header__favorites Header__favorites-nonbtn Header__btn-active">
+              <li className="Header__favorites Header__btn Header__favorites-nonbtn Header__btn--active">
                 <span style={{display: "block", padding: "5px"}}>Favorites</span>
               </li>
             </ul>

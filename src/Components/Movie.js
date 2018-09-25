@@ -10,11 +10,11 @@ class Movie extends Component {
     // 3(pin): "w342"
     // 4(pin): "w500"
     // 5(pin): "w780"
-    let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[0] + this.props.poster;
-    let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + this.props.poster;
+    let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + this.props.poster;
+    let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[2] + this.props.poster;
     let addressDesktop = this.props.settings.secure_base_url + this.props.settings.poster_sizes[3] + this.props.poster;
     return(
-      <div className={!this.props.usePreview ? 'Movie' : 'Movie__preview'}>
+      <div className={!this.props.usePreview ? 'Movie' : 'Movie Movie--preview'}>
         {!this.props.usePreview &&
           <div className="Movie__link">
             <Link to={`/filmId/${this.props.id}`} >
@@ -40,7 +40,7 @@ class Movie extends Component {
         {this.props.usePreview &&
           <div className="Movie__link">
             <Link to={`/filmId/${this.props.id}`}>
-              <h2 className="Movie__preview-header">{this.props.name}</h2>
+              <h2 className="Movie__header">{this.props.name}</h2>
               {this.props.poster !== null &&
                 <picture>
                   <source srcSet={addressTablet} media="(min-width: 800px)"/>

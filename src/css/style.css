@@ -33,7 +33,7 @@ a:visited{
   min-width: 144px;
   min-height: 81px;
 }
-.image-preload--movie-backdrop{
+.image-preload--movie-poster{
   min-width: 290px;
   min-height: 163px;
 }
@@ -43,21 +43,21 @@ a:visited{
 
 @media (min-width: 800px) {
   .image-preload--gallery-preview{
-    min-width: 185px;
-    min-height: 104px;
+    min-width: 110px;
+    min-height: 62px;
   }
-  .image-preload--movie-backdrop{
-    min-width: 550px;
-    min-height: 310px;
+  .image-preload--movie-poster{
+    min-width: 230px;
+    min-height: 345px;
   }
 }
 @media (min-width: 1300px) {
   .image-preload--gallery-preview{
-    min-width: 308px;
-    min-height: 173px;
+    min-width: 182px;
+    min-height: 102px;
   }
-  .image-preload--movie-backdrop{
-    min-width: 890px;
-    min-height: 500px;
+  .image-preload--movie-poster{
+    min-width: 346px;
+    min-height: 518px;
   }
 }

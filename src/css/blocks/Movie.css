@@ -1,20 +1,29 @@
-.Movie, .Movie__preview{
+.Movie{
   display: flex;
   position: relative;
   flex-direction: column;
   margin: 10px auto;
   background-color: white;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,0.75);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.75);
   border-radius: 5px;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.Movie:hover{
+  box-shadow: 0 0 10px 0 rgba(98, 115, 106, 0.75);
 }
 .Movie{
-  width: 102px;
+  width: 130px;
 }
-.Movie__preview{
-  width: 102px;
+.Movie img{
+  max-width: 100%;
 }
-.Movie__header {
+.Movie--preview{
+  width: 140px;
+}
+.Movie__header{
+  margin-top: 4px;
   font-size: 14px;
   text-align: center;
 }
@@ -22,18 +31,18 @@
   display: flex;
   flex-direction: column;
   flex-grow: 2;
-  margin-bottom: 28px;
+  padding-bottom: 29px;
   width: 100%;
 }
-.Movie__preview .Movie__link{
+.Movie--preview .Movie__link{
   margin-bottom: 0;
 }
-.Movie__preview-header{
-  font-size: 12px;
+.Movie--preview .Movie__header{
+  font-size: 14px;
   text-align: center;
   margin: 5px;
 }
-.Movie a, .Movie__preview a{
+.Movie a{
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -45,23 +54,16 @@
   padding: 4px;
   transition: 0.2s;
 }
-.Movie a:hover, .Movie__preview a:hover{
-  box-shadow: 0 0 10px 0 rgba(132, 83, 165, 0.75);
-  background-color: #f8f4ff;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-.Movie__preview a:hover{
+.Movie--preview a:hover{
   border-radius: 5px;
 }
 .Movie__placeholder-mobile, .Movie__placeholder-tablet, .Movie__placeholder-desktop, .Movie__placeholder-tablet--desktop{
-  background: url("http://localhost:3000/placeholder-image.png") center;
+  background: url("https://oskarzeta.github.io/Moviesearcher/placeholder-image.png") center;
   background-size: cover;
-  margin-bottom: 4px;
 }
 .Movie__placeholder-mobile{
-  width: 92px;
-  height: 138px;
+  width: 122px;
+  height: 176px;
   display: block;
 }
 .Movie__placeholder-tablet, .Movie__placeholder-tablet--desktop{
@@ -71,17 +73,20 @@
 }
 .Movie__placeholder-desktop{
   width: 342px;
-  height: 514px;
+  height: 489px;
   display: none;
 }
 @media (min-width: 800px) {
   .Movie {
     width: 163px;
   }
-  .Movie__preview{
+  .Movie__link{
+    padding-bottom: 34px;
+  }
+  .Movie--preview{
     width: 163px;
   }
-  .Movie__preview-header{
+  .Movie--preview .Movie__header{
     font-size: 16px;
     text-align: center;
     margin: 5px;
@@ -101,14 +106,21 @@
     width: 351px;
     margin: 20px auto;
   }
-  .Movie__preview-header{
+  .Movie--preview{
+    width: 195px;
+  }
+  .Movie:hover{
+    box-shadow: 1px 1px 25px 0 rgba(98, 115, 106, 0.75);
+  }
+  .Movie--preview .Movie__header{
     font-size: 20px;
   }
   .Movie__header{
-    font-size: 24px;
+    font-size: 32px;
+    margin: 10px 0 20px 0;
   }
   .Movie__link{
-    margin-bottom: 49px;
+    margin-bottom: 20px;
   }
   .Movie__placeholder-mobile{
     display: none;

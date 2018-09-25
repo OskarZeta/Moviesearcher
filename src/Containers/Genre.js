@@ -15,7 +15,7 @@ class Genre extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.genresSelected !== prevProps.genresSelected) {
       if (this.props.genresSelected.length !== 0 || prevProps.genresSelected.length !== 0) {
-        if (this.props.genresSelected.includes(this.props.id) || prevProps.genresSelected.includes(this.props.id)) {
+        if (this.props.genresSelected.indexOf(this.props.id) !== -1 || prevProps.genresSelected.indexOf(this.props.id) !== -1) {
           if (this.props.genresSelected.length !== 0) {
             if (this.props.sortValue && this.props.sortDir) {
               this.props.history.push(`/sort_by/${this.props.sortValue}.${this.props.sortDir}/genres=${this.props.genresSelected}/${this.props.page}`);
@@ -31,7 +31,6 @@ class Genre extends Component {
           }
         }
       }
-
     }
   }
   render(){

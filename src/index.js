@@ -1,9 +1,12 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+//import $ from 'jquery';
+//import Popper from 'popper.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import setStore from './Redux/store';
 import Root from './Containers/Root';
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 const initialState = {
   loadingMovies: false,
@@ -28,4 +31,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-registerServiceWorker();
+//registerServiceWorker();
