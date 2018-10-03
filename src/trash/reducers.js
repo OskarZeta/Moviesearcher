@@ -2,7 +2,7 @@ import {
   FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_FAIL,
   FETCH_MOVIES_SUCCESS
-} from './actions/fetch_movies';
+} from './actions/movie_list/fetch_movies_default';
 import {
   FETCH_SETTINGS_FAIL,
   FETCH_SETTINGS_SUCCESS,
@@ -17,22 +17,22 @@ import {
   MOVIE_DETAILS_REQUEST,
   MOVIE_DETAILS_FAIL,
   MOVIE_DETAILS_SUCCESS
-} from './actions/fetch_movie_details';
+} from './actions/movie_info/fetch_movie_details';
 import {
   MOVIE_IMAGES_REQUEST,
   MOVIE_IMAGES_FAIL,
   MOVIE_IMAGES_SUCCESS
-} from './actions/fetch_movie_images';
+} from './actions/movie_info/fetch_movie_images';
 import {
   MOVIE_SIMILAR_REQUEST,
   MOVIE_SIMILAR_FAIL,
   MOVIE_SIMILAR_SUCCESS
-} from './actions/fetch_movie_similars';
+} from './actions/movie_info/fetch_movie_similars';
 import {
   MOVIE_CREDITS_REQUEST,
   MOVIE_CREDITS_FAIL,
   MOVIE_CREDITS_SUCCESS
-} from './actions/fetch_movie_credits';
+} from './actions/movie_info/fetch_movie_credits';
 import {
   ADD_GENRE,
   REMOVE_GENRE,

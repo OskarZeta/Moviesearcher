@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import { apiKey } from '../actions/fetch_movies';
+import { apiKey } from './fetch_movies_default';
 
 export const MOVIE_DETAILS_REQUEST = 'MOVIE_DETAILS_REQUEST';
 export const MOVIE_DETAILS_FAIL = 'MOVIE_DETAILS_FAIL';
