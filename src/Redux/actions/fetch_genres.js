@@ -1,55 +1,59 @@
-import 'whatwg-fetch';
-import { apiKey, apiAddress } from '../actions/fetch_movies';
+import axios from 'axios';
 
-export const FETCH_GENRES_REQUEST = 'FETCH_GENRES_REQUEST';
-export const FETCH_GENRES_FAIL = 'FETCH_GENRES_FAIL';
-export const FETCH_GENRES_SUCCESS = 'FETCH_GENRES_SUCCESS';
+import { errorSet } from './has_error';
 
-const urlGenres = `${apiAddress}/genre/movie/list?language=en-US&api_key=${apiKey}`;
+const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
-function fetchGenresRequest() {
+//export const FETCH_GENRES_REQUEST = 'FETCH_GENRES_REQUEST';
+//export const FETCH_GENRES_FAIL = 'FETCH_GENRES_FAIL';
+export const FETCH_GENRES = 'FETCH_GENRES';
+
+const urlGenres = `https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${apiKey}`;
+
+// function fetchGenresRequest() {
+//   return {
+//     type: FETCH_GENRES_REQUEST,
+//     loadingGenres: true
+//   }
+// }
+// function fetchGenresFail() {
+//   return {
+//     type: FETCH_GENRES_FAIL,
+//     loadingOptions: false,
+//     genresLoadingError: true,
+//     genreList: {}
+//   }
+// }
+// function fetchGenresSuccess(json) {
+//   return {
+//     type: FETCH_GENRES_SUCCESS,
+//     loadingGenres: false,
+//     genreList: json
+//   }
+// }
+
+function loadGenres(json) {
   return {
-    type: FETCH_GENRES_REQUEST,
-    loadingGenres: true
-  }
-}
-function fetchGenresFail() {
-  return {
-    type: FETCH_GENRES_FAIL,
-    loadingOptions: false,
-    genresLoadingError: true,
-    genreList: {}
-  }
-}
-function fetchGenresSuccess(json) {
-  return {
-    type: FETCH_GENRES_SUCCESS,
-    loadingGenres: false,
+    type: FETCH_GENRES,
     genreList: json
   }
 }
 
 export function fetchGenres() {
   return ((dispatch) => {
-    dispatch(fetchGenresRequest());
-    return fetch(urlGenres)
-      .then((initialResponse) => {
-        if (initialResponse.ok) {
-          return initialResponse.json();
-        } else {
-          dispatch(fetchGenresFail());
-        }
-      })
-      .then((json) => {
-        json = json.genres.map((genre) => {
+    return axios.get(urlGenres)
+      .then((response) => {
+        dispatch(loadGenres(response.data.genres));
+        //console.log(response.data.genres);
+        return response.data.genres.map((genre) => {
           return Object.assign(genre, {
             selected: false
           });
         });
-        dispatch(fetchGenresSuccess(json));
-      }, (error)=> {
-        dispatch(fetchGenresFail());
+      })
+      .catch((error) => {
         console.log(error);
+        dispatch(errorSet("Error while retrieving list of genres from server."));
       });
   });
 }

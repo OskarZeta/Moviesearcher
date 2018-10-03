@@ -17,12 +17,13 @@ class Search extends Component {
   render(){
     return(
       <div>
-        {this.props.searchQuery &&
-          <input type="search" value={this.props.searchQuery} autoFocus onChange={(e) => {this.searchRequest(e)}}/>
-        }
-        {!this.props.searchQuery &&
-          <input type="search" onChange={(e) => {this.searchRequest(e)}} placeholder="Search..."/>
-        }
+        {/*{this.props.searchQuery &&*/}
+          {/*<input type="search" value={this.props.searchQuery} autoFocus onChange={(e) => {this.searchRequest(e)}}/>*/}
+        {/*}*/}
+        {/*{!this.props.searchQuery &&*/}
+          {/*<input type="search" onChange={(e) => {this.searchRequest(e)}} placeholder="Search..."/>*/}
+        {/*}*/}
+        <input type="search" onChange={(e) => {this.searchRequest(e)}} placeholder="Search..."/>
       </div>
     );
   }

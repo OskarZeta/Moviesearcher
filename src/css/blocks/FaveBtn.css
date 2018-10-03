@@ -99,7 +99,7 @@
     margin-left: 8px;
   }
   .FaveBtn__text{
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 @media (min-width: 1300px) {
@@ -128,13 +128,14 @@
   .FaveBtn--moviePage .FaveBtn__img{
     width: 30px;
     height: 30px;
-    margin-left: 20px;
-    margin-right: 50px;
+    margin-right: 30px;
   }
   .FaveBtn--moviePage .FaveBtn__text{
-    font-size: 28px;
+    font-size: 26px;
   }
   .FaveBtn--moviePage.FaveBtn--active .FaveBtn__img{
+    width: 30px;
+    height: 30px;
     margin-right: 20px;
   }
   .Movie--preview .FaveBtn{
@@ -148,6 +149,6 @@
     margin-right: 15px;
   }
   .Movie--preview .FaveBtn__text{
-    font-size: 16px;
+    font-size: 15px;
   }
 }

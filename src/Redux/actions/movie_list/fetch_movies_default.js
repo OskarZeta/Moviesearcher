@@ -1,9 +1,9 @@
 //import 'whatwg-fetch';
 import axios from 'axios';
 
-import { errorSet } from './has_error';
-export const apiAddress = 'https://api.themoviedb.org/3';
-export const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
+import { errorSet } from '../has_error';
+
+const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
 // export const FETCH_MOVIES_REQUEST = 'FETCH_MOVIES_REQUEST';
 // export const FETCH_MOVIES_FAIL = 'FETCH_MOVIES_FAIL';
@@ -47,10 +47,10 @@ const urlPolular = `https://api.themoviedb.org/3/movie/popular?language=en-US&ap
 //   }
 // }
 
-function moviesLoadDefault(response) {
+function moviesLoadDefault(data) {
   return {
     type: FETCH_MOVIES_DEFAULT,
-    moviesDefault: response ? response.results : []
+    movieList: data ? data.results : []
   }
 }
 
@@ -58,10 +58,11 @@ export function fetchMoviesDefault(page) {
   return (dispatch) => {
     return axios.get(urlPolular + page)
       .then((response) => {
-        dispatch(moviesLoadDefault(response));
+        dispatch(moviesLoadDefault(response.data));
       })
       .catch((error) => {
-        dispatch(errorSet(error));
+        console.log(error);
+        dispatch(errorSet("Error while retrieving list of popular movies from server."));
       })
   }
 }

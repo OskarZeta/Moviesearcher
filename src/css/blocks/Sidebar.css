@@ -53,7 +53,7 @@
   margin: auto;
 }
 .Sidebar__genre-name{
-  font-size: 12px;
+  font-size: 11px;
 }
 .Sidebar__sort-params{
   display: flex;
@@ -101,7 +101,7 @@
   margin: auto;
 }
 .Sidebar__sort-name{
-  font-size: 12px;
+  font-size: 11px;
 }
 .Sidebar__wrapper--hidden{
   display: none;
@@ -128,18 +128,21 @@
     margin-right: 13px;
   }
   .Sidebar__genre-name{
-    font-size: 16px;
+    font-size: 15px;
   }
   .Sidebar__sort-wrapper{
     margin-left: 5px;
     flex-direction: row;
   }
   .Sidebar__sort-name{
-    font-size: 14px;
+    font-size: 15px;
   }
   .Sidebar__sort{
     display: flex;
     flex-direction: column;
+  }
+  .Sidebar__sort-custom{
+    margin-right: 5px;
   }
   .Sidebar__sort:last-child{
     flex-grow: 2;
@@ -156,7 +159,7 @@
   .Sidebar__sort-wrapper--direction{
     flex-direction: column;
     justify-content: space-between;
-    margin: 0;
+    margin: 0 0 0 10px;
     flex-grow: 2;
   }
 }
