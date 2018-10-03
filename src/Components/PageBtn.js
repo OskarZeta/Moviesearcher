@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { pageNext, pagePrev, changePage } from '../Redux/actions/change_page';
+//import { pageNext, pagePrev, changePage } from '../Redux/actions/change_page';
 
 class PageBtn extends Component {
   componentDidMount(){
@@ -26,9 +26,14 @@ class PageBtn extends Component {
     }
   }
   render() {
+    //console.log(this.props.query, this.props.history.location.pathname);
     return (
       <div>
-        <Link className={'Pagination__' + this.props.direction} to={`/${this.props.query ? 'sort_by?' + this.props.query + '/' : ''}${this.makePageAndText().page}`}>
+        <Link className={'Pagination__' + this.props.direction}
+              to={
+                `${this.props.query ? this.props.history.location.pathname + '?' + this.props.query + '/' : '/'}${this.makePageAndText().page}`
+              }
+        >
           <span>{this.makePageAndText().text}</span>
         </Link>
         {/*{this.props.genresSelected.length === 0 && !this.props.searchQuery && !(this.props.sortValue && this.props.sortDir) &&*/}
@@ -61,18 +66,19 @@ class PageBtn extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
+//const mapStateToProps = (state, ownProps) => {
+  //return {
     // page: ownProps.page,
     // genresSelected: ownProps.genresSelected || state.genresSelected,
     // searchQuery: ownProps.searchQuery
-  }
-};
+  //}
+//};
 
-const mapDispatchToProps = {
+//const mapDispatchToProps = {
   // pageNext,
   // pagePrev,
   // changePage
-};
+//};
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageBtn);
+//export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageBtn));
+export default withRouter(PageBtn);

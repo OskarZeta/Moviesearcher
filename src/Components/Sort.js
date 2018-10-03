@@ -85,11 +85,11 @@ class Sort extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
+//const mapStateToProps = (state) => {
+  //return {
     //genresSelected: state.genresSelected
-  }
-};
+  //}
+//};
 
-export default withRouter(connect(mapStateToProps)(Sort));
-//export default Sort;
+//export default withRouter(connect(mapStateToProps)(Sort));
+export default withRouter(Sort);

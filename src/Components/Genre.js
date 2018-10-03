@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addGenres, removeGenres } from '../Redux/actions/change_genres';
-import { changePage } from '../Redux/actions/change_page';
+//import { addGenres, removeGenres } from '../Redux/actions/change_genres';
+//import { changePage } from '../Redux/actions/change_page';
 import { withRouter } from 'react-router-dom';
 
 const queryString = require('query-string');
@@ -83,19 +83,20 @@ class Genre extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
+//const mapStateToProps = (state, ownProps) => {
+  //return {
     //genresSelected: state.genresSelected,
-    page: state.page,
+    //page: state.page,
     //history: ownProps.history,
-    check: ownProps.check
-  }
-};
+    //check: ownProps.check
+  //}
+//};
 
-const mapDispatchToProps = {
-  changePage,
-  addGenres,
-  removeGenres
-};
+//const mapDispatchToProps = {
+  //changePage,
+  //addGenres,
+  //removeGenres
+//};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Genre));
+//export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Genre));
+export default withRouter(Genre);
