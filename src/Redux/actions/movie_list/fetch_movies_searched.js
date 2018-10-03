@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { errorSet } from '../has_error';
+import { loadingStart, loadingStop } from '../is_loading';
 
 const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
@@ -18,9 +19,11 @@ function moviesLoadSorted(data) {
 
 export function fetchMoviesSearched(page, query) {
   return (dispatch) => {
+    dispatch(loadingStart());
     return axios.get(urlSearch1 + query + urlSearch2 + page)
       .then((response) => {
-        dispatch(moviesLoadSorted(response));
+        dispatch(moviesLoadSorted(response.data));
+        dispatch(loadingStop());
       })
       .catch((error) => {
         dispatch(errorSet(error));

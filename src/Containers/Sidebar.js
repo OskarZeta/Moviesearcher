@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchGenres } from '../Redux/actions/fetch_genres';
-import Genre from './Genre';
-import Sort from './Sort';
+import Genre from '../Components/Genre';
+import Sort from '../Components/Sort';
 import Spinner from '../Components/Spinner';
 
 class Sidebar extends Component {
   componentDidMount() {
-    this.props.fetchGenres();
     //console.log(this.props.query);
-    //console.log(this.props.history);
+    this.props.fetchGenres();
   }
   componentDidUpdate(prevProps){
     if (this.props.query !== prevProps.query) {
@@ -86,10 +85,10 @@ class Sidebar extends Component {
     //console.log(this.props.history);
     return(
       <div className={this.props.query ? 'Sidebar' : 'Sidebar hidden'}>
-        {!this.props.genreList.length &&
+        {this.props.genreList.length === 0 &&
           <Spinner/>
         }
-        {this.props.genreList.length > 0 &&
+        {this.props.genreList.length !== 0 &&
           <div className="Sidebar__wrapper">
             <div className="Sidebar__genreList">
               <h2 className="Sidebar__header">

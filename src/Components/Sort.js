@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 const queryString = require('query-string');
 
 class Sort extends Component {
-  componentDidMount(){
-    //console.log(this.props.history);
-  }
   clickHandler (e) {
-
     let url;
-    // if (this.props.query) {
-    //   url = Object.assign({}, this.props.query);
-    // } else {
-    //   url = {};
-    // }
     if (this.props.name === 'sort') {
       if (this.props.query) {
         if (!this.props.query.direction) {
           url = Object.assign({}, this.props.query, {value: this.props.value}, {direction: "desc"});
-          //console.log(url);
         } else {
           url = Object.assign({}, this.props.query);
         }
@@ -40,25 +29,6 @@ class Sort extends Component {
       url.direction = this.props.value;
     }
     this.props.history.push(`/sort_by?${decodeURIComponent(queryString.stringify(url))}`);
-    // if (this.props.name === 'sort') {
-    //   let direction = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelectorAll('input[name=direction]:checked')[0].value;
-    //   if (this.props.genresSelected.length > 0) {
-    //     //this.props.history.push(`/sort_by/${this.props.value}.${direction}/genres=${this.props.genresSelected}`);
-    //   } else {
-    //     //this.props.history.push(`/sort_by/${this.props.value}.${direction}`);
-    //     this.props.history.push(`/sort_by?value=${this.props.value}&direction=${direction}`);
-    //   }
-    // } else if (this.props.name === 'direction') {
-    //   let sortType = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelectorAll('input[name=sort]:checked')[0].value;
-    //   if (this.props.genresSelected.length > 0) {
-    //     //this.props.history.push(`/sort_by/${sortType}.${this.props.value}/genres=${this.props.genresSelected}`);
-    //   } else {
-    //     //this.props.history.push(`/sort_by/${sortType}.${this.props.value}`);
-    //     this.props.history.push(`/sort_by?value=${sortType}&direction=${this.props.value}`);
-    //   }
-    // }
-
-    //console.log(this.props.query);
   }
   render(){
     return(
@@ -85,11 +55,4 @@ class Sort extends Component {
   }
 }
 
-//const mapStateToProps = (state) => {
-  //return {
-    //genresSelected: state.genresSelected
-  //}
-//};
-
-//export default withRouter(connect(mapStateToProps)(Sort));
 export default withRouter(Sort);

@@ -6,10 +6,11 @@ import {movieImages} from './movieImages';
 import {movieSimilars} from './movieSimilars';
 import {settings} from './settings';
 import {genreList} from './genreList';
-import {genresSelected} from './genresSelected';
+//import {genresSelected} from './genresSelected';
 import {favorites} from './favorites';
-import {page} from './page';
+//import {page} from './page';
 import {error} from './error';
+import {loading} from './loading';
 
 const rootReducer = combineReducers({
   movieList,
@@ -19,10 +20,11 @@ const rootReducer = combineReducers({
   movieSimilars,
   settings,
   genreList,
-  genresSelected,
+  //genresSelected,
   favorites,
-  page,
-  error
+  //page,
+  error,
+  loading
 });
 
 export default rootReducer;

@@ -1,5 +1,6 @@
-import { errorSet } from '../has_error';
 import axios from 'axios';
+import { errorSet } from '../has_error';
+//import { loadingStart, loadingStop } from '../is_loading';
 
 const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
@@ -17,11 +18,13 @@ function movieLoadSimilars(data) {
   }
 }
 
-export function fetchMovieImages(id) {
+export function fetchMovieSimilars(id) {
   return (dispatch) => {
+    //dispatch(loadingStart());
     return axios.get(urlSimilars1 + id + urlSimilars2)
       .then((response) => {
         dispatch(movieLoadSimilars(response));
+        //dispatch(loadingStop());
       })
       .catch((error) => {
         dispatch(errorSet(error));

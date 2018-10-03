@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, withRouter, Link } from 'react-router-dom';
-import {
-  //fetchGenredMovies,
-  //fetchSearchedMovies,
-  //fetchPopularMovies,
-  //fetchSortedMovies
-} from '../Redux/actions/movie_list/fetch_movies_default';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { fetchSettings } from '../Redux/actions/fetch_settings';
-import { fetchMovieDetails } from '../Redux/actions/movie_info/fetch_movie_details';
-import { fetchMovieImages } from '../Redux/actions/movie_info/fetch_movie_images';
-import { fetchMovieCredits } from '../Redux/actions/movie_info/fetch_movie_credits';
-import { addGenres, clearGenres } from '../Redux/actions/change_genres';
-import { changePage } from '../Redux/actions/change_page';
 import { connect } from 'react-redux';
 import '../css/style.css';
 // import MovieList from '../Components/MovieList';
@@ -26,11 +15,11 @@ import '../css/style.css';
 
 import Header from '../Components/Header/Header';
 import HeaderMovie from '../Components/Header/HeaderMovie';
-import HeaderSorted from '../Components/Header/HeaderSorted';
 import HeaderMovieDetails from '../Components/Header/HeaderMovieDetails';
 import MovieList from './MovieList/MovieList';
 import MovieListSorted from './MovieList/MovieListSorted';
-//import MovieInfo from './MovieInfo';
+import MovieListSearched from './MovieList/MovieListSearched';
+import MovieInfo from './MovieInfo';
 
 const queryString = require('query-string');
 
@@ -40,6 +29,19 @@ class App extends Component {
       this.props.fetchSettings();
     } else {
       this.props.fetchSettings(JSON.parse(document.cookie.split(';')[0].split(' ')[0].split('settings=')[1]));
+    }
+  }
+  makeQueryAndPage(searchQuery){
+    if (searchQuery.split('/')[1]) {
+      return {
+        query: queryString.parse(searchQuery.split('/')[0]),
+        page: +searchQuery.split('/')[1]
+      };
+    } else {
+      return {
+        query: queryString.parse(searchQuery),
+        page: 1
+      };
     }
   }
   componentDidMount() {
@@ -85,6 +87,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
+
     // console.log(this.props.location);
 
     // if (this.props.favorites !== prevProps.favorites) {
@@ -169,8 +172,6 @@ class App extends Component {
   }
 
   render() {
-    //console.log(this.props.location);
-    //console.log(this.props);
     return (
       <div className="App">
         <Switch>
@@ -183,33 +184,41 @@ class App extends Component {
             );
           }}/>
           <Route path='/sort_by' render={(props) => {
-            let query;
-            let page;
-            if (props.location.search.split('/')[1]) {
-              query = queryString.parse(props.location.search.split('/')[0]);
-              page = +props.location.search.split('/')[1];
-            } else {
-              query = queryString.parse(props.location.search);
-              page = 1;
-            }
             return(
               <div>
-                <Header query={query}/>
-                <MovieListSorted query={query} page={page}/>
+                <Header
+                  query={this.makeQueryAndPage(props.location.search).query}
+                />
+                <MovieListSorted
+                  query={this.makeQueryAndPage(props.location.search).query}
+                  page={this.makeQueryAndPage(props.location.search).page}
+                />
+              </div>
+            );
+          }}/>
+          <Route path='/search' render={(props) => {
+            return(
+              <div>
+                <Header
+                  query={this.makeQueryAndPage(props.location.search).query}
+                />
+                <MovieListSearched
+                  query={this.makeQueryAndPage(props.location.search).query}
+                  page={this.makeQueryAndPage(props.location.search).page}
+                />
               </div>
             );
           }}/>
           <Route path='/filmId/:id' render={(props) => {
-
             return(
               <div>
                 <HeaderMovie/>
-                {/*<MovieInfo/>*/}
+                <MovieInfo id={+props.match.params.id}/>
               </div>
             );
           }}/>
           <Route path='/:page(\d+)' render={(props) => {
-            console.log('page');
+            //console.log('page');
             return(
               <div>
                 <Header/>

@@ -1,15 +1,15 @@
 //import 'whatwg-fetch';
 import axios from 'axios';
-
 import { errorSet } from '../has_error';
-
-const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
+import { loadingStart, loadingStop } from '../is_loading';
 
 // export const FETCH_MOVIES_REQUEST = 'FETCH_MOVIES_REQUEST';
 // export const FETCH_MOVIES_FAIL = 'FETCH_MOVIES_FAIL';
 // export const FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS';
+
 export const FETCH_MOVIES_DEFAULT = 'FETCH_MOVIES_DEFAULT';
 
+const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 const urlPolular = `https://api.themoviedb.org/3/movie/popular?language=en-US&api_key=${apiKey}&page=`;
 // const urlGenred1 = `https://api.themoviedb.org/3/discover/movie?with_genres=`;
 // const urlDiscover = `https://api.themoviedb.org/3/discover/movie?sort_by=`;
@@ -56,9 +56,11 @@ function moviesLoadDefault(data) {
 
 export function fetchMoviesDefault(page) {
   return (dispatch) => {
+    dispatch(loadingStart());
     return axios.get(urlPolular + page)
       .then((response) => {
         dispatch(moviesLoadDefault(response.data));
+        dispatch(loadingStop());
       })
       .catch((error) => {
         console.log(error);
