@@ -1,12 +1,10 @@
-//import 'whatwg-fetch';
 import axios from 'axios';
 //import { apiKey } from '../movie_list/fetch_movies_default';
 import { errorSet } from '../has_error';
+//import { loadingStart, loadingStop } from '../is_loading';
 
 const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
-//export const MOVIE_CREDITS_REQUEST = 'MOVIE_CREDITS_REQUEST';
-//export const MOVIE_CREDITS_FAIL = 'MOVIE_CREDITS_FAIL';
 export const FETCH_MOVIE_CREDITS = 'FETCH_MOVIE_CREDITS';
 
 const urlCredits1 = `https://api.themoviedb.org/3/movie/`;
@@ -44,9 +42,11 @@ function movieLoadCredits(data) {
 
 export function fetchMovieCredits(id) {
   return (dispatch) => {
+    //dispatch(loadingStart());
     return axios.get(urlCredits1 + id + urlCredits2)
       .then((response) => {
-        dispatch(movieLoadCredits(response));
+        dispatch(movieLoadCredits(response.data));
+        //dispatch(loadingStop());
       })
       .catch((error) => {
         dispatch(errorSet(error));

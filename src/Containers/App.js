@@ -1,8 +1,3 @@
-import React, { Component } from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import { fetchSettings } from '../Redux/actions/fetch_settings';
-import { connect } from 'react-redux';
-import '../css/style.css';
 // import MovieList from '../Components/MovieList';
 // import MovieInfo from '../Containers/MovieInfo';
 // import Gallery from '../Components/Gallery';
@@ -13,6 +8,12 @@ import '../css/style.css';
 // import Crew from '../Components/Crew';
 // import Cast from '../Components/Cast';
 
+import React, { Component } from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import { fetchSettings } from '../Redux/actions/fetch_settings';
+import { connect } from 'react-redux';
+import '../css/style.css';
+
 import Header from '../Components/Header/Header';
 import HeaderMovie from '../Components/Header/HeaderMovie';
 import HeaderMovieDetails from '../Components/Header/HeaderMovieDetails';
@@ -20,6 +21,7 @@ import MovieList from './MovieList/MovieList';
 import MovieListSorted from './MovieList/MovieListSorted';
 import MovieListSearched from './MovieList/MovieListSearched';
 import MovieInfo from './MovieInfo';
+import Gallery from './Gallery';
 
 const queryString = require('query-string');
 
@@ -186,30 +188,31 @@ class App extends Component {
           <Route path='/sort_by' render={(props) => {
             return(
               <div>
-                <Header
-                  query={this.makeQueryAndPage(props.location.search).query}
-                />
-                <MovieListSorted
-                  query={this.makeQueryAndPage(props.location.search).query}
-                  page={this.makeQueryAndPage(props.location.search).page}
-                />
+                <Header query={this.makeQueryAndPage(props.location.search).query}/>
+                <MovieListSorted query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
               </div>
             );
           }}/>
           <Route path='/search' render={(props) => {
             return(
               <div>
-                <Header
-                  query={this.makeQueryAndPage(props.location.search).query}
-                />
-                <MovieListSearched
-                  query={this.makeQueryAndPage(props.location.search).query}
-                  page={this.makeQueryAndPage(props.location.search).page}
-                />
+                <Header query={this.makeQueryAndPage(props.location.search).query}/>
+                <MovieListSearched query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
+              </div>
+            );
+          }}/>
+          <Route path='/filmId/:id/images' render={(props) => {
+            //console.log(props.location.search);
+            return(
+              <div>
+                <HeaderMovieDetails id={+props.match.params.id}/>
+                <Gallery id={+props.match.params.id}/>
               </div>
             );
           }}/>
           <Route path='/filmId/:id' render={(props) => {
+            //console.log('movie');
+            //console.log(props.location.search);
             return(
               <div>
                 <HeaderMovie/>

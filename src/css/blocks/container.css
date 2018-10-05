@@ -6,7 +6,7 @@
   box-sizing: border-box;
   position: relative;
 }
-.container--movielist, .container--movieinfo {
+.container--movielist, .container--movieinfo, .container--gallery {
   display: flex;
   flex-wrap: wrap;
   box-shadow: 5px 5px 5px -4px #bcc3d7, -5px 5px 5px -4px #bcc3d7;
@@ -16,6 +16,15 @@
 .container--header{
   background-color: #d0e6dd;
   box-shadow: 5px 5px 5px -4px #9eb4ab, -5px 5px 5px -4px #9fb4ab;
+}
+.container--gallery{
+  align-content: flex-start;
+}
+.container--similars{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
 }
 .container--imageshow{
   padding: 0;

@@ -35,12 +35,12 @@ class MovieInfo extends Component {
           document.querySelector('.MovieInfo__show-link--gallery').classList.remove("hidden");
         }
         return images.map((image, index) => {
-          let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + image.file_path;
-          let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[2] + image.file_path;
-          let addressDesktop = this.props.settings.secure_base_url + this.props.settings.poster_sizes[3] + image.file_path;
+          let addressMobile = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[1] + image.file_path;
+          let addressTablet = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[2] + image.file_path;
+          let addressDesktop = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[3] + image.file_path;
           if (index < imagesToShowPreview) {
             return(
-              <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.movieDetails.id}/image=${index+1}`}>
+              <Link className="MovieInfo__image-preview" key={index} to={`/filmId/${this.props.movieDetails.id}?image=${index+1}`}>
                 <picture>
                   <source srcSet={addressDesktop} media="(min-width: 1300px)" />
                   <source srcSet={addressTablet} media="(min-width: 800px)" />
@@ -57,8 +57,9 @@ class MovieInfo extends Component {
     }
   }
   loadCast() {
-    if (this.props.movieCredits) {
+    //if (this.props.movieCredits) {
       let cast = this.props.movieCredits.cast;
+      //console.log(this.props.movieCredits);
       if (cast.length === 0) {
         if (document.querySelector('.MovieInfo__show-link--cast')) {
           document.querySelector('.MovieInfo__show-link--cast').classList.add("hidden");
@@ -83,11 +84,12 @@ class MovieInfo extends Component {
           }
         });
       }
-    }
+    //}
   }
   loadCrew() {
-    if (this.props.movieCredits) {
+    //if (this.props.movieCredits) {
       let crew = this.props.movieCredits.crew;
+      //console.log(this.props.movieCredits);
       if (crew.length === 0) {
         if (document.querySelector('.MovieInfo__show-link--crew')) {
           document.querySelector('.MovieInfo__show-link--crew').classList.add("hidden");
@@ -113,9 +115,11 @@ class MovieInfo extends Component {
           );
         });
       }
-    }
+    //}
   }
   componentDidMount() {
+    //console.log('film');
+    //console.log(this.props.id);
     //this.props.clearGenres();
     this.props.fetchMovieDetails(this.props.id);
     this.props.fetchMovieSimilars(this.props.id, 1);
@@ -125,17 +129,26 @@ class MovieInfo extends Component {
     // this.props.fetchMovieImages(this.props.movieDetails.id);
     // this.props.fetchMovieCredits(this.props.movieDetails.id);
   }
+  componentDidUpdate(props){
+    if (this.props.id !== props.id) {
+      //console.log('film updated');
+      this.props.fetchMovieDetails(this.props.id);
+      this.props.fetchMovieSimilars(this.props.id, 1);
+      this.props.fetchMovieImages(this.props.id);
+      this.props.fetchMovieCredits(this.props.id);
+    }
+  }
   render(){
     //console.log(this.props.movieDetails);
     return(
       <div className="App__content">
+        <div className="container container--movieinfo">
         {this.props.loading && <Spinner/>}
         {!this.props.loading && Object.keys(this.props.movieDetails).length && Object.keys(this.props.settings).length &&
-          <div className="container container--movieinfo">
-            {/*{this.props.imageIndex && this.props.movieImages && this.props.settings &&*/}
-              {/*<ImageShow imageIndex={this.props.imageIndex - 1} movieImages={this.props.movieImages} settings={this.props.settings} history={this.props.history} from="movie"/>*/}
-            {/*}*/}
             <div className="MovieInfo__wrapper">
+              {/*{this.props.imageIndex && this.props.movieImages && this.props.settings &&*/}
+                {/*<ImageShow imageIndex={this.props.imageIndex - 1} movieImages={this.props.movieImages} settings={this.props.settings} history={this.props.history} from="movie"/>*/}
+              {/*}*/}
               <h1 className="MovieInfo__title">
                 <span>{this.props.movieDetails.title}</span>
               </h1>
@@ -205,13 +218,12 @@ class MovieInfo extends Component {
                       </Link>
                     </div>
 
-                    {/*{this.props.loadingMovieImages && <Spinner/>}*/}
-                    {/*{this.props.movieImagesError && !this.props.loadingMovieImages && <div>ERROR IN GALLERY!</div>}*/}
-                    {/*{!this.props.movieImagesError && !this.props.loadingMovieImages && this.props.movieImages && this.props.settings &&*/}
-                      {/*<div className="MovieInfo__images-wrapper">*/}
-                        {/*{this.loadImages()}*/}
-                      {/*</div>*/}
-                    {/*}*/}
+                    {!Object.keys(this.props.movieImages).length && <Spinner/>}
+                    {Object.keys(this.props.movieImages).length &&
+                      <div className="MovieInfo__images-wrapper">
+                        {this.loadImages()}
+                      </div>
+                    }
 
                   </div>
                   <h2 className="MovieInfo__section-header">original title</h2>
@@ -220,17 +232,17 @@ class MovieInfo extends Component {
                   </p>
                   <h2 className="MovieInfo__section-header">tagline</h2>
                   {this.props.movieDetails.tagline.length > 0 &&
-                  <p className="MovieInfo__info">{'"' + this.props.movieDetails.tagline + '"'}</p>
+                    <p className="MovieInfo__info">{'"' + this.props.movieDetails.tagline + '"'}</p>
                   }
                   {this.props.movieDetails.tagline.length === 0 &&
-                  <p className="MovieInfo__info" style={{fontStyle: "italic"}}>Not available</p>
+                    <p className="MovieInfo__info" style={{fontStyle: "italic"}}>Not available</p>
                   }
-                  <h2 className="MovieInfo__section-header">description</h2>
+                    <h2 className="MovieInfo__section-header">description</h2>
                   {this.props.movieDetails.overview.length > 0 &&
-                  <p className="MovieInfo__info">{this.props.movieDetails.overview}</p>
+                    <p className="MovieInfo__info">{this.props.movieDetails.overview}</p>
                   }
                   {this.props.movieDetails.overview.length === 0 &&
-                  <p className="MovieInfo__info MovieInfo__info--na">Not available</p>
+                    <p className="MovieInfo__info MovieInfo__info--na">Not available</p>
                   }
                   <h2 className="MovieInfo__section-header">release date</h2>
                   <p className="MovieInfo__info">
@@ -239,20 +251,20 @@ class MovieInfo extends Component {
                   <h2 className="MovieInfo__section-header">genres</h2>
                   <div className="MovieInfo__info MovieInfo__info--row">
 
-                    {/*{this.props.movieDetails.genres.length > 0 && this.props.movieDetails.genres.map((genre, index) => {*/}
-                      {/*return (*/}
-                        {/*<Link key={index} className="MovieInfo__genre-href" to={`/genres=${genre.id}`} onClick={() => {*/}
-                          {/*this.props.addGenres(genre.id);*/}
-                        {/*}}>*/}
-                          {/*{genre.name}*/}
-                        {/*</Link>*/}
-                      {/*)*/}
-                    {/*})}*/}
-                    {/*{this.props.movieDetails.genres.length === 0 &&*/}
-                      {/*<div className="MovieInfo__info MovieInfo__info--na">*/}
-                        {/*Not available*/}
-                      {/*</div>*/}
-                    {/*}*/}
+                    {this.props.movieDetails.genres.length > 0 && this.props.movieDetails.genres.map((genre, index) => {
+                      return (
+                        <Link key={index} className="MovieInfo__genre-href" to={`/genres=${genre.id}`} onClick={() => {
+                          this.props.addGenres(genre.id);
+                        }}>
+                          {genre.name}
+                        </Link>
+                      )
+                    })}
+                    {this.props.movieDetails.genres.length === 0 &&
+                      <div className="MovieInfo__info MovieInfo__info--na">
+                        Not available
+                      </div>
+                    }
 
                   </div>
                   <h2 className="MovieInfo__section-header">budget</h2>
@@ -263,23 +275,23 @@ class MovieInfo extends Component {
                   <h2 className="MovieInfo__section-header">crew</h2>
                   <div className="MovieInfo__info MovieInfo__info--credits">
                     <div className="MovieInfo__show-link MovieInfo__show-link--crew">
-                      <Link to={`/filmId/${this.props.movieDetails.id}/crew`} >
+                      <Link to={`/filmId/${this.props.id}/crew`} >
                         <span>show full crew</span>
                       </Link>
                     </div>
 
-                    {/*{this.loadCrew()}*/}
+                    {Object.keys(this.props.movieCredits).length && this.loadCrew()}
 
                   </div>
                   <h2 className="MovieInfo__section-header">cast</h2>
                   <div className="MovieInfo__info MovieInfo__info--credits">
                     <div className="MovieInfo__show-link MovieInfo__show-link--cast">
-                      <Link to={`/filmId/${this.props.movieDetails.id}/cast`} >
+                      <Link to={`/filmId/${this.props.id}/cast`} >
                         <span>show full cast</span>
                       </Link>
                     </div>
 
-                    {/*{this.loadCast()}*/}
+                    {Object.keys(this.props.movieCredits).length && this.loadCast()}
 
                   </div>
                   <div className="MovieInfo__votes">
@@ -306,6 +318,16 @@ class MovieInfo extends Component {
               </div>
               <h2 className="MovieInfo__section-header MovieInfo__section-header--similars">similar movies</h2>
               <div className="MovieInfo__info MovieInfo__info--similars">
+                {!Object.keys(this.props.movieSimilars).length && <Spinner/>}
+                {Object.keys(this.props.movieSimilars).length && this.props.movieSimilars.total_results &&
+                  <MovieListSimilars usePreview={true} favorites={this.props.favorites}/>
+                }
+                {Object.keys(this.props.movieSimilars).length && !this.props.movieSimilars.total_results &&
+                  <div className="MovieInfo__info MovieInfo__info--na MovieInfo__info--na-similars">
+                    Not available
+                  </div>
+                }
+
 
                 {/*{this.props.loadingMovieSimilar && <div>Loading...</div>}*/}
                 {/*{this.props.movieSimilarError && !this.props.loadingMovieSimilar && <div>ERROR!</div>}*/}
@@ -322,8 +344,8 @@ class MovieInfo extends Component {
 
               </div>
             </div>
-          </div>
         }
+        </div>
       </div>
     );
   }
@@ -332,7 +354,7 @@ class MovieInfo extends Component {
 const mapStateToProps = (state) => {
   return {
     movieDetails: state.movieDetails,
-    movieSimilar: state.movieSimilar,
+    movieSimilars: state.movieSimilars,
     movieImages: state.movieImages,
     movieCredits: state.movieCredits,
     settings: state.settings,

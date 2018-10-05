@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Movie from '../../Components/Movie';
+import Movie from '../../Components/Movie/Movie';
 import PageBtn from '../../Components/PageBtn';
 import Spinner from '../../Components/Spinner';
 import {

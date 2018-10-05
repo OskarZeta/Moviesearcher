@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { errorSet } from '../has_error';
-//import { loadingStart, loadingStop } from '../is_loading';
 
 const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
@@ -14,17 +13,16 @@ const urlSimilars2 = `/similar?api_key=${apiKey}&language=en-US&page=1`;
 function movieLoadSimilars(data) {
   return {
     type: FETCH_MOVIE_SIMILARS,
-    movieDetails: data
+    movieSimilars: data
+    //movieSimilars: data.results
   }
 }
 
 export function fetchMovieSimilars(id) {
   return (dispatch) => {
-    //dispatch(loadingStart());
     return axios.get(urlSimilars1 + id + urlSimilars2)
       .then((response) => {
-        dispatch(movieLoadSimilars(response));
-        //dispatch(loadingStop());
+        dispatch(movieLoadSimilars(response.data));
       })
       .catch((error) => {
         dispatch(errorSet(error));
