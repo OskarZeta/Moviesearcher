@@ -39,6 +39,9 @@ class MovieList extends Component {
     if (this.props.page !== prevProps.page) {
       this.props.fetchMoviesDefault(Number.isNaN(this.props.page) ? 1 : this.props.page);
     }
+    if (this.props.favorites !== prevProps.favorites) {
+      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+    }
   }
   render() {
     return(

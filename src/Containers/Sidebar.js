@@ -76,13 +76,6 @@ class Sidebar extends Component {
   }
 
   render(){
-    //if (this.props.error) {
-      //console.log(this.props.error);
-      //throw new Error('genres error!')
-    //}
-    //console.log(this.props.genreList.length);
-
-    //console.log(this.props.history);
     return(
       <div className={this.props.query ? 'Sidebar' : 'Sidebar hidden'}>
         {this.props.genreList.length === 0 &&

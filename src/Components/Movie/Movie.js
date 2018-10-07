@@ -13,7 +13,6 @@ class Movie extends Component {
     let addressMobile = this.props.settings.secure_base_url + this.props.settings.poster_sizes[1] + this.props.poster;
     let addressTablet = this.props.settings.secure_base_url + this.props.settings.poster_sizes[2] + this.props.poster;
     let addressDesktop = this.props.settings.secure_base_url + this.props.settings.poster_sizes[3] + this.props.poster;
-    //className={!this.props.usePreview ? 'Movie' : 'Movie Movie--preview'}
     return(
       <div className='Movie'>
         {/*{!this.props.usePreview &&*/}

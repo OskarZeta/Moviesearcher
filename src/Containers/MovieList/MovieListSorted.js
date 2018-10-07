@@ -37,6 +37,9 @@ class MovieListSorted extends Component {
     if (this.props.page !== prevProps.page || this.props.query !== prevProps.query) {
       this.props.fetchMoviesSorted(this.props.page, this.props.query.value, this.props.query.direction, this.props.query.genres);
     }
+    if (this.props.favorites !== prevProps.favorites) {
+      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+    }
   }
   render() {
     return(

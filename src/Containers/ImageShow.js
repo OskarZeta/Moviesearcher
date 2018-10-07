@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Spinner from '../Components/Spinner';
 
 class ImageShow extends Component {
@@ -16,24 +18,24 @@ class ImageShow extends Component {
       if (dir === "prev") {
         if (this.props.imageIndex > 0) {
           document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/image=${index}`);
+          this.props.history.push(`/filmId/${this.props.movieImages.id}?image=${index}`);
         }
       } else if (dir === "next") {
         if (this.props.imageIndex < this.props.movieImages.backdrops.length - 1) {
           document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/image=${index + 2}`);
+          this.props.history.push(`/filmId/${this.props.movieImages.id}?image=${index + 2}`);
         }
       }
     } else if (this.props.from === "gallery") {
       if (dir === "prev") {
         if (this.props.imageIndex > 0) {
           document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/images/${index}`);
+          this.props.history.push(`/filmId/${this.props.movieImages.id}/images?image=${index}`);
         }
       } else if (dir === "next"){
         if (this.props.imageIndex < this.props.movieImages.backdrops.length - 1) {
           document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/images/${index + 2}`);
+          this.props.history.push(`/filmId/${this.props.movieImages.id}/images?image=${index + 2}`);
         }
       }
     }
@@ -45,10 +47,23 @@ class ImageShow extends Component {
     document.querySelector('.image-preload').classList.remove('hidden');
   }
   render(){
-    console.log(this.props.settings);
-    let addressMobile = this.props.settings.images.secure_base_url + this.props.settings.images.backdrop_sizes[0];// + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-    let addressTablet = this.props.settings.images.secure_base_url + this.props.settings.images.backdrop_sizes[1];// + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-    let addressDesktop = this.props.settings.images.secure_base_url + this.props.settings.images.backdrop_sizes[2];// + this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    let addressMobile;
+    let addressTablet;
+    let addressDesktop;
+    if (Object.keys(this.props.movieImages).length && Object.keys(this.props.settings).length) {
+      addressMobile =
+        this.props.settings.images.secure_base_url +
+        this.props.settings.images.backdrop_sizes[0] +
+        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+      addressTablet =
+        this.props.settings.images.secure_base_url +
+        this.props.settings.images.backdrop_sizes[1] +
+        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+      addressDesktop =
+        this.props.settings.images.secure_base_url +
+        this.props.settings.images.backdrop_sizes[2] +
+        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+    }
     return(
       <div className="ImageShow">
         <div className="container container--imageshow">
@@ -73,4 +88,11 @@ class ImageShow extends Component {
   }
 }
 
-export default ImageShow;
+const mapStateToProps = (state) => {
+  return {
+    movieImages: state.movieImages,
+    settings: state.settings
+  }
+};
+
+export default withRouter(connect(mapStateToProps)(ImageShow));

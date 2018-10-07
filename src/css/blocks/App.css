@@ -12,6 +12,7 @@
 .App__credits{
   margin: 10px 0;
   padding: 0;
+  width: 100%;
 }
 .App__faves-empty{
   font-size: 20px;

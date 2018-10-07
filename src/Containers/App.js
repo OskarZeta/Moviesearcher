@@ -11,17 +11,23 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { fetchSettings } from '../Redux/actions/fetch_settings';
+import { loadFavorites } from '../Redux/actions/change_favorites';
 import { connect } from 'react-redux';
 import '../css/style.css';
 
 import Header from '../Components/Header/Header';
 import HeaderMovie from '../Components/Header/HeaderMovie';
 import HeaderMovieDetails from '../Components/Header/HeaderMovieDetails';
+import HeaderFavorites from '../Components/Header/HeaderFavorites';
 import MovieList from './MovieList/MovieList';
 import MovieListSorted from './MovieList/MovieListSorted';
 import MovieListSearched from './MovieList/MovieListSearched';
+import MovieListFavorites from './MovieList/MovieListFavorites';
 import MovieInfo from './MovieInfo';
 import Gallery from './Gallery';
+import Cast from './Cast';
+import Crew from './Crew';
+//import Favorites from '../Components/Favorites';
 
 const queryString = require('query-string');
 
@@ -48,7 +54,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.getSettings();
-
+    this.props.loadFavorites();
     // if (this.props.filmId === 'error' || Number.isNaN(this.props.page)) {
     //   console.log('wrong data');
     //   this.props.history.push('/');
@@ -175,167 +181,182 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Switch>
-          <Route exact path='/' render={() => {
-            return(
-              <div>
-                <Header/>
-                <MovieList page={1}/>
-              </div>
-            );
-          }}/>
-          <Route path='/sort_by' render={(props) => {
-            return(
-              <div>
-                <Header query={this.makeQueryAndPage(props.location.search).query}/>
-                <MovieListSorted query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
-              </div>
-            );
-          }}/>
-          <Route path='/search' render={(props) => {
-            return(
-              <div>
-                <Header query={this.makeQueryAndPage(props.location.search).query}/>
-                <MovieListSearched query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
-              </div>
-            );
-          }}/>
-          <Route path='/filmId/:id/images' render={(props) => {
-            //console.log(props.location.search);
-            return(
-              <div>
-                <HeaderMovieDetails id={+props.match.params.id}/>
-                <Gallery id={+props.match.params.id}/>
-              </div>
-            );
-          }}/>
-          <Route path='/filmId/:id' render={(props) => {
-            //console.log('movie');
-            //console.log(props.location.search);
-            return(
-              <div>
-                <HeaderMovie/>
-                <MovieInfo id={+props.match.params.id}/>
-              </div>
-            );
-          }}/>
-          <Route path='/:page(\d+)' render={(props) => {
-            //console.log('page');
-            return(
-              <div>
-                <Header/>
-                <MovieList page={+props.match.params.page}/>
-              </div>
-            );
-          }}/>
-          <Route render={(props) => {
-            console.log(props);
-            return(
-              <div>wrong route</div>
-            );
-          }}>
-          </Route>
-        </Switch>
-
-        {/*{!this.props.filmId && !this.props.favsPage &&*/}
-          {/*<div>*/}
-            {/*<Header history={this.props.history}*/}
-                    {/*searchQuery={this.props.searchQuery}*/}
-                    {/*genresSelected={this.props.genresSelected}*/}
-                    {/*goHome={this.props.goHome}*/}
-                    {/*sortValue={this.props.sortValue}*/}
-                    {/*sortDir={this.props.sortDir}*/}
-            {/*/>*/}
-            {/*<div className="container container--movielist">*/}
-              {/*{this.props.loadingMovies && <Spinner/>}*/}
-              {/*{this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}*/}
-              {/*{!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length && this.props.favorites &&*/}
-                {/*<div className="App__wrapper-movies" >*/}
-                  {/*<MovieList movieList={this.props.movieList} settings={this.props.settings.images} favorites={this.props.favorites}/>*/}
-                  {/*<Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-        {/*{this.props.filmId && !this.props.gallery && !this.props.crewPage && !this.props.castPage &&*/}
-          {/*<div>*/}
-            {/*<Header filmId={this.props.filmId}/>*/}
-            {/*<div className="container container--movieinfo">*/}
-              {/*{this.props.loadingMovieDetails && <Spinner/>}*/}
-              {/*{this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}*/}
-              {/*{!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length && this.props.favorites &&*/}
-                {/*<div className="App__wrapper-movies">*/}
-                  {/*<MovieInfo movieDetails={this.props.movieDetails} settings={this.props.settings.images} favorites={this.props.favorites}*/}
-                  {/*imageIndex={this.props.imageIndex} history={this.props.history}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-        {/*{this.props.filmId && this.props.gallery && !this.props.crewPage && !this.props.castPage &&*/}
-          {/*<div>*/}
-            {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
-            {/*<div className="container container--movieinfo">*/}
-              {/*{this.props.loadingMovieImages && <Spinner/>}*/}
-              {/*{this.props.movieImagesError && !this.props.loadingMovieImages && <div>GALLERY ERROR!</div>}*/}
-              {/*{!this.props.loadingMovieImages && !this.props.movieImagesError && this.props.movieImages && Object.keys(this.props.settings).length &&*/}
-                {/*<div className="App__wrapper-movies">*/}
-                  {/*<Gallery filmId={this.props.filmId} movieImages={this.props.movieImages} settings={this.props.settings.images}*/}
-                  {/*imageIndex={this.props.imageIndex} history={this.props.history}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-        {/*{this.props.filmId && !this.props.gallery && this.props.crewPage && !this.props.castPage &&*/}
-          {/*<div>*/}
-            {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
-            {/*<div className="container container--movieinfo">*/}
-              {/*{this.props.loadingMovieCredits && <Spinner/>}*/}
-              {/*{this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CREW ERROR!</div>}*/}
-              {/*{!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&*/}
-                {/*<div className="App__wrapper-movies">*/}
-                  {/*<Crew crew={this.props.movieCredits.crew}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-        {/*{this.props.filmId && !this.props.gallery && !this.props.crewPage && this.props.castPage &&*/}
-          {/*<div>*/}
-            {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
-            {/*<div className="container container--movieinfo">*/}
-              {/*{this.props.loadingMovieCredits && <Spinner/>}*/}
-              {/*{this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CAST ERROR!</div>}*/}
-              {/*{!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&*/}
-                {/*<div className="App__wrapper-movies">*/}
-                  {/*<Cast cast={this.props.movieCredits.cast}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-        {/*{this.props.favsPage &&*/}
-          {/*<div>*/}
-            {/*<Header filmId={this.props.filmId} toFavs={true}/>*/}
-            {/*<div className="container container--movieinfo">*/}
-              {/*{this.props.favorites && Object.keys(this.props.settings).length &&*/}
-                {/*<div className="App__wrapper-movies">*/}
-                  {/*<Favorites settings={this.props.settings} favorites={this.props.favorites} favsPage={this.props.favsPage}/>*/}
-                {/*</div>*/}
-              {/*}*/}
-            {/*</div>*/}
-          {/*</div>*/}
-        {/*}*/}
-      </div>
+      <Switch>
+        <Route exact path='/' render={() => {
+          return(
+            <div className="App">
+              <Header/>
+              <MovieList page={1}/>
+            </div>
+          );
+        }}/>
+        <Route path='/sort_by' render={(props) => {
+          return(
+            <div className="App">
+              <Header query={this.makeQueryAndPage(props.location.search).query}/>
+              <MovieListSorted query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
+            </div>
+          );
+        }}/>
+        <Route path='/search' render={(props) => {
+          return(
+            <div className="App">
+              <Header query={this.makeQueryAndPage(props.location.search).query}/>
+              <MovieListSearched query={this.makeQueryAndPage(props.location.search).query} page={this.makeQueryAndPage(props.location.search).page}/>
+            </div>
+          );
+        }}/>
+        <Route path='/filmId/:id/images' render={(props) => {
+          return(
+            <div className="App">
+              <HeaderMovieDetails id={+props.match.params.id}/>
+              <Gallery id={+props.match.params.id} query={this.makeQueryAndPage(props.location.search).query}/>
+            </div>
+          );
+        }}/>
+        <Route path='/filmId/:id/(cast|crew)' render={(props) => {
+          return(
+            <div className="App">
+              <HeaderMovieDetails id={+props.match.params.id}/>
+              {props.match.params[0] === "cast" &&
+              <Cast id={+props.match.params.id}/>
+              }
+              {props.match.params[0] === "crew" &&
+              <Crew id={+props.match.params.id}/>
+              }
+            </div>
+          );
+        }}/>
+        <Route path='/filmId/:id' render={(props) => {
+          return(
+            <div className="App">
+              <HeaderMovie/>
+              <MovieInfo id={+props.match.params.id} query={this.makeQueryAndPage(props.location.search).query}/>
+            </div>
+          );
+        }}/>
+        <Route path='/favorites' render={() => {
+          return(
+            <div className="App">
+              <HeaderFavorites/>
+              <MovieListFavorites/>
+            </div>
+          );
+        }}/>
+        <Route path='/:page(\d+)' render={(props) => {
+          return(
+            <div className="App">
+              <Header/>
+              <MovieList page={+props.match.params.page}/>
+            </div>
+          );
+        }}/>
+        <Route render={(props) => {
+          console.log(props);
+          return(<div>wrong route</div>);
+        }}>
+        </Route>
+      </Switch>
     );
   }
 }
 
+// {/*{!this.props.filmId && !this.props.favsPage &&*/}
+// {/*<div>*/}
+// {/*<Header history={this.props.history}*/}
+// {/*searchQuery={this.props.searchQuery}*/}
+// {/*genresSelected={this.props.genresSelected}*/}
+// {/*goHome={this.props.goHome}*/}
+// {/*sortValue={this.props.sortValue}*/}
+// {/*sortDir={this.props.sortDir}*/}
+// {/*/>*/}
+// {/*<div className="container container--movielist">*/}
+// {/*{this.props.loadingMovies && <Spinner/>}*/}
+// {/*{this.props.initialLoadingError && !this.props.loadingMovies && <div>ERROR!</div>}*/}
+// {/*{!this.props.loadingMovies && !this.props.initialLoadingError && this.props.movieList.length > 0 && Object.keys(this.props.settings).length && this.props.favorites &&*/}
+// {/*<div className="App__wrapper-movies" >*/}
+// {/*<MovieList movieList={this.props.movieList} settings={this.props.settings.images} favorites={this.props.favorites}/>*/}
+// {/*<Pagination page={this.props.page} genresSelected={this.props.genresSelected} searchQuery={this.props.searchQuery} sortValue={this.props.sortValue} sortDir={this.props.sortDir}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*{this.props.filmId && !this.props.gallery && !this.props.crewPage && !this.props.castPage &&*/}
+// {/*<div>*/}
+// {/*<Header filmId={this.props.filmId}/>*/}
+// {/*<div className="container container--movieinfo">*/}
+// {/*{this.props.loadingMovieDetails && <Spinner/>}*/}
+// {/*{this.props.movieDetailsError && !this.props.loadingMovieDetails && <div>ERROR!</div>}*/}
+// {/*{!this.props.loadingMovieDetails && !this.props.movieDetailsError && this.props.movieDetails && Object.keys(this.props.settings).length && this.props.favorites &&*/}
+// {/*<div className="App__wrapper-movies">*/}
+// {/*<MovieInfo movieDetails={this.props.movieDetails} settings={this.props.settings.images} favorites={this.props.favorites}*/}
+// {/*imageIndex={this.props.imageIndex} history={this.props.history}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*{this.props.filmId && this.props.gallery && !this.props.crewPage && !this.props.castPage &&*/}
+// {/*<div>*/}
+// {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
+// {/*<div className="container container--movieinfo">*/}
+// {/*{this.props.loadingMovieImages && <Spinner/>}*/}
+// {/*{this.props.movieImagesError && !this.props.loadingMovieImages && <div>GALLERY ERROR!</div>}*/}
+// {/*{!this.props.loadingMovieImages && !this.props.movieImagesError && this.props.movieImages && Object.keys(this.props.settings).length &&*/}
+// {/*<div className="App__wrapper-movies">*/}
+// {/*<Gallery filmId={this.props.filmId} movieImages={this.props.movieImages} settings={this.props.settings.images}*/}
+// {/*imageIndex={this.props.imageIndex} history={this.props.history}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*{this.props.filmId && !this.props.gallery && this.props.crewPage && !this.props.castPage &&*/}
+// {/*<div>*/}
+// {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
+// {/*<div className="container container--movieinfo">*/}
+// {/*{this.props.loadingMovieCredits && <Spinner/>}*/}
+// {/*{this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CREW ERROR!</div>}*/}
+// {/*{!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&*/}
+// {/*<div className="App__wrapper-movies">*/}
+// {/*<Crew crew={this.props.movieCredits.crew}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*{this.props.filmId && !this.props.gallery && !this.props.crewPage && this.props.castPage &&*/}
+// {/*<div>*/}
+// {/*<Header filmId={this.props.filmId} toMovie={true}/>*/}
+// {/*<div className="container container--movieinfo">*/}
+// {/*{this.props.loadingMovieCredits && <Spinner/>}*/}
+// {/*{this.props.movieCreditsError && !this.props.loadingMovieCredits && <div>CAST ERROR!</div>}*/}
+// {/*{!this.props.loadingMovieCredits && !this.props.movieCreditsError && this.props.movieCredits && Object.keys(this.props.settings).length &&*/}
+// {/*<div className="App__wrapper-movies">*/}
+// {/*<Cast cast={this.props.movieCredits.cast}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*{this.props.favsPage &&*/}
+// {/*<div>*/}
+// {/*<Header filmId={this.props.filmId} toFavs={true}/>*/}
+// {/*<div className="container container--movieinfo">*/}
+// {/*{this.props.favorites && Object.keys(this.props.settings).length &&*/}
+// {/*<div className="App__wrapper-movies">*/}
+// {/*<Favorites settings={this.props.settings} favorites={this.props.favorites} favsPage={this.props.favsPage}/>*/}
+// {/*</div>*/}
+// {/*}*/}
+// {/*</div>*/}
+// {/*</div>*/}
+// {/*}*/}
+
 const mapStateToProps = (state, ownProps) => {
+  //console.log(JSON.parse(localStorage.getItem('favorites')));
   return {
+    //favorites: state.favorites || JSON.parse(localStorage.getItem('favorites'))
     // loadingMovies: state.loadingMovies,
     // initialLoadingError: state.initialLoadingError,
     // movieList: state.movieList,
@@ -360,7 +381,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
-  fetchSettings
+  fetchSettings,
+  loadFavorites
   // fetchGenredMovies,
   // fetchSortedMovies,
   // fetchSearchedMovies,

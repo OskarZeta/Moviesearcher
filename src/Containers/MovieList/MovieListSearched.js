@@ -37,6 +37,9 @@ class MovieListSearched extends Component {
     if (this.props.page !== prevProps.page || this.props.query !== prevProps.query) {
       this.props.fetchMoviesSearched(this.props.page, this.props.query.q);
     }
+    if (this.props.favorites !== prevProps.favorites) {
+      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+    }
   }
   render() {
     return(

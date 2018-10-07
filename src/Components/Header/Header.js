@@ -18,10 +18,10 @@ class Header extends Component {
             <h1>Moviesearcher App</h1>
           </Link>
           <ul className="Header__additional">
-            <li className="Header__options Header__btn" onClick={(e) => {this.clickOptions(e)}}>
+            <li className={`Header__options Header__btn ${this.props.query ? !this.props.query.q ? 'Header__btn--active' : '' : ''}`} onClick={(e) => {this.clickOptions(e)}}>
               <span>Options</span>
             </li>
-            <li className="Header__sidebar">
+            <li className='Header__sidebar'>
               <Sidebar query={this.props.query ? this.props.query.q ? undefined : this.props.query : undefined}/>
             </li>
             <li className="Header__favorites Header__btn">

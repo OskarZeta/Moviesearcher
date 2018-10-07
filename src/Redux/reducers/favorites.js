@@ -1,21 +1,32 @@
-import {ADD_FAVORITE, REMOVE_FAVORITE} from '../actions/change_favorites';
+import {ADD_FAVORITE, REMOVE_FAVORITE, LOAD_FAVORIES} from '../actions/change_favorites';
 
-export function favorites(state, action) {
+export function favorites(state = [], action) {
   switch (action.type) {
     case ADD_FAVORITE: {
-      return Object.assign({}, state, {
-        favorites: state.favorites.concat(action.movie)
-      })
+      return state.concat(action.movie);
+      // return Object.assign({}, state, {
+      //   favorites: state.favorites.concat(action.movie)
+      // })
     }
     case REMOVE_FAVORITE: {
-      return Object.assign({}, state, {
-        favorites: state.favorites.filter((fave) => {
-          return fave.id !== action.id;
-        })
-      })
+      return state.filter((fave) => {
+        return fave.id !== action.id;
+      });
+      // return Object.assign({}, state, {
+      //   favorites: state.favorites.filter((fave) => {
+      //     return fave.id !== action.id;
+      //   })
+      // })
+    }
+    case LOAD_FAVORIES: {
+      if (JSON.parse(localStorage.getItem('favorites'))) {
+        return JSON.parse(localStorage.getItem('favorites'));
+      } else {
+        return state;
+      }
     }
     default: {
-      return [];
+      return state;
     }
   }
 }
