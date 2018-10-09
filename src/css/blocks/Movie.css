@@ -1,5 +1,6 @@
 .Movie{
   display: flex;
+  width: 130px;
   position: relative;
   flex-direction: column;
   margin: 10px auto;
@@ -12,9 +13,6 @@
 }
 .Movie:hover{
   box-shadow: 0 0 10px 0 rgba(98, 115, 106, 0.75);
-}
-.Movie{
-  width: 130px;
 }
 .Movie img{
   max-width: 100%;
@@ -32,6 +30,9 @@
   flex-direction: column;
   flex-grow: 2;
   padding-bottom: 29px;
+  width: 100%;
+}
+.Movie__link picture, .Movie__link img{
   width: 100%;
 }
 .Movie--preview .Movie__link{
@@ -67,8 +68,8 @@
   display: block;
 }
 .Movie__placeholder-tablet, .Movie__placeholder-tablet--desktop{
-  width: 154px;
-  height: 231px;
+  width: 192px;
+  height: 289px;
   display: none;
 }
 .Movie__placeholder-desktop{
@@ -78,7 +79,7 @@
 }
 @media (min-width: 800px) {
   .Movie {
-    width: 163px;
+    width: 200px;
   }
   .Movie__link{
     padding-bottom: 34px;

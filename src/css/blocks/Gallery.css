@@ -1,6 +1,3 @@
-.Gallery{
-  //min-height: calc(95vh - 123px);
-}
 .Gallery__wrapper{
   display: flex;
   flex-wrap: wrap;
@@ -8,13 +5,9 @@
 }
 .Gallery__image{
   display: flex;
-  //flex-direction: row;
-  //flex-wrap: wrap;
   align-items: center;
   width: 48%;
   margin: 0 auto 10px auto;
-  //margin: 5px auto 0 auto;
-  //position: relative;
 }
 .Gallery__image img{
   width: 100%;

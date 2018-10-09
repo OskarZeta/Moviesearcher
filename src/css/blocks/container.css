@@ -6,17 +6,19 @@
   box-sizing: border-box;
   position: relative;
 }
+.container--loading{
+  display: flex;
+  min-height: calc(100vh - 300px);
+  width: 100%;
+}
 .container--movielist, .container--movieinfo, .container--gallery {
   display: flex;
   flex-wrap: wrap;
   box-shadow: 5px 5px 5px -4px #bcc3d7, -5px 5px 5px -4px #bcc3d7;
-  //min-height: calc(95vh - 123px);
-  min-height: calc(100vh - 123px);
   background-color: white;
 }
 .container--header{
-  background-color: #d0e6dd;
-  box-shadow: 5px 5px 5px -4px #9eb4ab, -5px 5px 5px -4px #9fb4ab;
+  background-color: #4071a5;
 }
 .container--gallery{
   align-items: flex-start;
@@ -43,9 +45,14 @@
   }
   .container--header{
     z-index: 5;
+    padding: 10px 0 0 0;
   }
   .container--imageshow{
     width: 640px;
+  }
+  .container--loading{
+    min-height: calc(100vh - 190px);
+    width: 100%;
   }
 }
 
@@ -55,5 +62,9 @@
   }
   .container--imageshow{
     width: 1000px;
+  }
+  .container--loading{
+    min-height: calc(100vh - 250px);
+    width: 100%;
   }
 }
