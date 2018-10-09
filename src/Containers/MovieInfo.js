@@ -201,7 +201,6 @@ class MovieInfo extends Component {
                       </div>
                     </div>
                   }
-
                   <FaveBtn favorites={this.props.favorites} id={this.props.movieDetails.id} name={this.props.movieDetails.title}
                            poster={this.props.movieDetails.poster_path}
                            isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
@@ -209,7 +208,6 @@ class MovieInfo extends Component {
                            }).length > 0) : false}
                            moviePage={true}
                   />
-
                 </div>
                 <div className="MovieInfo__right-column">
                   <h2 className="MovieInfo__section-header">image gallery</h2>
@@ -255,7 +253,7 @@ class MovieInfo extends Component {
 
                     {this.props.movieDetails.genres.length > 0 && this.props.movieDetails.genres.map((genre, index) => {
                       return (
-                        <Link key={index} className="MovieInfo__genre-href" to={`/genres=${genre.id}`} onClick={() => {
+                        <Link key={index} className="MovieInfo__genre-href" to={`/sort_by?genres=${genre.id}`} onClick={() => {
                           this.props.addGenres(genre.id);
                         }}>
                           {genre.name}

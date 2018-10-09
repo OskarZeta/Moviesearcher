@@ -6,11 +6,13 @@ class Header extends Component {
     return(
       <header className="Header">
         <div className="container container--header">
-          <Link className="Header__home" to="/">
-            <h1>Moviesearcher App</h1>
-          </Link>
+          <h1>
+            <Link className="Header__home" to="/">
+              Moviesearcher App
+            </Link>
+          </h1>
           <ul className="Header__additional">
-            <li className="Header__favorites Header__btn">
+            <li className="Header__favorites Header__favorites--moviePage Header__btn">
               <Link to="/favorites">
                 <span>Favorites</span>
               </Link>

@@ -14,9 +14,11 @@ class Header extends Component {
     return(
       <header className="Header">
         <div className="container container--header">
-          <Link className="Header__home" to="/">
-            <h1>Moviesearcher App</h1>
-          </Link>
+          <h1>
+            <Link className="Header__home" to="/">
+              Moviesearcher App
+            </Link>
+          </h1>
           <ul className="Header__additional">
             <li className={`Header__options Header__btn ${this.props.query ? !this.props.query.q ? 'Header__btn--active' : '' : ''}`} onClick={(e) => {this.clickOptions(e)}}>
               <span>Options</span>

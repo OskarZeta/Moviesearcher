@@ -44,8 +44,6 @@ class MovieListFavorites extends Component {
   render() {
     return(
       <div className="container container--movielist">
-        {/*{this.props.favorites.length === 0 && <Spinner/>}*/}
-        {/*{this.props.favorites.length !== 0 && Object.keys(this.props.settings).length !== 0 && this.makeList()}*/}
         {Object.keys(this.props.settings).length !== 0 && this.makeList()}
       </div>
     );

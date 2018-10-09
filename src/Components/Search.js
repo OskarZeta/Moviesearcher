@@ -12,7 +12,7 @@ class Search extends Component {
   }
   render(){
     return(
-      <div>
+      <div className="Header__search-input-wrapper">
         {this.props.query &&
           <input
             type="search"

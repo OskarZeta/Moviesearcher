@@ -6,14 +6,14 @@ class HeaderFavorites extends Component {
     return(
       <header className="Header">
         <div className="container container--header">
-          <Link className="Header__home" to="/">
-            <h1>Moviesearcher App</h1>
-          </Link>
+          <h1>
+            <Link className="Header__home" to="/">
+              Moviesearcher App
+            </Link>
+          </h1>
           <ul className="Header__additional">
             <li className="Header__favorites Header__btn Header__favorites-nonbtn Header__btn--active">
-              <Link to="/favorites">
-                <span>Favorites</span>
-              </Link>
+              <span>Favorites</span>
             </li>
           </ul>
         </div>
