@@ -6,15 +6,17 @@ import {
 
 
 class ErrorHandler extends Component {
-  //componentDidCatch(error, info){
-    //console.log(error, info);
-    //this.props.errorClear();
-  //}
   render(){
     if (this.props.error.isError) {
       return(
-        <div>
-          {this.props.error.errorText}
+        <div className="App">
+          <div className="container container--error-page">
+            <h1 className="App__error-header">ERROR! :(</h1>
+            <div className="App__error-text">
+              <span>{this.props.error.errorText}</span>
+              <a className="App__error-link" href="/">Home</a>
+            </div>
+          </div>
         </div>
       );
     }

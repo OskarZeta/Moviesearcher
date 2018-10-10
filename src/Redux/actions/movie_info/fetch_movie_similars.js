@@ -3,8 +3,6 @@ import { errorSet } from '../has_error';
 
 const apiKey = '8282c68f5ed8f63c5bfae413614846d5';
 
-//export const MOVIE_SIMILAR_REQUEST = 'MOVIE_SIMILAR_REQUEST';
-//export const MOVIE_SIMILAR_FAIL = 'MOVIE_SIMILAR_FAIL';
 export const FETCH_MOVIE_SIMILARS = 'FETCH_MOVIE_SIMILARS';
 
 const urlSimilars1 = `https://api.themoviedb.org/3/movie/`;
@@ -14,7 +12,6 @@ function movieLoadSimilars(data) {
   return {
     type: FETCH_MOVIE_SIMILARS,
     movieSimilars: data
-    //movieSimilars: data.results
   }
 }
 
@@ -25,51 +22,11 @@ export function fetchMovieSimilars(id) {
         dispatch(movieLoadSimilars(response.data));
       })
       .catch((error) => {
-        dispatch(errorSet(error));
+        dispatch(errorSet(
+          "An error has occurred during the call to tmdb API. " +
+          "Check your address bar (you've probably entered wrong film ID) " +
+          "or try contacting tmdb's tech support."
+        ));
       })
   }
 }
-
-
-// function movieSimilarRequest() {
-//   return {
-//     type: MOVIE_SIMILAR_REQUEST,
-//     loadingMovieSimilar: true,
-//     movieSimilarError: false
-//   }
-// }
-// function movieSimilarFail() {
-//   return {
-//     type: MOVIE_SIMILAR_FAIL,
-//     loadingMovieSimilar: false,
-//     movieSimilarError: true
-//   }
-// }
-// function movieSimilarSuccess(json) {
-//   return {
-//     type: MOVIE_SIMILAR_SUCCESS,
-//     loadingMovieSimilar: false,
-//     movieSimilarError: false,
-//     movieSimilar: json
-//   }
-// }
-//
-// export function fetchMovieSimilar(id, page) {
-//   return (dispatch) => {
-//     dispatch(movieSimilarRequest());
-//     return fetch(urlSimilar1 + id + urlSimilar2 + page)
-//       .then((initialResponse) => {
-//         if (initialResponse.ok) {
-//           return initialResponse.json();
-//         } else {
-//           dispatch(movieSimilarFail());
-//         }
-//       })
-//       .then((json) => {
-//         dispatch(movieSimilarSuccess(json))
-//       }, (error) => {
-//         dispatch(movieSimilarFail());
-//         console.log(error);
-//       });
-//   }
-// }

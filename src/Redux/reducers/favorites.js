@@ -4,19 +4,11 @@ export function favorites(state = [], action) {
   switch (action.type) {
     case ADD_FAVORITE: {
       return state.concat(action.movie);
-      // return Object.assign({}, state, {
-      //   favorites: state.favorites.concat(action.movie)
-      // })
     }
     case REMOVE_FAVORITE: {
       return state.filter((fave) => {
         return fave.id !== action.id;
       });
-      // return Object.assign({}, state, {
-      //   favorites: state.favorites.filter((fave) => {
-      //     return fave.id !== action.id;
-      //   })
-      // })
     }
     case LOAD_FAVORIES: {
       if (JSON.parse(localStorage.getItem('favorites'))) {

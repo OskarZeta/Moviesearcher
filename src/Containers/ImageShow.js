@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../Components/Spinner';
+import { errorSet } from '../Redux/actions/has_error';
 
 class ImageShow extends Component {
   closeClick(){
@@ -51,18 +52,22 @@ class ImageShow extends Component {
     let addressTablet;
     let addressDesktop;
     if (Object.keys(this.props.movieImages).length && Object.keys(this.props.settings).length) {
-      addressMobile =
-        this.props.settings.images.secure_base_url +
-        this.props.settings.images.backdrop_sizes[0] +
-        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-      addressTablet =
-        this.props.settings.images.secure_base_url +
-        this.props.settings.images.backdrop_sizes[1] +
-        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-      addressDesktop =
-        this.props.settings.images.secure_base_url +
-        this.props.settings.images.backdrop_sizes[2] +
-        this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+      if (this.props.imageIndex >= this.props.movieImages.backdrops.length || isNaN(this.props.imageIndex)) {
+        this.props.errorSet('Wrong image index detected');
+      } else {
+        addressMobile =
+          this.props.settings.images.secure_base_url +
+          this.props.settings.images.backdrop_sizes[0] +
+          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+        addressTablet =
+          this.props.settings.images.secure_base_url +
+          this.props.settings.images.backdrop_sizes[1] +
+          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+        addressDesktop =
+          this.props.settings.images.secure_base_url +
+          this.props.settings.images.backdrop_sizes[2] +
+          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+      }
     }
     return(
       <div className="ImageShow">
@@ -95,4 +100,8 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default withRouter(connect(mapStateToProps)(ImageShow));
+const mapDispatchToProps = {
+  errorSet
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ImageShow));

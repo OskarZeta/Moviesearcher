@@ -11,11 +11,19 @@
   min-height: calc(100vh - 300px);
   width: 100%;
 }
-.container--movielist, .container--movieinfo, .container--gallery {
+.container--movielist, .container--movieinfo, .container--gallery, .container--error-page {
   display: flex;
   flex-wrap: wrap;
   box-shadow: 5px 5px 5px -4px #bcc3d7, -5px 5px 5px -4px #bcc3d7;
   background-color: white;
+}
+.container--error-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
 }
 .container--header{
   background-color: #4071a5;

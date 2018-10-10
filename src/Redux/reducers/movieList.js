@@ -6,21 +6,12 @@ export function movieList(state=[], action) {
   switch (action.type) {
     case FETCH_MOVIES_DEFAULT: {
       return action.movieList;
-      // return Object.assign({}, state, {
-      //   movieList: action.movieList
-      // });
     }
     case FETCH_MOVIES_SORTED: {
       return action.movieList;
-      // return Object.assign({}, state, {
-      //   movieList: action.movieList
-      // });
     }
     case FETCH_MOVIES_SEARCHED: {
       return action.movieList;
-      // return Object.assign({}, state, {
-      //   movieList: action.movieList
-      // });
     }
     default: {
       return state;

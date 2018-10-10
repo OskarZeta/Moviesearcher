@@ -5,7 +5,6 @@ export function errorSet(text){
   return {
     type: ERROR_SET,
     errorText: text
-    //error: error
   }
 }
 

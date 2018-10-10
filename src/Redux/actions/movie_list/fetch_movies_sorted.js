@@ -9,7 +9,6 @@ const urlSorted = `https://api.themoviedb.org/3/discover/movie?`;
 const urlSorted2 = `&api_key=${apiKey}&page=`;
 
 function moviesLoadSorted(data) {
-  //console.log(data);
   return {
     type: FETCH_MOVIES_SORTED,
     movieList: data ? data.results : []
@@ -17,7 +16,6 @@ function moviesLoadSorted(data) {
 }
 
 export function fetchMoviesSorted(page, sortBy, direction, genresArray) {
-  //console.log(page, sortBy, direction, genresArray);
   return (dispatch) => {
     dispatch(loadingStart());
     let url = urlSorted;
@@ -32,7 +30,6 @@ export function fetchMoviesSorted(page, sortBy, direction, genresArray) {
       }
     }
     url = url + urlSorted2;
-    //console.log(url + page);
     return axios.get(url + page)
       .then((response) => {
         dispatch(moviesLoadSorted(response.data));

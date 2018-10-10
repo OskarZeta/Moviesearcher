@@ -5,7 +5,6 @@ import {
 } from '../../Redux/actions/change_favorites';
 
 import Movie from '../../Components/Movie/Movie';
-import Spinner from '../../Components/Spinner';
 
 class MovieListFavorites extends Component {
   makeList() {
@@ -54,7 +53,6 @@ const mapStateToProps = (state) => {
   return {
     settings: state.settings,
     favorites: state.favorites
-    //loading: state.loading
   }
 };
 const mapDispatchToProps = {

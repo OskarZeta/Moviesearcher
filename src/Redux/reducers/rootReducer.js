@@ -6,9 +6,7 @@ import {movieImages} from './movieImages';
 import {movieSimilars} from './movieSimilars';
 import {settings} from './settings';
 import {genreList} from './genreList';
-//import {genresSelected} from './genresSelected';
 import {favorites} from './favorites';
-//import {page} from './page';
 import {error} from './error';
 import {loading} from './loading';
 
@@ -20,9 +18,7 @@ const rootReducer = combineReducers({
   movieSimilars,
   settings,
   genreList,
-  //genresSelected,
   favorites,
-  //page,
   error,
   loading
 });
