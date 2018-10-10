@@ -20,7 +20,7 @@ class Sort extends Component {
     } else if (this.props.name === 'direction') {
       if (this.props.query) {
         if (!this.props.query.value) {
-          url = Object.assign({}, this.props.query, {value: "popularity"});
+          url = Object.assign({}, this.props.query, {value: "popularity"}, {direction: this.props.direction});
         }
         url = Object.assign({}, this.props.query);
       } else {
