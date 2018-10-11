@@ -1,20 +1,19 @@
 .Sidebar{
   width: 100%;
+  margin: -5px 0 -5px 0;
+  background: linear-gradient(to left, #4071a5 5%, #4283b9 50%, #4071a5 95%);
+  padding: 5px 0;
 }
 .Sidebar__wrapper{
   display: flex;
   flex-direction: column;
+  padding: 0 2px;
 }
 .Sidebar__header{
   font-size: 16px;
   margin: 0;
   text-align: left;
   padding-bottom: 3px;
-  border-bottom: 1px solid #989b98;
-}
-.Sidebar__header-text{
-  padding-left: 5px;
-  font-style: italic;
 }
 .Sidebar__genreList-wrapper{
   display: flex;
@@ -28,10 +27,11 @@
   align-items: center;
   cursor: pointer;
   transition: 0.2s;
-  margin-bottom: 0;
+  user-select: none;
+  margin-bottom: 0.5em;
 }
 .Sidebar__genre-label:hover{
-  background-color: #c9e1d8;
+  color: #d3dbe1;
 }
 .Sidebar__genre-input{
   display: none;
@@ -39,21 +39,30 @@
 .Sidebar__genre-custom{
   box-sizing: border-box;
   display: flex;
+  position: relative;
   width: 12px;
   height: 12px;
-  border: 1px solid #8e918e;
+  border: 1px solid white;
   margin-right: 8px;
+  z-index: 0;
+}
+.Sidebar__genre-input:checked + .Sidebar__genre-custom{
+  border: none;
 }
 .Sidebar__genre-input:checked + .Sidebar__genre-custom::after{
   display: block;
+  position: absolute;
+  top: -1px;
+  left: 0;
   content: "";
-  background-color: #989b98;
-  width: 8px;
-  height: 8px;
-  margin: auto;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4gICAgPHBhdGggZD0iTTIwIDEyLjE5NHY5LjgwNmgtMjB2LTIwaDE4LjI3MmwtMS45NTEgMmgtMTQuMzIxdjE2aDE2di01Ljc2OGwyLTIuMDM4em0uOTA0LTEwLjAyN2wtOS40MDQgOS42MzktNC40MDUtNC4xNzYtMy4wOTUgMy4wOTcgNy41IDcuMjczIDEyLjUtMTIuNzM3LTMuMDk2LTMuMDk2eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=');
+  background-size: cover;
+  width: 14px;
+  height: 14px;
+  z-index: 2;
 }
 .Sidebar__genre-name{
-  font-size: 12px;
+  font-size: 11px;
 }
 .Sidebar__sort-params{
   display: flex;
@@ -70,10 +79,12 @@
   border-radius: 8px;
   margin: 0;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
+  user-select: none;
+  margin-bottom: 0.2em;
 }
 .Sidebar__sort-label:hover{
-  background-color: #c9e1d8;
+  color: #d3dbe1;
 }
 .Sidebar__sort-radiobtn{
   display: flex;
@@ -87,26 +98,30 @@
   display: flex;
   width: 13px;
   height: 13px;
-  border: 1px solid #8e918e;
+  border: 2px solid white;
   border-radius: 10px;
   margin-right: 8px;
 }
+
 .Sidebar__sort-input:checked + .Sidebar__sort-custom::after{
   display: block;
   content: "";
-  width: 7px;
-  height: 7px;
-  background: #8e918e;
+  width: 5px;
+  height: 5px;
+  background: white;
   border-radius: 10px;
   margin: auto;
 }
 .Sidebar__sort-name{
-  font-size: 12px;
+  font-size: 11px;
 }
 .Sidebar__wrapper--hidden{
   display: none;
 }
 @media (min-width: 800px) {
+  .Sidebar{
+    padding: 10px;
+  }
   .Sidebar__wrapper{
     flex-direction: row;
     flex-wrap: wrap;
@@ -128,36 +143,46 @@
     margin-right: 13px;
   }
   .Sidebar__genre-name{
-    font-size: 16px;
+    font-size: 15px;
   }
   .Sidebar__sort-wrapper{
-    margin-left: 5px;
     flex-direction: row;
+    justify-content: space-between;
+    margin-right: -50px;
+    width: 100%;
   }
   .Sidebar__sort-name{
-    font-size: 14px;
+    font-size: 16px;
+    margin-right: 10px;
   }
   .Sidebar__sort{
     display: flex;
     flex-direction: column;
+    flex-grow: 2;
+  }
+  .Sidebar__sort-custom{
+    margin-right: 5px;
   }
   .Sidebar__sort:last-child{
-    flex-grow: 2;
-    margin-left: 45px;
+    width: 160px;
+    flex-grow: 1;
   }
   .Sidebar__sort-params{
     display: flex;
     width: 100%;
   }
   .Sidebar__sort-label{
-    margin: 0 5px 2px 0;
     border-radius: 4px;
+    align-items: baseline;
+    width: 25%;
   }
   .Sidebar__sort-wrapper--direction{
     flex-direction: column;
     justify-content: space-between;
-    margin: 0;
-    flex-grow: 2;
+    padding-left: 10px;
+  }
+  .Sidebar__sort-wrapper--direction label{
+    width: 100%;
   }
 }
 
@@ -179,33 +204,39 @@
     height: 18px;
     margin-right: 10px;
   }
+
+  .Sidebar__genre-input:checked + .Sidebar__genre-custom{
+    border: none;
+  }
   .Sidebar__genre-input:checked + .Sidebar__genre-custom::after{
-    width: 12px;
-    height: 12px;
+    width: 21px;
+    height: 22px;
   }
   .Sidebar__genre-name{
-    font-size: 20px;
-  }
-  .Sidebar__sort{
-    flex-grow: 2;
+    font-size: 22px;
   }
   .Sidebar__sort:last-child{
-    flex-grow: 1;
-    margin-left: 50px;
+    width: 255px;
   }
   .Sidebar__sort-name{
-    font-size: 20px;
+    font-size: 22px;
+    margin-right: 20px;
   }
   .Sidebar__sort-custom{
     width: 20px;
     height: 20px;
+    margin-right: 10px;
   }
   .Sidebar__sort-input:checked + .Sidebar__sort-custom::after{
     width: 12px;
     height: 12px;
   }
   .Sidebar__sort-wrapper{
-    margin-left: 15px;
+    margin: 0;
+    padding-left: 15px;
     justify-content: space-between;
+  }
+  .Sidebar__sort-wrapper--direction{
+    margin: 0;
   }
 }

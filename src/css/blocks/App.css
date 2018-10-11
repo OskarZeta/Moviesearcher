@@ -1,6 +1,28 @@
 .App{
-  background-color: #f0f0f0;
+  background-color: #f8f9fa;
 }
+.App__error-header{
+  font-size: 26px;
+}
+.App__error-text{
+  font-size: 18px;
+}
+.App__error-link{
+  display: block;
+  margin-top: 50px;
+  color: #007bff;
+}
+.App__error-link:hover{
+  text-decoration: none;
+  color: #004991!important;
+}
+.App__error-link:active{
+  opacity: 0.8;
+}
+.App__error-link:visited{
+  color: #007bff;
+}
+
 .App__wrapper{
   width: 100%;
 }
@@ -12,12 +34,24 @@
 .App__credits{
   margin: 10px 0;
   padding: 0;
+  width: 100%;
 }
 .App__faves-empty{
   font-size: 20px;
 }
+@media (min-width: 800px) {
+  .App__error-header{
+    font-size: 40px;
+  }
+  .App__error-text{
+    font-size: 24px;
+  }
+}
 @media (min-width: 1300px) {
-  .App__faves-empty{
-    font-size: 28px;
+  .App__error-header{
+    font-size: 50px;
+  }
+  .App__error-text{
+    font-size: 34px;
   }
 }

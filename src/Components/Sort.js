@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
+const queryString = require('query-string');
 
 class Sort extends Component {
   clickHandler (e) {
+    let url;
     if (this.props.name === 'sort') {
-      let direction = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.querySelectorAll('input[name=direction]:checked')[0].value;
-      if (this.props.genresSelected.length > 0) {
-        this.props.history.push(`/sort_by/${this.props.value}.${direction}/genres=${this.props.genresSelected}`);
+      if (this.props.query) {
+        if (!this.props.query.direction) {
+          url = Object.assign({}, this.props.query, {value: this.props.value}, {direction: "desc"});
+        } else {
+          url = Object.assign({}, this.props.query);
+        }
       } else {
-        this.props.history.push(`/sort_by/${this.props.value}.${direction}`);
+        url = {direction: "desc"};
       }
+      url.value = this.props.value;
     } else if (this.props.name === 'direction') {
-      let sortType = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelectorAll('input[name=sort]:checked')[0].value;
-      if (this.props.genresSelected.length > 0) {
-        this.props.history.push(`/sort_by/${sortType}.${this.props.value}/genres=${this.props.genresSelected}`);
+      if (this.props.query) {
+        if (!this.props.query.value) {
+          url = Object.assign({}, this.props.query, {value: "popularity"}, {direction: this.props.direction});
+        }
+        url = Object.assign({}, this.props.query);
       } else {
-        this.props.history.push(`/sort_by/${sortType}.${this.props.value}`);
+        url = {value: "popularity"};
       }
+      url.direction = this.props.value;
     }
+    this.props.history.push(`/sort_by?${decodeURIComponent(queryString.stringify(url))}`);
   }
   render(){
     return(
@@ -43,4 +55,4 @@ class Sort extends Component {
   }
 }
 
-export default Sort;
+export default withRouter(Sort);

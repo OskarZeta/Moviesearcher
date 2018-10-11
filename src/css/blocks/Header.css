@@ -1,23 +1,28 @@
 .Header{
   width: 100%;
   z-index: 10;
-  background-color: #d9f0e7;
-  color: #202821;
+  color: #ffffff;
+  background-color: #38517d;
 }
-.Header h1{
-  margin: 0 0 10px 0;
+.Header__home{
+  display: block;
+  margin: 0 0 5px 0;
+  font-size: 30px;
   text-align: center;
-  transition: 0.1s;
-}
-.Header a{
+  transition: 0.2s;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #4071a5;
+  width: 100%;
   text-decoration: none;
-  color: #747d75;
+  color: #ffffff;
 }
-.Header h1:hover{
-  color: #606960;
+.Header__home:hover{
+  border-bottom: 2px solid white;
+  color: #ffffff;
+  text-decoration: none;
 }
-.Header h1:active{
-  color: #272d28;
+.Header__home:active{
+  opacity: 0.6;
 }
 .Header__additional{
   display: flex;
@@ -28,33 +33,30 @@
 }
 .Header__btn{
   position: relative;
-  padding: 5px;
+  padding: 10px;
   margin: 5px 0;
-  background-color: #bfd7ce;
-  border-radius: 5px;
-  border-right: 1px solid #9dafa6;
-  border-bottom: 1px solid #889b92;
   transition: 0.2s;
+  background-color: #4c8ecd;
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
+  color: #ffffff;
+  border: 1px solid #3f5487;
   text-transform: uppercase;
 }
 .Header__btn:hover{
-  background-color: #b5cdc4;
-  color: black;
+  background-color: #4c84c3;
+  border: 1px solid #41669b;
 }
 .Header__btn:active{
-  background-color: #b5cdc4;
-  border: none;
-  color: black;
+  background-color: #3d6191;
+  border: 1px solid #41669b;
 }
 .Header__btn--active{
-  background-color: #b5cdc4;
-  border: none;
-  color: black;
+  background-color: #3d6191;
 }
 .Header__btn--active:hover{
-  background-color: #bfd7ce;
+  background-color: #3a5987;
+  border: 1px solid #41669b;
 }
 .Header__options{
   order: 2;
@@ -62,7 +64,7 @@
   user-select: none;
 }
 .Header__sidebar{
-  order: 3
+  order: 3;
 }
 .Header__favorites{
   order: 4;
@@ -71,13 +73,13 @@
 .Header__favorites a{
   display: block;
   width: 100%;
-  padding: 5px;
+  padding: 10px;
 }
 .Header__favorites-nonbtn{
-  margin-top: 10px;
+  padding: 10px 0;
 }
 .Header__favorites-nonbtn:hover{
-  background-color: #b5cdc4;
+  background-color: #405c91;
 }
 .Header__back a{
   display: block;
@@ -85,33 +87,35 @@
 .Header__search{
   order: 1;
   flex-grow: 2;
-  padding: 10px;
-  background-color: #cbe1d8;
-  margin-bottom: 5px;
+  margin: 10px 0;
 }
 .Header__search input{
   box-sizing: border-box;
-  border: none;
-  border-bottom: 2px solid #b7cdc1;
-  padding: 2px 10px;
+  border: 2px solid white;
+  border-radius: 3px;
+  padding: 5px 10px;
   width: 100%;
   outline: none;
   transition: 0.5s;
 }
 .Header__search input:focus{
-  border-bottom: 2px solid #6d7d74;
+  border: 2px solid #b8d6ff;
   border-radius: 7px;
 }
 
 @media (min-width: 800px) {
   .Header h1{
-    border-bottom: 2px solid #606960;
+    margin: 0;
   }
-  .Header h1:hover{
-    border-bottom: 2px solid #202821;
+  .Header__home{
+    width: auto;
+    padding-bottom: 5px;
+    background: linear-gradient(to bottom, #4071a5 5%, #4283b9 50%, #4071a5 95%);
   }
-  .Header h1:active{
-    border-bottom: 2px solid black;
+  .Header__home:hover{
+    color: #dadeeb;
+    border-bottom: 2px solid #4071a5;
+    background: linear-gradient(to bottom, #4071a5 20%, #4283b9 50%, #4071a5 80%);
   }
   .Header__additional{
     flex-direction: row;
@@ -121,50 +125,80 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 110px;
-    height: 35px;
+    width: 125px;
+    height: 60px;
     position: relative;
-    padding: 5px;
-    margin: 5px 0;
+    padding: 0;
+    margin: 0;
+    border: none;
     transition: 0.2s;
+    background-color: inherit;
   }
-  .Header__options{
-    order: 1;
-    margin-right: 10px;
+  .Header__btn:hover{
+    background-color: #41669b;
+    border: none;
   }
-  .Header__sidebar{
-    position: absolute;
-    left: 0;
-    top: 45px;
-    order: 2
+  .Header__btn--active{
+    background-color: #405c91;
+    margin-bottom: 295px;
   }
-  .Header__favorites{
-    order: 3;
-    padding: 0 5px;
+  .Header__btn--active:hover{
+    background-color: #406196;
   }
   .Header__search{
     order: 4;
     flex-grow: 2;
     background-color: transparent;
     padding: 0;
-    margin: 8px 0 0 10px;
-    height: 30px;
+    margin: 10px;
+    height: 40px;
+  }
+  .Header__search-input-wrapper{
+    height: 100%;
+  }
+  .Header__search input{
+    height: 100%;
   }
   .Header__search input:focus{
     border-radius: 5px;
   }
   .Header__back{
+    width: 177px;
     margin-right: 10px;
   }
   .Header__back a{
     padding: 0;
     margin: 0;
   }
-  .Header__btn--active{
-    margin-bottom: 225px;
-  }
   .Header__favorites-nonbtn{
-    margin-bottom: 5px;
+    width: 260px;
+    margin-bottom: 0;
+  }
+  .Header__favorites-nonbtn:hover{
+    background-color: #405c91;
+  }
+  .Header__options{
+    order: 1;
+    padding-right: 10px;
+    position: relative;
+  }
+  .Header__options span{
+    padding-left: 10px;
+  }
+  .Header__sidebar{
+    position: absolute;
+    left: 0;
+    top: 65px;
+    order: 2
+  }
+  .Header__favorites{
+    order: 3;
+  }
+  .Header__favorites--moviePage{
+    width: 250px;
+  }
+  .Header__favorites--movieDetails{
+    width: 167px;
   }
   .Header__additional--movie{
     position: relative;
@@ -172,31 +206,31 @@
 }
 
 @media (min-width: 1300px) {
-  .Header h1{
-    font-size: 48px;
+  .Header__home {
+    font-size: 44px;
   }
   .Header__additional{
     font-size: 24px;
   }
   .Header__sidebar{
-    top: 51px;
+    top: 85px;
   }
   .Header__btn{
-    height: 50px;
+    height: 80px;
     width: 200px;
-    border-radius: 10px;
     font-size: 26px;
+  }
+  .Header__btn:active{
+    opacity: 0.8;
   }
   .Header__options, .Header__back{
     margin-right: 15px;
   }
   .Header__search{
     height: 50px;
-    margin-top: 5px;
-    margin-left: 15px;
+    margin: 15px;
   }
   .Header__search input{
-    height: 50px;
     padding-left: 15px;
     display: flex;
     align-self: stretch;
@@ -209,9 +243,22 @@
     padding: 0;
   }
   .Header__btn--active{
-    margin-bottom: 295px;
+    margin-bottom: 425px;
+  }
+  .Header__back{
+    width: 278px;
+  }
+  .Header__favorites--moviePage{
+    width: 375px;
+  }
+  .Header__favorites--movieDetails{
+    width: 268px;
   }
   .Header__favorites-nonbtn{
-    margin-bottom: 5px;
+    width: 395px;
+    margin-bottom: 0;
+  }
+  .Header__favorites-nonbtn:active{
+    opacity: 1;
   }
 }

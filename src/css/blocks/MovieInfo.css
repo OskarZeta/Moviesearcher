@@ -46,9 +46,6 @@
   margin-left: -15px;
 }
 .MovieInfo__info--gallery{
-  margin: 0;
-  border-left: none;
-  border-top-left-radius: 0;
   border-bottom: none;
   padding: 5px 0;
 }
@@ -70,17 +67,13 @@
 .MovieInfo__images-wrapper{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 .MovieInfo__image-preview{
   display: flex;
   align-items: center;
   width: 48%;
-  margin: 5px auto 0 auto;
+  margin: 5px 1% 0 auto;
   position: relative;
-}
-.MovieInfo__image-preview:nth-child(1), .MovieInfo__image-preview:nth-child(2){
-  margin-top: 0;
 }
 .MovieInfo__image-preview img{
   width: 100%;
@@ -186,6 +179,10 @@
   display: block;
   margin-right: 10px;
 }
+.MovieInfo__similar-wrapper{
+  display: flex;
+  flex-direction: column;
+}
 
 @media (min-width: 800px) {
   .MovieInfo__main{
@@ -204,12 +201,14 @@
   .MovieInfo__images-wrapper{
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
   }
   .MovieInfo__image-preview{
     justify-content: center;
     width: 24%;
-    margin: 0 auto 5px auto;
+    margin-top: 10px;
+  }
+  .MovieInfo__image-preview:nth-child(4n){
+    margin-right: 0;
   }
   .MovieInfo__votebox{
     width: 40px;
@@ -230,7 +229,6 @@
   }
   .MovieInfo__vote-wrapper{
     align-items: center;
-    line-height: 0;
   }
   .MovieInfo__vote-wrapper .MovieInfo__section-header{
     font-size: 16px;
@@ -273,8 +271,13 @@
     width: 230px;
   }
   .MovieInfo__number{
-    font-size: 16px;
+    font-size: 15px;
     margin-right: 0;
+  }
+  .MovieInfo__similar-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
