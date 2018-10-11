@@ -14,7 +14,7 @@ class ErrorHandler extends Component {
             <h1 className="App__error-header">ERROR! :(</h1>
             <div className="App__error-text">
               <span>{this.props.error.errorText}</span>
-              <a className="App__error-link" href="/">Home</a>
+              <a className="App__error-link" href="/Moviesearcher/">Home</a>
             </div>
           </div>
         </div>
