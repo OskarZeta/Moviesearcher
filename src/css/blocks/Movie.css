@@ -108,7 +108,7 @@
     margin: 20px auto;
   }
   .Movie--preview{
-    width: 195px;
+    width: 215px;
   }
   .Movie:hover{
     box-shadow: 1px 1px 25px 0 rgba(98, 115, 106, 0.75);

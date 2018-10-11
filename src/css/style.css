@@ -10,15 +10,33 @@
 @import "blocks/ImageShow.css";
 @import "blocks/Spinner.css";
 
+*{
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+}
 body{
   margin: 0;
   padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}
+p{
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 a, a:hover{
   text-decoration: none;
 }
 a:visited{
   color: inherit;
+}
+img, svg{
+  vertical-align: middle;
+}
+h1, h2, h3, h4 h5, h6{
+  font-weight: 500;
 }
 .image-preload{
   display: flex;

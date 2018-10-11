@@ -229,7 +229,6 @@
   }
   .MovieInfo__vote-wrapper{
     align-items: center;
-    line-height: 0;
   }
   .MovieInfo__vote-wrapper .MovieInfo__section-header{
     font-size: 16px;

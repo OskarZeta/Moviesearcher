@@ -27,8 +27,8 @@
   align-items: center;
   cursor: pointer;
   transition: 0.2s;
-  margin-bottom: 2px;
   user-select: none;
+  margin-bottom: 0.5em;
 }
 .Sidebar__genre-label:hover{
   color: #d3dbe1;
@@ -81,6 +81,7 @@
   cursor: pointer;
   transition: 0.2s;
   user-select: none;
+  margin-bottom: 0.2em;
 }
 .Sidebar__sort-label:hover{
   color: #d3dbe1;
@@ -97,7 +98,7 @@
   display: flex;
   width: 13px;
   height: 13px;
-  border: 1px solid white;
+  border: 2px solid white;
   border-radius: 10px;
   margin-right: 8px;
 }
@@ -105,8 +106,8 @@
 .Sidebar__sort-input:checked + .Sidebar__sort-custom::after{
   display: block;
   content: "";
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
   background: white;
   border-radius: 10px;
   margin: auto;

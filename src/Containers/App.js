@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route, Link, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { fetchSettings } from '../Redux/actions/fetch_settings';
 import { loadFavorites } from '../Redux/actions/change_favorites';
 import { connect } from 'react-redux';
