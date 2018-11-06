@@ -1,6 +1,8 @@
 A simple moviesearcher app, created using react, redux, react-router, redux-thunk middleware and whatwg-fetch
 (last two for actions chaining and async API calls).
 
+https://oskarzeta.github.io/Moviesearcher/
+
 (default react readme below this line)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
