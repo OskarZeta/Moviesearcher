@@ -1,16 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Spinner extends Component {
-  render(){
-    return(
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
-  }
-}
+const Spinner = () =>
+  <div className="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 
 export default Spinner;

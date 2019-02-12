@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-class PageBtn extends Component {
-  makePageAndText() {
+const PageBtn = ({ page, direction, query, history }) => {
+  const makePageAndText = () => {
     let text = '';
-    let newPage = this.props.page;
-    if (this.props.direction === 'prev') {
+    let newPage = page;
+    if (direction === 'prev') {
       text = 'Back';
       if (newPage !== 1) {
         newPage = newPage - 1;
@@ -19,19 +19,18 @@ class PageBtn extends Component {
       page: newPage
     }
   }
-  render() {
-    return (
-      <div>
-        <Link className={'Pagination__' + this.props.direction}
-              to={
-                `${this.props.query ? this.props.history.location.pathname + '?' + this.props.query + '/' : '/'}${this.makePageAndText().page}`
-              }
-        >
-          <span>{this.makePageAndText().text}</span>
-        </Link>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Link
+        className={'Pagination__' + direction}
+        to={
+          `${query ? history.location.pathname + '?' + query + '/' : '/'}${makePageAndText().page}`
+        }
+      >
+        <span>{makePageAndText().text}</span>
+      </Link>
+    </div>
+  );
 }
 
 export default withRouter(PageBtn);

@@ -1,58 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 const queryString = require('query-string');
 
-class Sort extends Component {
-  clickHandler (e) {
+const Sort = ({ name, query, value, history, defaultChecked, title, direction }) => {
+  const clickHandler = e => {
     let url;
-    if (this.props.name === 'sort') {
-      if (this.props.query) {
-        if (!this.props.query.direction) {
-          url = Object.assign({}, this.props.query, {value: this.props.value}, {direction: "desc"});
+    if (name === 'sort') {
+      if (query) {
+        if (!query.direction) {
+          url = Object.assign({}, query, { value, direction: "desc" });
         } else {
-          url = Object.assign({}, this.props.query);
+          url = Object.assign({}, query);
         }
       } else {
-        url = {direction: "desc"};
+        url = { direction: "desc" };
       }
-      url.value = this.props.value;
-    } else if (this.props.name === 'direction') {
-      if (this.props.query) {
-        if (!this.props.query.value) {
-          url = Object.assign({}, this.props.query, {value: "popularity"}, {direction: this.props.direction});
+      url.value = value;
+    } else if (name === 'direction') {
+      if (query) {
+        if (!query.value) {
+          url = Object.assign({}, query, { value: "popularity", direction });
         }
-        url = Object.assign({}, this.props.query);
+        url = Object.assign({}, query);
       } else {
-        url = {value: "popularity"};
+        url = { value: "popularity" };
       }
-      url.direction = this.props.value;
+      url.direction = value;
     }
-    this.props.history.push(`/sort_by?${decodeURIComponent(queryString.stringify(url))}`);
+    history.push(`/sort_by?${decodeURIComponent(queryString.stringify(url))}`);
   }
-  render(){
-    return(
-      <label className={this.props.defaultChecked ? 'Sidebar__sort-label Sidebar__sort-label--active' : 'Sidebar__sort-label'}>
-        {this.props.defaultChecked &&
-          <div className="Sidebar__sort-radiobtn Sidebar__sort-radiobtn--active">
-            <input className="Sidebar__sort-input" type="radio" name={this.props.name} value={this.props.value} onClick={(e) => {
-              this.clickHandler(e);
-            }} defaultChecked/>
-            <span className="Sidebar__sort-custom"></span>
-          </div>
-        }
-        {!this.props.defaultChecked &&
-          <div className="Sidebar__sort-radiobtn">
-            <input className="Sidebar__sort-input" type="radio" name={this.props.name} value={this.props.value} onClick={(e) => {
-              this.clickHandler(e);
-            }}/>
-            <span className="Sidebar__sort-custom"></span>
-          </div>
-        }
-        <span className="Sidebar__sort-name">{this.props.title}</span>
-      </label>
-    );
-  }
+  return(
+    <label className={defaultChecked ? 'Sidebar__sort-label Sidebar__sort-label--active' : 'Sidebar__sort-label'}>
+      {defaultChecked &&
+        <div className="Sidebar__sort-radiobtn Sidebar__sort-radiobtn--active">
+          <input className="Sidebar__sort-input" type="radio" name={name} value={value} onClick={clickHandler} defaultChecked/>
+          <span className="Sidebar__sort-custom"></span>
+        </div>
+      }
+      {!defaultChecked &&
+        <div className="Sidebar__sort-radiobtn">
+          <input className="Sidebar__sort-input" type="radio" name={name} value={value} onClick={clickHandler} />
+          <span className="Sidebar__sort-custom"></span>
+        </div>
+      }
+      <span className="Sidebar__sort-name">{title}</span>
+    </label>
+  );
 }
 
 export default withRouter(Sort);
