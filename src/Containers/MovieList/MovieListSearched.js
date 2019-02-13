@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Movie from '../../Components/Movie/Movie';
 import PageBtn from '../../Components/PageBtn';
 import Spinner from '../../Components/Spinner';
+import WithMovieList from './WithMovieList';
 import {
   fetchMoviesSearched
 } from '../../Redux/actions/movie_list/fetch_movies_searched';
@@ -11,61 +11,37 @@ import {
 const queryString = require('query-string');
 
 class MovieListSearched extends Component {
-  makeList() {
-    let list;
-    if (this.props.movieList.length !== 0) {
-      list = this.props.movieList;
-      return list.map((movie) => {
-        return(
-          <Movie key={movie.id}
-                 id={movie.id}
-                 name={movie.title}
-                 poster={movie.poster_path}
-                 settings={this.props.settings.images}
-                 isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
-                     return favMovie.id === movie.id;}).length > 0)
-                   : false}
-          />
-        );
-      });
-    } else {
-      return (
-        <div className="container container--loading">
-          <span>No movies found!</span>
-        </div>
-      );
-    }
+  componentDidMount() {
+    this.props.fetchFunction(this.props.page, this.props.query.q);
   }
-  componentDidMount(){
-    this.props.fetchMoviesSearched(this.props.page, this.props.query.q);
-  }
-  componentDidUpdate(prevProps){
-    if (this.props.page !== prevProps.page || this.props.query !== prevProps.query) {
-      this.props.fetchMoviesSearched(this.props.page, this.props.query.q);
-    }
-    if (this.props.favorites !== prevProps.favorites) {
-      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+  componentDidUpdate(prevProps) {
+    const { page, query, favorites } = this.props;
+    if (page !== prevProps.page || (query !== prevProps.query && favorites === prevProps.favorites)) {
+      this.props.fetchFunction(page, query.q);
     }
   }
   render() {
+    const { loading, settings, movieList, query, page } = this.props;
     return(
       <div className="container container--movielist">
-        {this.props.loading &&
+        {loading &&
           <div className="container--loading">
             <Spinner/>
           </div>
         }
-        {!this.props.loading && Object.keys(this.props.settings).length && this.makeList()}
-        {this.props.movieList.length !== 0 && <div className="Pagination">
-          <PageBtn direction="prev" query={decodeURIComponent(queryString.stringify(this.props.query))} page={this.props.page} />
-          <PageBtn direction="next" query={decodeURIComponent(queryString.stringify(this.props.query))} page={this.props.page} />
-        </div>}
+        {!loading && Object.keys(settings).length && this.props.makeList()}
+        {movieList.length !== 0 &&
+          <div className="Pagination">
+            <PageBtn direction="prev" query={decodeURIComponent(queryString.stringify(query))} page={page} />
+            <PageBtn direction="next" query={decodeURIComponent(queryString.stringify(query))} page={page} />
+          </div>
+        }
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     settings: state.settings,
     movieList: state.movieList,
@@ -74,7 +50,7 @@ const mapStateToProps = (state) => {
   }
 };
 const mapDispatchToProps = {
-  fetchMoviesSearched
+  fetchFunction: fetchMoviesSearched
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MovieListSearched);
+export default connect(mapStateToProps, mapDispatchToProps)(WithMovieList(MovieListSearched));

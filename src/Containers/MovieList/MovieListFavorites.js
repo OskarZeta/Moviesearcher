@@ -4,59 +4,33 @@ import {
   loadFavorites
 } from '../../Redux/actions/change_favorites';
 
-import Movie from '../../Components/Movie/Movie';
+import WithMovieList from './WithMovieList';
 
 class MovieListFavorites extends Component {
-  makeList() {
-    let list;
-    if (this.props.favorites.length !== 0) {
-      list = this.props.favorites;
-      return list.map((movie) => {
-        return(
-          <Movie key={movie.id}
-                 id={movie.id}
-                 name={movie.title}
-                 poster={movie.poster_path}
-                 settings={this.props.settings.images}
-                 isFav = {this.props.favorites.length > 0 ? (!!this.props.favorites.filter((favMovie) => {
-                     return favMovie.id === movie.id;}).length > 0)
-                   : false}
-          />
-        );
-      });
-    } else {
-      return(
-        <span className="App__faves-empty">You don't have any favorites yet!</span>
-      );
-    }
-  }
   componentDidMount(){
-    if (this.props.favorites.length === 0) {
-      this.props.loadFavorites();
-    }
-  }
-  componentDidUpdate(prevProps){
-    if (this.props.favorites !== prevProps.favorites) {
-      localStorage.setItem('favorites', JSON.stringify(this.props.favorites));
+    if (!this.props.favorites.length) {
+      this.props.fetchFunction();
     }
   }
   render() {
+    const { settings, favorites } = this.props;
     return(
       <div className="container container--movielist">
-        {Object.keys(this.props.settings).length !== 0 && this.makeList()}
+        {Object.keys(settings).length && this.props.makeList('favorites')}
+        {favorites.length === 0 && <span className="App__faves-empty">You don't have any favorites yet!</span>}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     settings: state.settings,
     favorites: state.favorites
   }
 };
 const mapDispatchToProps = {
-  loadFavorites
+  fetchFunction: loadFavorites
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MovieListFavorites);
+export default connect(mapStateToProps, mapDispatchToProps)(WithMovieList(MovieListFavorites));
