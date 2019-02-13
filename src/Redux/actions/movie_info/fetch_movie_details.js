@@ -16,14 +16,14 @@ function movieLoadDetails(data) {
 }
 
 export function fetchMovieDetails(id) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loadingStart());
     return axios.get(urlDetails1 + id + urlDetails2)
-      .then((response) => {
+      .then(response => {
         dispatch(movieLoadDetails(response.data));
         dispatch(loadingStop());
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorSet(
           "An error has occurred during the call to tmdb API. " +
           "Check your address bar (you've probably entered wrong film ID) " +

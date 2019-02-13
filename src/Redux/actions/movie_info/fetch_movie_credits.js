@@ -16,17 +16,16 @@ function movieLoadCredits(data) {
 }
 
 export function fetchMovieCredits(id) {
-  return (dispatch) => {
-    return axios.get(urlCredits1 + id + urlCredits2)
-      .then((response) => {
+  return dispatch =>
+    axios.get(urlCredits1 + id + urlCredits2)
+      .then(response => {
         dispatch(movieLoadCredits(response.data));
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorSet(
           "An error has occurred during the call to tmdb API. " +
           "Check your address bar (you've probably entered wrong film ID) " +
           "or try contacting tmdb's tech support."
         ));
       })
-  }
 }

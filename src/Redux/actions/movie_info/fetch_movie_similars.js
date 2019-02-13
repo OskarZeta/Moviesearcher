@@ -16,17 +16,16 @@ function movieLoadSimilars(data) {
 }
 
 export function fetchMovieSimilars(id) {
-  return (dispatch) => {
-    return axios.get(urlSimilars1 + id + urlSimilars2)
-      .then((response) => {
+  return dispatch =>
+    axios.get(urlSimilars1 + id + urlSimilars2)
+      .then(response => {
         dispatch(movieLoadSimilars(response.data));
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorSet(
           "An error has occurred during the call to tmdb API. " +
           "Check your address bar (you've probably entered wrong film ID) " +
           "or try contacting tmdb's tech support."
         ));
       })
-  }
 }

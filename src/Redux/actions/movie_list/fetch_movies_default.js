@@ -15,14 +15,14 @@ function moviesLoadDefault(data) {
 }
 
 export function fetchMoviesDefault(page) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loadingStart());
     return axios.get(urlPolular + page)
-      .then((response) => {
+      .then(response => {
         dispatch(moviesLoadDefault(response.data));
         dispatch(loadingStop());
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         dispatch(errorSet("Error while retrieving list of popular movies from server."));
       })

@@ -14,17 +14,17 @@ function loadGenres(json) {
 }
 
 export function fetchGenres() {
-  return ((dispatch) => {
+  return (dispatch => {
     return axios.get(urlGenres)
-      .then((response) => {
+      .then(response => {
         dispatch(loadGenres(response.data.genres));
-        return response.data.genres.map((genre) => {
-          return Object.assign(genre, {
+        return response.data.genres.map(genre => 
+          Object.assign(genre, {
             selected: false
-          });
-        });
+          })
+        );
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
         dispatch(errorSet("Error while retrieving list of genres from server."));
       });

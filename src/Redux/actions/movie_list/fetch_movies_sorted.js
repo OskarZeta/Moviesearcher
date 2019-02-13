@@ -16,7 +16,7 @@ function moviesLoadSorted(data) {
 }
 
 export function fetchMoviesSorted(page, sortBy, direction, genresArray) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loadingStart());
     let url = urlSorted;
     if (sortBy && direction) {
@@ -31,11 +31,11 @@ export function fetchMoviesSorted(page, sortBy, direction, genresArray) {
     }
     url = url + urlSorted2;
     return axios.get(url + page)
-      .then((response) => {
+      .then(response => {
         dispatch(moviesLoadSorted(response.data));
         dispatch(loadingStop());
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorSet(error));
       })
   }

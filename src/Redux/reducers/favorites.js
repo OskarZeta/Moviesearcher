@@ -6,16 +6,13 @@ export function favorites(state = [], action) {
       return state.concat(action.movie);
     }
     case REMOVE_FAVORITE: {
-      return state.filter((fave) => {
-        return fave.id !== action.id;
-      });
+      return state.filter(fave =>
+        fave.id !== action.id
+      );
     }
     case LOAD_FAVORIES: {
-      if (JSON.parse(localStorage.getItem('favorites'))) {
-        return JSON.parse(localStorage.getItem('favorites'));
-      } else {
-        return state;
-      }
+      let parsed = JSON.parse(localStorage.getItem('favorite_movies'));
+      return parsed ? parsed : state;
     }
     default: {
       return state;

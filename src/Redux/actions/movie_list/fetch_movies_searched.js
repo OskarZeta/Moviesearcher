@@ -18,14 +18,14 @@ function moviesLoadSorted(data) {
 }
 
 export function fetchMoviesSearched(page, query) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(loadingStart());
     return axios.get(urlSearch1 + query + urlSearch2 + page)
-      .then((response) => {
+      .then(response => {
         dispatch(moviesLoadSorted(response.data));
         dispatch(loadingStop());
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch(errorSet(error));
       })
   }

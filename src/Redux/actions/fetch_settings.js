@@ -13,16 +13,16 @@ function settingsLoad(data) {
 }
 
 export function fetchSettings(settingsFromCookie) {
-  return (dispatch) => {
+  return dispatch => {
     if (!settingsFromCookie) {
       return axios.get(`https://api.themoviedb.org/3/configuration?api_key=${apiKey}`)
-        .then((response) => {
+        .then(response => {
           dispatch(settingsLoad(response.data));
           let date = new Date();
           date.setDate(date.getDate() + 3);
           document.cookie = `settings=${JSON.stringify(response.data)} path=/; expires=${date.toUTCString()}`;
         })
-        .catch((error) => {
+        .catch(error => {
           dispatch(errorSet("Error while loading settings from server."));
         })
     } else {
