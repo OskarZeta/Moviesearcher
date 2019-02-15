@@ -6,47 +6,51 @@ import Spinner from '../Components/Spinner';
 import ImageShow from './ImageShow';
 
 class Gallery extends Component {
+  makeAddress(n, path) {
+    return this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[n] + path;
+  }
   loadImages() {
     let images = this.props.movieImages.backdrops;
     return images.map((image, index) => {
-      let addressMobile = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[1] + image.file_path;
-      let addressTablet = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[2] + image.file_path;
-      let addressDesktop = this.props.settings.images.secure_base_url + this.props.settings.images.poster_sizes[3] + image.file_path;
       return(
-        <Link className="Gallery__image" key={index} to={`/filmId/${this.props.id}/images?image=${index+1}`}>
+        <Link className="Gallery__image" key={index} to={`/filmId/${this.props.id}/gallery?image=${index+1}`}>
           <picture>
-            <source srcSet={addressDesktop} media="(min-width: 1300px)" />
-            <source srcSet={addressTablet} media="(min-width: 800px)" />
-            <img src={addressMobile} alt="movie-poster"/>
+            <source srcSet={this.makeAddress(3, image.file_path)} media="(min-width: 1300px)" />
+            <source srcSet={this.makeAddress(2, image.file_path)} media="(min-width: 800px)" />
+            <img src={this.makeAddress(1, image.file_path)} alt="movie-poster"/>
           </picture>
         </Link>
       );
     });
   }
-  componentDidMount(){
-    if (Object.keys(this.props.movieImages).length === 0) {
+  componentDidMount() {
+    if (!Object.keys(this.props.movieImages).length) {
       this.props.fetchMovieImages(this.props.id);
     }
   }
-  render(){
+  render() {
+    const { query, movieImages, settings } = this.props;
     return(
       <div className="Gallery">
-        {Object.keys(this.props.query).length !== 0 &&
-          <ImageShow imageIndex={this.props.query.image - 1} from="gallery"/>
+        {Object.keys(query).length !== 0 &&
+          <ImageShow
+            imageIndex={query.image - 1}
+            settings={settings}
+            from="gallery"
+          />
         }
         <div className="container container--gallery">
-          {!Object.keys(this.props.movieImages).length && <Spinner/>}
-          {Object.keys(this.props.movieImages).length && Object.keys(this.props.settings).length && this.loadImages()}
+          {!Object.keys(movieImages).length && <Spinner/>}
+          {Object.keys(movieImages).length && this.loadImages()}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    movieImages: state.movieImages,
-    settings: state.settings
+    movieImages: state.movieImages
   }
 };
 const mapDispatchToProps = {

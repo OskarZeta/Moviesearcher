@@ -1,72 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Spinner from '../Components/Spinner';
+import ImagePreload from '../Components/ImagePreload';
 import { errorSet } from '../Redux/actions/has_error';
 
 class ImageShow extends Component {
-  closeClick(){
-    document.querySelector('.image-preload').classList.remove('hidden');
-    if (this.props.from === "movie") {
-      this.props.history.push(`/filmId/${this.props.movieImages.id}`);
-    } else if (this.props.from === "gallery") {
-      this.props.history.push(`/filmId/${this.props.movieImages.id}/images`);
-    }
+  state = {
+    isLoaded : false
   }
-  sliderClick(dir){
+  closeClick() {
+    this.setState({
+      isLoaded : false
+    }, () => {
+      if (this.props.from === "movie") {
+        this.props.history.push(`/filmId/${this.props.movieImages.id}`);
+      } else if (this.props.from === "gallery") {
+        this.props.history.push(`/filmId/${this.props.movieImages.id}/gallery`);
+      }
+    });
+  }
+  sliderClick(dir) {
     let index = this.props.imageIndex;
-    if (this.props.from === "movie") {
-      if (dir === "prev") {
-        if (this.props.imageIndex > 0) {
-          document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}?image=${index}`);
-        }
-      } else if (dir === "next") {
-        if (this.props.imageIndex < this.props.movieImages.backdrops.length - 1) {
-          document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}?image=${index + 2}`);
-        }
+    let source = "?image=";
+    if (this.props.from === "gallery") {
+      source = "/gallery?image=";
+    }
+    if (dir === "prev") {
+      if (index > 0) {
+        this.setState({
+          isLoaded: false
+        }, () =>
+          this.props.history.push(`/filmId/${this.props.movieImages.id}${source}${index}`)
+        );
       }
-    } else if (this.props.from === "gallery") {
-      if (dir === "prev") {
-        if (this.props.imageIndex > 0) {
-          document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/images?image=${index}`);
-        }
-      } else if (dir === "next"){
-        if (this.props.imageIndex < this.props.movieImages.backdrops.length - 1) {
-          document.querySelector('.image-preload').classList.remove('hidden');
-          this.props.history.push(`/filmId/${this.props.movieImages.id}/images?image=${index + 2}`);
-        }
+    } else if (dir === "next") {
+      if (index < this.props.movieImages.backdrops.length - 1) {
+        this.setState({
+          isLoaded: false
+        }, () =>
+          this.props.history.push(`/filmId/${this.props.movieImages.id}${source}${index + 2}`)
+        );
       }
     }
   }
-  loadImage(e) {
-    e.target.parentNode.parentNode.querySelector('.image-preload').classList.add('hidden');
+  loadImage = () => {
+    this.setState({
+      isLoaded: true
+    });
   }
-  componentDidMount() {
-    document.querySelector('.image-preload').classList.remove('hidden');
-  }
-  render(){
+  render() {
     let addressMobile;
     let addressTablet;
     let addressDesktop;
-    if (Object.keys(this.props.movieImages).length && Object.keys(this.props.settings).length) {
-      if (this.props.imageIndex >= this.props.movieImages.backdrops.length || isNaN(this.props.imageIndex)) {
+    const { imageIndex, movieImages } = this.props;
+    const settings = this.props.settings.images;
+    function _makeAddress(n) {
+      return settings.secure_base_url +
+      settings.backdrop_sizes[n] +
+      movieImages.backdrops[imageIndex].file_path;
+    }
+    if (Object.keys(movieImages).length) {
+      if (imageIndex >= movieImages.backdrops.length || Number.isNaN(imageIndex)) {
         this.props.errorSet('Wrong image index detected');
       } else {
-        addressMobile =
-          this.props.settings.images.secure_base_url +
-          this.props.settings.images.backdrop_sizes[0] +
-          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-        addressTablet =
-          this.props.settings.images.secure_base_url +
-          this.props.settings.images.backdrop_sizes[1] +
-          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
-        addressDesktop =
-          this.props.settings.images.secure_base_url +
-          this.props.settings.images.backdrop_sizes[2] +
-          this.props.movieImages.backdrops[this.props.imageIndex].file_path;
+        addressMobile = _makeAddress(0);
+        addressTablet = _makeAddress(1);
+        addressDesktop = _makeAddress(2);
       }
     }
     return(
@@ -76,11 +75,9 @@ class ImageShow extends Component {
             <picture>
               <source srcSet={addressDesktop} media="(min-width: 1300px)"/>
               <source srcSet={addressTablet} media="(min-width: 800px)"/>
-              <img onLoad={(e) => {this.loadImage(e)}} src={addressMobile} alt="movie-poster"/>
+              <img onLoad={this.loadImage} src={addressMobile} alt="movie-poster"/>
             </picture>
-            <div className="image-preload image-preload--movie-backdrop">
-              <Spinner/>
-            </div>
+            {!this.state.isLoaded && <ImagePreload type="movie-backdrop"/>}
           </div>
           <div className="ImageShow__interface">
             <button className="ImageShow__prev" onClick={() => {this.sliderClick("prev")}}></button>
@@ -93,10 +90,9 @@ class ImageShow extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    movieImages: state.movieImages,
-    settings: state.settings
+    movieImages: state.movieImages
   }
 };
 

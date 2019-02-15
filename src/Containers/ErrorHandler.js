@@ -6,7 +6,7 @@ import {
 
 
 class ErrorHandler extends Component {
-  render(){
+  render() {
     if (this.props.error.isError) {
       return(
         <div className="App">
@@ -26,7 +26,7 @@ class ErrorHandler extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     error: state.error
   }
