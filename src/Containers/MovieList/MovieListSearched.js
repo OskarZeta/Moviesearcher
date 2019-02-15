@@ -6,7 +6,7 @@ import Spinner from '../../Components/Spinner';
 import WithMovieList from './WithMovieList';
 import {
   fetchMoviesSearched
-} from '../../Redux/actions/movie_list/fetch_movies_searched';
+ } from '../../Redux/actions/movie_list/fetch_movies_searched';
 
 const queryString = require('query-string');
 
@@ -15,8 +15,8 @@ class MovieListSearched extends Component {
     this.props.fetchFunction(this.props.page, this.props.query.q);
   }
   componentDidUpdate(prevProps) {
-    const { page, query, favorites } = this.props;
-    if (page !== prevProps.page || (query !== prevProps.query && favorites === prevProps.favorites)) {
+    const { page, query } = this.props;
+    if (page !== prevProps.page || query.q !== prevProps.query.q) {
       this.props.fetchFunction(page, query.q);
     }
   }
@@ -32,8 +32,16 @@ class MovieListSearched extends Component {
         {!loading && Object.keys(settings).length && this.props.makeList()}
         {movieList.length !== 0 &&
           <div className="Pagination">
-            <PageBtn direction="prev" query={decodeURIComponent(queryString.stringify(query))} page={page} />
-            <PageBtn direction="next" query={decodeURIComponent(queryString.stringify(query))} page={page} />
+            <PageBtn
+              direction="prev"
+              query={decodeURIComponent(queryString.stringify(query))}
+              page={page}
+            />
+            <PageBtn
+              direction="next"
+              query={decodeURIComponent(queryString.stringify(query))}
+              page={page}
+            />
           </div>
         }
       </div>
@@ -43,9 +51,7 @@ class MovieListSearched extends Component {
 
 const mapStateToProps = state => {
   return {
-    settings: state.settings,
     movieList: state.movieList,
-    favorites: state.favorites,
     loading: state.loading
   }
 };
@@ -53,4 +59,6 @@ const mapDispatchToProps = {
   fetchFunction: fetchMoviesSearched
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithMovieList(MovieListSearched));
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(WithMovieList(MovieListSearched));

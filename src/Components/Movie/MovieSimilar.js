@@ -25,7 +25,7 @@ const MovieSimilar = ({ settings, poster, name, id, favorites, isFav }) => {
         <FaveBtn
           id={id} name={name}
           poster={poster}
-          isFav={isFav}
+          //isFav={isFav}
         />
       </div>
     </div>

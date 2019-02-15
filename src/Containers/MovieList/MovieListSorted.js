@@ -6,7 +6,7 @@ import Spinner from '../../Components/Spinner';
 import WithMovieList from './WithMovieList';
 import {
   fetchMoviesSorted
-} from '../../Redux/actions/movie_list/fetch_movies_sorted';
+ } from '../../Redux/actions/movie_list/fetch_movies_sorted';
 
 const queryString = require('query-string');
 
@@ -16,13 +16,17 @@ class MovieListSorted extends Component {
     this.props.fetchFunction(page, query.value, query.direction, query.genres);
   }
   componentDidUpdate(prevProps) {
-    const { query, page, favorites } = this.props;
-    if (page !== prevProps.page || (query !== prevProps.query && favorites === prevProps.favorites)) {
+    const { query, page } = this.props;
+    if (page !== prevProps.page ||
+        query.value !== prevProps.query.value ||
+        query.direction !== prevProps.query.direction ||
+        query.genres !== prevProps.query.genres
+      ) {
       this.props.fetchFunction(page, query.value, query.direction, query.genres);
     }
   }
   render() {
-    const { loading, movieList, settings, query, page } = this.props;
+    const { loading, movieList, query, page } = this.props;
     return(
       <div className="container container--movielist">
         {loading &&
@@ -30,7 +34,7 @@ class MovieListSorted extends Component {
             <Spinner/>
           </div>
         }
-        {!loading && movieList.length !== 0 && Object.keys(settings).length && this.props.makeList()}
+        {!loading && movieList.length !== 0 && this.props.makeList()}
         {!loading && movieList.length === 0 &&
           <div className="container container--loading">
             <span>No movies found!</span>
@@ -38,8 +42,16 @@ class MovieListSorted extends Component {
         }
         {movieList.length !== 0 &&
           <div className="Pagination">
-            <PageBtn direction="prev" query={decodeURIComponent(queryString.stringify(query))} page={page} />
-            <PageBtn direction="next" query={decodeURIComponent(queryString.stringify(query))} page={page} />
+            <PageBtn
+              direction="prev"
+              query={decodeURIComponent(queryString.stringify(query))}
+              page={page}
+            />
+            <PageBtn
+              direction="next"
+              query={decodeURIComponent(queryString.stringify(query))}
+              page={page}
+            />
           </div>
         }
       </div>
@@ -49,9 +61,7 @@ class MovieListSorted extends Component {
 
 const mapStateToProps = state => {
   return {
-    settings: state.settings,
     movieList: state.movieList,
-    favorites: state.favorites,
     loading: state.loading
   }
 };
@@ -59,4 +69,6 @@ const mapDispatchToProps = {
   fetchFunction: fetchMoviesSorted
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithMovieList(MovieListSorted));
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(WithMovieList(MovieListSorted));
