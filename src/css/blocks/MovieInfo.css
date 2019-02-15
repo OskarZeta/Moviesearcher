@@ -66,13 +66,15 @@
 }
 .MovieInfo__images-wrapper{
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .MovieInfo__image-preview{
   display: flex;
   align-items: center;
   width: 48%;
-  margin: 5px 1% 0 auto;
+  margin-bottom: 5px;
+  //margin: 5px 1% 0 auto;
   position: relative;
 }
 .MovieInfo__image-preview img{

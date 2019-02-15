@@ -37,7 +37,9 @@
   width: 100%;
 }
 .App__faves-empty{
+  display: block;
   font-size: 20px;
+  height: calc(100vh - 200px);
 }
 @media (min-width: 800px) {
   .App__error-header{

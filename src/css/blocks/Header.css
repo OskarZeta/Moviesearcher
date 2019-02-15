@@ -83,6 +83,7 @@
 }
 .Header__back a{
   display: block;
+  width: 100%;
 }
 .Header__search{
   order: 1;
